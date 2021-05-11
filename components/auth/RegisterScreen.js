@@ -1,18 +1,10 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react'
+import { View, Text } from 'react-native'
 
-export default class RegisterScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
-
-    render() {
-        return (
-            <View>
-                <Text> RegisterScreen </Text>
-            </View>
-        );
-    }
+export default function RegisterScreen() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Register</Text>
+        </View>
+    )
 }
