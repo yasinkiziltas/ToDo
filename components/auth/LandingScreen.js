@@ -59,22 +59,16 @@ export default function LandingScreen({ navigation }) {
                     backgroundColor: '#a6e4d0',
                     image: <Image source={require('../../assets/img/onboarding-img2.png')} />,
                     title: " ToDo App",
-                    subtitle: 'Done with React Native Onboarding Swiper'
+                    subtitle: 'Plan your work and..'
                 },
 
                 {
                     backgroundColor: '#fdeb93',
-                    image: <Image source={require('../../assets/img/todo1.png')} style={{ width: 240, height: 240 }} />,
-                    title: " ToDo App",
-                    subtitle: 'Done with React Native Onboarding Swiper'
-                },
-
-                {
-                    backgroundColor: '#a6e4d0',
                     image: <Image source={require('../../assets/img/todo2.png')} style={{ width: 240, height: 240 }} />,
                     title: " ToDo App",
-                    subtitle: 'Done with React Native Onboarding Swiper'
+                    subtitle: 'Start working!'
                 }
+
             ]}
         />
     )
