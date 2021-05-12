@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -9,6 +9,7 @@ import LoginScreen from './components/auth/LoginScreen'
 import RegisterScreen from './components/auth/RegisterScreen'
 
 import HomeScreen from './components/main/HomeScreen'
+import MainScreen from './components/Main'
 
 import firebase from 'firebase'
 
@@ -29,60 +30,70 @@ if (firebase.apps.length === 0) {
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default class App extends Component {
 
-  const [loaded, setLoaded] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(null)
+  constructor(props) {
+    super(props)
 
-  useEffect(() => {
+    this.state = {
+      loaded: false
+    }
+  }
+
+  componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-
       if (!user) {
-        setLoggedIn(false)
-        setLoaded(true)
+        this.setState({
+          loggedIn: false,
+          loaded: true
+        })
       }
 
       else {
-        setLoggedIn(true)
-        setLoaded(true)
+        this.setState({
+          loggedIn: true,
+          loaded: true
+        })
       }
     })
-  }, [])
-
-
-  if (!loaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-        <Text>Loading..</Text>
-      </View>
-    )
   }
 
+  render() {
+    const { loggedIn, loaded } = this.state;
+
+    if (!loaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+          <Text>Loading..</Text>
+        </View>
+      )
+    }
 
 
-  if (!loggedIn) {
+
+    if (!loggedIn) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
+    }
+
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
-          <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
-    )
-  }
 
-  else {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      </NavigationContainer>
-    )
 
+    )
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -3,8 +3,8 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
-import { windowHeight, windowWidth } from '../../utils/Dimentions';
-import { NavigationContainer } from '@react-navigation/native'
+
+
 
 export default function LoginScreen({ navigation }) {
 
@@ -12,6 +12,18 @@ export default function LoginScreen({ navigation }) {
     const [password, setPassword] = useState();
 
     const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText } = styles;
+
+
+
+    const signIn = () => {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((result) => {
+                console.log('Success login: ', result)
+            })
+            .catch((error) => {
+                console.log('Error login: ', error)
+            })
+    }
 
     return (
         <View style={container}>
@@ -73,7 +85,7 @@ const styles = StyleSheet.create({
         height: 150
     },
     forgotText: {
-        color: "#7209F6",
+        color: "#5882FD",
         fontSize: 15
     },
     signInText: {
@@ -92,7 +104,7 @@ const styles = StyleSheet.create({
     },
     registerButtonText: {
         fontWeight: 'bold',
-        color: "#7209F6",
+        color: "#5882FD",
         fontSize: 16,
     }
 

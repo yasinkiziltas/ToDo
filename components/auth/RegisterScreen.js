@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useRef } from 'react'
+import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
@@ -13,6 +13,22 @@ export default function RegisterScreen({ navigation }) {
     const [password, setPassword] = useState();
 
     const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText } = styles;
+
+    const signUp = () => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+                firebase.firestore().collection("users")
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                        name,
+                        email,
+                    })
+                console.log('New user: ', result)
+            })
+            .catch((error) => {
+                console.log('Sign Up Error: ', error)
+            })
+    }
 
     return (
         <View style={container}>
@@ -33,6 +49,7 @@ export default function RegisterScreen({ navigation }) {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+
 
 
 
@@ -57,12 +74,12 @@ export default function RegisterScreen({ navigation }) {
 
             <FormButton
                 buttonTitle="Register"
-                onPress={() => register()}
+                onPress={() => signUp()}
             />
 
-            <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
+            {/* <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
                 <Text style={registerButtonText}>Go Back</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
         </View >
     )
@@ -94,13 +111,13 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         position: 'absolute',
-        margin: 16,
-        right: 90,
+        margin: 26,
+        right: 150,
         bottom: 20,
     },
     registerButtonText: {
         fontWeight: 'bold',
-        color: "#7209F6",
+        color: "#5882FD",
         fontSize: 16,
     }
 
