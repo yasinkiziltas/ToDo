@@ -4,8 +4,10 @@ import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
 import { windowHeight, windowWidth } from '../../utils/Dimentions';
+import { NavigationContainer } from '@react-navigation/native'
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
+
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -14,7 +16,7 @@ export default function LoginScreen() {
     return (
         <View style={container}>
             <View>
-                <Image source={require('../../assets/img/todo2.png')}
+                <Image source={require('../../assets/img/todo.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
@@ -50,7 +52,7 @@ export default function LoginScreen() {
                 <Text style={forgotText}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={registerButton} onPress={() => { }}>
+            <TouchableOpacity style={registerButton} onPress={() => navigation.navigate('Register')}>
                 <Text style={registerButtonText}>Dont have any account? Register</Text>
             </TouchableOpacity>
 
@@ -67,17 +69,17 @@ const styles = StyleSheet.create({
         // paddingTop: 50
     },
     logo: {
-        width: 150,
+        width: 250,
         height: 150
     },
     forgotText: {
         color: "#7209F6",
-        fontSize: 12
+        fontSize: 15
     },
     signInText: {
         fontWeight: 'bold',
         fontSize: 25,
-        marginBottom: 15
+        marginBottom: 25
     },
     forgotButton: {
         marginVertical: 35,
@@ -89,6 +91,8 @@ const styles = StyleSheet.create({
         bottom: 20,
     },
     registerButtonText: {
+        fontWeight: 'bold',
+        color: "#7209F6",
         fontSize: 16,
     }
 

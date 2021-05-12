@@ -65,7 +65,7 @@ export default function LandingScreen({ navigation }) {
                 {
                     backgroundColor: '#fdeb93',
                     image: <Image source={require('../../assets/img/todo2.png')} style={{ width: 240, height: 240 }} />,
-                    title: " ToDo App",
+                    // title: " ToDo App",
                     subtitle: 'Start working!'
                 }
 

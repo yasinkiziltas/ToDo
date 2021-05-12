@@ -3,6 +3,9 @@ import { View, StyleSheet, TextInput } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { windowHeight, windowWidth } from '../utils/Dimentions';
 
+
+
+
 export default function FormInput({ labelValue, placeholderText, iconType, ...rest }) {
     return (
         <View>
@@ -26,11 +29,13 @@ export default function FormInput({ labelValue, placeholderText, iconType, ...re
 
 const styles = StyleSheet.create({
     inputContainer: {
+        borderWidth: 1,
+        borderColor: '#7209F6',
         marginTop: 5,
         marginBottom: 10,
         width: '90%',
         height: windowHeight / 15,
-        borderColor: '#ccc',
+        // borderColor: '#ccc',
         borderRadius: 13,
         borderWidth: 1,
         flexDirection: 'row',
