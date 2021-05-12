@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Button } from 'react-native'
-import firebase from 'firebase'
+import Modal from 'react-native-modal';
+
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
@@ -12,6 +13,7 @@ import ProfileScreen from './main/ProfileScreen'
 const Tab = createMaterialBottomTabNavigator()
 
 export default function Main() {
+
     return (
         <Tab.Navigator initialRouteName="Home" labeled={false}>
             <Tab.Screen name="Home" component={HomeScreen}
