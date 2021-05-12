@@ -3,9 +3,6 @@ import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView }
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
-import { windowHeight, windowWidth } from '../../utils/Dimentions';
-import { NavigationContainer } from '@react-navigation/native'
-
 export default function RegisterScreen({ navigation }) {
 
     const [name, setName] = useState();
@@ -49,9 +46,6 @@ export default function RegisterScreen({ navigation }) {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
-
-
-
 
             <FormInput
                 labelValue={email}
