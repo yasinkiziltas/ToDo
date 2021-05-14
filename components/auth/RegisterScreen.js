@@ -32,7 +32,7 @@ export default function RegisterScreen({ navigation }) {
     return (
         <Animatable.View style={container} animation="fadeInUp">
             <View>
-                <Image source={require('../../assets/img/signup.png')}
+                <Image source={require('../../assets/img/register.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
@@ -73,9 +73,9 @@ export default function RegisterScreen({ navigation }) {
                 onPress={() => signUp()}
             />
 
-            {/* <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
                 <Text style={registerButtonText}>Go Back</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
         </Animatable.View >
     )
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 150,
-        height: 150
+        height: 150,
+        marginBottom:15
     },
     forgotText: {
         color: "#7209F6",
@@ -106,8 +107,7 @@ const styles = StyleSheet.create({
         marginVertical: 35,
     },
     registerButton: {
-        position: 'absolute',
-        margin: 26,
+        position: 'absolute',     
         right: 150,
         bottom: 20,
     },

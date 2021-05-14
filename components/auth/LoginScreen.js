@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }) {
     return (
         <Animatable.View animation="bounceInUp" style={container}>
             <View>
-                <Image source={require('../../assets/img/note.png')}
+                <Image source={require('../../assets/img/signin.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 250,
-        height: 150
+        height: 250
     },
     forgotText: {
         color: "#5882FD",
