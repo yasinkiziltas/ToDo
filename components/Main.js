@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal';
 
 

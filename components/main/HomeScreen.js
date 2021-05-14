@@ -10,7 +10,7 @@ export default function HomeScreen() {
     }
 
     useEffect(() => {
-        toggleModal()
+        // toggleModal()
     }, [])
 
     return (
