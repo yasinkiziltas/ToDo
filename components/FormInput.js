@@ -26,7 +26,7 @@ export default function FormInput({ labelValue, placeholderText, iconType, ...re
 
 const styles = StyleSheet.create({
     inputContainer: {
-        borderWidth: 1,
+        borderBottomWidth:1,
         borderColor: '#5882FD',
         marginTop: 5,
         marginBottom: 10,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         height: windowHeight / 15,
         // borderColor: '#ccc',
         borderRadius: 13,
-        borderWidth: 1,
+        // borderWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',

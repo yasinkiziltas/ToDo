@@ -3,6 +3,8 @@ import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView }
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
+import * as Animatable from 'react-native-animatable';
+
 export default function RegisterScreen({ navigation }) {
 
     const [name, setName] = useState();
@@ -28,9 +30,9 @@ export default function RegisterScreen({ navigation }) {
     }
 
     return (
-        <View style={container}>
+        <Animatable.View style={container} animation="fadeInUp">
             <View>
-                <Image source={require('../../assets/img/todo.png')}
+                <Image source={require('../../assets/img/signup.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
@@ -75,7 +77,7 @@ export default function RegisterScreen({ navigation }) {
                 <Text style={registerButtonText}>Go Back</Text>
             </TouchableOpacity> */}
 
-        </View >
+        </Animatable.View >
     )
 }
 

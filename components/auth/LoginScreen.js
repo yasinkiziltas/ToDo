@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
-
+import * as Animatable from 'react-native-animatable';
 
 
 export default function LoginScreen({ navigation }) {
@@ -11,7 +11,7 @@ export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText } = styles;
+    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput} = styles;
 
 
 
@@ -26,9 +26,9 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <View style={container}>
+        <Animatable.View animation="bounceInUp" style={container}>
             <View>
-                <Image source={require('../../assets/img/todo.png')}
+                <Image source={require('../../assets/img/note.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
@@ -36,6 +36,7 @@ export default function LoginScreen({ navigation }) {
 
             <Text style={signInText}>Sign In to continue</Text>
 
+            
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -65,15 +66,16 @@ export default function LoginScreen({ navigation }) {
             </TouchableOpacity>
 
             <TouchableOpacity style={registerButton} onPress={() => navigation.navigate('Register')}>
-                <Text style={registerButtonText}>Dont have any account? Register</Text>
+                <Text style={registerButtonText}>Dont have any account? <Text style={registerButtonTextInput}>Register</Text></Text>
             </TouchableOpacity>
 
-        </View >
+        </Animatable.View >
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'transparent',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -99,13 +101,15 @@ const styles = StyleSheet.create({
     registerButton: {
         position: 'absolute',
         margin: 16,
-        right: 90,
+        // right: 90,
         bottom: 20,
     },
-    registerButtonText: {
-        fontWeight: 'bold',
+    registerButtonText: {     
         color: "#5882FD",
         fontSize: 16,
+    },
+    registerButtonTextInput:{
+        fontWeight: 'bold',
     }
 
 });
