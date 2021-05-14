@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <Animatable.View animation="bounceInUp" style={container}>
+        <Animatable.View animation="fadeInDownBig" style={container}>
             <View>
                 <Image source={require('../../assets/img/signin.png')}
                     resizeMode="contain"
