@@ -41,7 +41,7 @@ export default function LoginScreen({ navigation }) {
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
                 placeholderText="Email"
-                iconType="user"
+                iconType="mail"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
