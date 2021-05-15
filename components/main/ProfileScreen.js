@@ -3,15 +3,6 @@ import { ScrollView, StyleSheet, SafeAreaView, Image, Text, Button } from 'react
 import firebase from 'firebase'
 
 
-const signOut = () => {
-    try {
-        firebase.auth().signOut();
-        console.log('Logout success')
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 export default function ProfileScreen() {
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
@@ -50,7 +41,7 @@ export default function ProfileScreen() {
                 contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', }}
                 showsVerticalScrollIndicator={false}
             >
-                <Image style={userImg} source={require('../../assets/img/user-8.jpg')} />
+                <Image style={userImg} source={require('../../assets/img/avatar.png')} />
                 {
                     userName ? <Text style={userNameStyl}>{userName}</Text> : <Text style={userNameStyl}>Firebase tarafında eklenen kullanıcı;</Text>
                 }

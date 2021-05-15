@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -9,13 +10,12 @@ export default function HomeScreen() {
         setModalVisible(!isModalVisible);
     }
 
-    useEffect(() => {
-        // toggleModal()
-    }, [])
+    const navigation = useNavigation()
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
             <Text>Home</Text>
+            <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
 
             <Modal isVisible={isModalVisible} style={styles.modalView}>
                 <View style={{ flex: 1 }}>

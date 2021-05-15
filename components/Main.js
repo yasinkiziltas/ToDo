@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
-import Modal from 'react-native-modal';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -9,14 +8,16 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from './main/HomeScreen'
 import AddTodoScreen from './main/AddTodoScreen'
 import ProfileScreen from './main/ProfileScreen'
+import DrawerContent from './main/DrawerContent'
 
 const Tab = createMaterialBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
-export default function Main() {
+export default function Main(navigation) {
 
     return (
-        <Tab.Navigator initialRouteName="Home" labeled={false}>
-            <Tab.Screen name="Home" component={HomeScreen}
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} />}>
+            <Drawer.Screen name="Home" component={HomeScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="home" color={color} size={24} />
@@ -24,7 +25,7 @@ export default function Main() {
                 }}
             />
 
-            <Tab.Screen name="Add" component={AddTodoScreen}
+            <Drawer.Screen name="Add" component={AddTodoScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="plus" color={color} size={24} />
@@ -32,13 +33,13 @@ export default function Main() {
                 }}
             />
 
-            <Tab.Screen name="Profile" component={ProfileScreen}
+            <Drawer.Screen name="Profile" component={ProfileScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="account-circle" color={color} size={24} />
                     )
                 }}
             />
-        </Tab.Navigator>
+        </Drawer.Navigator>
     )
 }
