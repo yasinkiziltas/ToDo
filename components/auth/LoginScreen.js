@@ -11,17 +11,17 @@ export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput} = styles;
+    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
 
 
 
     const signIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
-                console.log('Success login: ', result)
+                console.log('Success login!: ', result)
             })
             .catch((error) => {
-                console.log('Error login: ', error)
+                console.log('Error: ', error)
             })
     }
 
@@ -36,7 +36,7 @@ export default function LoginScreen({ navigation }) {
 
             <Text style={signInText}>Sign In to continue</Text>
 
-            
+
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
         // right: 90,
         bottom: 20,
     },
-    registerButtonText: {     
+    registerButtonText: {
         color: "#5882FD",
         fontSize: 16,
     },
-    registerButtonTextInput:{
+    registerButtonTextInput: {
         fontWeight: 'bold',
     }
 
