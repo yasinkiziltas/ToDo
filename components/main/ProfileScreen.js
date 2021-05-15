@@ -51,8 +51,14 @@ export default function ProfileScreen() {
                 showsVerticalScrollIndicator={false}
             >
                 <Image style={userImg} source={require('../../assets/img/user-8.jpg')} />
-                <Text style={userNameStyl}>{userName}</Text>
-                <Text style={userNameStyl}>{userEmail}</Text>
+                {
+                    userName ? <Text style={userNameStyl}>{userName}</Text> : <Text style={userNameStyl}>Firebase tarafında eklenen kullanıcı;</Text>
+                }
+
+                {
+                    userEmail ? <Text style={userNameStyl}>{userEmail}</Text> : <Text style={userNameStyl}>{firebase.auth().currentUser.email}</Text>
+                }
+
             </ScrollView>
             <Button title="Logout" onPress={() => signOut()} />
         </SafeAreaView>
