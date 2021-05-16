@@ -1,29 +1,40 @@
 import React from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
 
 export default function CustomHeader({title, navigation}) {
 
-    const {container, contentHeader, contentHeaderTitle, titleText, menuIcon} = styles;
+    const {container, contentHeader} = styles;
 
 
     // const navigation = useNavigation();
 
     return (
         <SafeAreaView style={container}>
-             <View style={contentHeader}>
+           
+            <View style={contentHeader}>
                  <TouchableOpacity  onPress={() => navigation.openDrawer()} >
                     <Image source={require('../assets/img/menu.png')} resizeMode="contain" style={{width:25,height:25, marginLeft:10}} />
                  </TouchableOpacity>
-                 
+             </View>
+     
+            
+             <View style={contentHeader}>
+                <Text style={{textAlign:'center'}}>{title}</Text>
              </View>
 
-             <View style={contentHeaderTitle}>
-                <Text>{title}</Text>
+
+             <View style={contentHeader}>
+                 <TouchableOpacity onPress={() => navigation.openDrawer()} >
+                    <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{width:25,height:25, marginLeft:90}} />
+                 </TouchableOpacity>         
              </View>
 
-             <View style={contentHeader}></View>
+             <View style={contentHeader}>
+                 <TouchableOpacity onPress={() => navigation.openDrawer()} >
+                    <Image source={require('../assets/img/notify.png')} resizeMode="contain" style={{width:20,height:20, marginLeft:50}} />
+                 </TouchableOpacity>         
+             </View>
+ 
 
         </SafeAreaView>
     )
@@ -40,12 +51,4 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
     },
-    contentHeaderTitle:{
-        paddingTop:20,
-        textAlign:'center',
-        alignItems:'center',
-    },
-    menuIcon:{
-        marginLeft: 15 
-    }
 })

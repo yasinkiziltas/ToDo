@@ -1,24 +1,51 @@
-import React, { useState } from 'react'
-import { SafeAreaView, View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { SafeAreaView, View, Text} from 'react-native'
 import Modal from 'react-native-modal';
-import { useNavigation } from '@react-navigation/native';
+import firebase from 'firebase'
 
 import CustomHeader from '../CustomHeader'
 
 export default function HomeScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
+    const [userName, setUserName] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     }
 
-    // const navigation = useNavigation()
+    const fetchUser = () => {
+        firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    const name = snapshot.data().name;
+                    const email = snapshot.data().email;               
+
+                    setUserName(name)
+                    setUserEmail(email)
+                    // console.log(snapshot.data())
+                   
+                }
+                else (
+                    console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
+                )
+    
+            })
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <CustomHeader title="Home" navigation={navigation}/>
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                {/* <Button title="Open drawer" onPress={() => navigation.openDrawer()} />    */}
+            <CustomHeader title="" navigation={navigation} />
+
+            <View style={{marginLeft:20, marginTop:10}}>
+                 <Text style={{fontWeight:'500', fontSize:30}}>What's up,  {userName}!</Text>
             </View>
         </SafeAreaView>
     )

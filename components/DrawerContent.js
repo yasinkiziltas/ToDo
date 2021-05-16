@@ -50,8 +50,7 @@ export default function DrawerContent(props) {
 
                     setUserName(name)
                     setUserEmail(email)
-
-                    console.log(snapshot.data())
+                    // console.log(snapshot.data())
                    
                 }
                 else (
@@ -126,7 +125,7 @@ export default function DrawerContent(props) {
                         </View>
 
                         <View style={styles.section}>
-                             <Paragraph style={[styles.paragraph, styles.caption]}>1</Paragraph>
+                             <Paragraph style={[styles.paragraph, styles.caption]}>0</Paragraph>
                             <Caption style={styles.caption}>Completed</Caption>
                         </View>
                     </View>
