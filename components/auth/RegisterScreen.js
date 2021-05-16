@@ -40,6 +40,7 @@ export default function RegisterScreen({ navigation }) {
 
             <Text style={signInText}>Sign Up to continue</Text>
 
+            <KeyboardAvoidingView style={{justifyContent: 'center', alignItems: 'center',}}behavior="padding">
             <FormInput
                 labelValue={name}
                 onChangeText={(userName) => setName(userName)}
@@ -67,6 +68,8 @@ export default function RegisterScreen({ navigation }) {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+            </KeyboardAvoidingView>
+          
 
             <FormButton
                 buttonTitle="Register"

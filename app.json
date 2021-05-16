@@ -28,7 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "ToDo App \nNavigation.",
+    "description": "ToDo App \n",
     "githubUrl": "https://github.com/yasinkiziltas/ToDo"
   }
 }

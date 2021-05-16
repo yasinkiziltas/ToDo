@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
@@ -36,7 +36,7 @@ export default function LoginScreen({ navigation }) {
 
             <Text style={signInText}>Sign In to continue</Text>
 
-
+            <KeyboardAvoidingView style={{justifyContent: 'center', alignItems: 'center',}}behavior="padding">
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -55,6 +55,8 @@ export default function LoginScreen({ navigation }) {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+            </KeyboardAvoidingView>
+           
 
             <FormButton
                 buttonTitle="Sign In"
