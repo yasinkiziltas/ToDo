@@ -8,9 +8,28 @@ export default function AddTodoScreen({navigation}) {
     const [todo, setTodo] = useState(null);
     const [title, setTitle] = useState(null);
 
+    // const submitTodo = () => {
+    //     firebase.firestore()
+    //         .collection('todos')
+    //         .add({
+    //             userId: firebase.auth().currentUser.uid,
+    //             title: title,
+    //             todo: todo,
+    //             todoTime: firebase.firestore.Timestamp.fromDate(new Date())
+    //         }).then(() => {
+    //             console.log('Todo Added!')
+    //             Alert.alert(
+    //                 'Todo added!',
+    //                 'Your todo has been published successfully!',
+    //             )
+    //         })
+    // }
+
     const submitTodo = () => {
         firebase.firestore()
             .collection('todos')
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userTodos")
             .add({
                 userId: firebase.auth().currentUser.uid,
                 title: title,
@@ -24,6 +43,7 @@ export default function AddTodoScreen({navigation}) {
                 )
             })
     }
+
 
     return (
         <SafeAreaView style={{ flex: 1}}>

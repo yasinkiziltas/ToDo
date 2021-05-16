@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, StyleSheet } from 'react-native'
 import {
     Avatar,
@@ -33,6 +33,67 @@ const signOut = () => {
 export default function DrawerContent(props) {
 
     const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+    const [userName, setUserName] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
+    const [todo, setTodo] = useState([]);
+   
+
+    const fetchUser = () => {
+        firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    const name = snapshot.data().name;
+                    const email = snapshot.data().email;               
+
+                    setUserName(name)
+                    setUserEmail(email)
+
+                    console.log(snapshot.data())
+                   
+                }
+                else (
+                    console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
+                )
+    
+            })
+    }
+
+    const fetchPosts = () => {
+        try {
+            firebase.firestore()
+            .collection("todos")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userTodos")
+            .get()
+            .then((snapshot) => {
+                let todos = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return {
+                        id,
+                        ...data
+                    }
+                })
+             setTodo(todos)
+            })
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+
+      
+    }
+    
+    
+    useEffect(() => {
+        fetchUser()
+        fetchPosts()
+    }, [])
+    
+
+    
 
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
@@ -51,8 +112,8 @@ export default function DrawerContent(props) {
                             />
 
                             <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                <Title>Yasin Kızıltaş</Title>
-                                <Caption>kzltayasin@gmail.com</Caption>
+                                <Title>{userName}</Title>
+                                <Caption>{userEmail}</Caption>
                             </View>
 
                         </View>
@@ -60,12 +121,12 @@ export default function DrawerContent(props) {
 
                     <View style={styles.row}>
                         <View style={styles.section}>
-                            <Paragraph style={[styles.paragraph, styles.caption]}>5</Paragraph>
+                            <Paragraph style={[styles.paragraph, styles.caption]}>{todo.length}</Paragraph>
                             <Caption style={styles.caption}>Todo</Caption>
                         </View>
 
                         <View style={styles.section}>
-                            <Paragraph style={[styles.paragraph, styles.caption]}>4</Paragraph>
+                             <Paragraph style={[styles.paragraph, styles.caption]}>1</Paragraph>
                             <Caption style={styles.caption}>Completed</Caption>
                         </View>
                     </View>
