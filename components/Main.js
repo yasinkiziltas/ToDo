@@ -8,6 +8,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from './main/HomeScreen'
 import AddTodoScreen from './main/AddTodoScreen'
 import ProfileScreen from './main/ProfileScreen'
+
+
 import DrawerContent from './DrawerContent'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -16,7 +18,7 @@ const Drawer = createDrawerNavigator()
 export default function Main(navigation) {
 
     return (
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} />}>
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} />} >
             <Drawer.Screen name="Home" component={HomeScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (

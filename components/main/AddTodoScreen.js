@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView} from 'react-native'
 import firebase from 'firebase'
+import CustomHeader from '../CustomHeader'
 
 export default function AddTodoScreen() {
     const [todo, setTodo] = useState(null);
@@ -24,8 +25,10 @@ export default function AddTodoScreen() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <SafeAreaView style={{ flex: 1}}>
+          <CustomHeader title=""/>
 
+          <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
             <TextInput
                 style={styles.InputField}
                 placeholder="Title"
@@ -47,8 +50,10 @@ export default function AddTodoScreen() {
             <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
                 <Text style={styles.addPostButtonTextn}>Add Todo</Text>
             </TouchableOpacity>
+          </View>
 
-        </View>
+        </SafeAreaView>
+       
     )
 }
 

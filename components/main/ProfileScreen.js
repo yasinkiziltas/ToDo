@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, SafeAreaView, Image, Text, Button } from 'react-native'
 import firebase from 'firebase'
+import CustomHeader from '../CustomHeader'
+
+const signOut = () => {
+    try {
+        firebase.auth().signOut();
+        console.log('Logout success')
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 export default function ProfileScreen() {
@@ -35,7 +45,7 @@ export default function ProfileScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-
+            <CustomHeader title="Profile"/>
             <ScrollView
                 style={container}
                 contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', }}

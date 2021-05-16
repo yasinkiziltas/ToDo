@@ -73,8 +73,8 @@ export default class App extends Component {
 
     if (!loggedIn) {
       return (
-        <NavigationContainer theme={MyTheme}>
-          <Stack.Navigator initialRouteName="Login">
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Landing">
             <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
