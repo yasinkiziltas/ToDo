@@ -8,7 +8,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from './main/HomeScreen'
 import AddTodoScreen from './main/AddTodoScreen'
 import ProfileScreen from './main/ProfileScreen'
-import DrawerContent from './main/DrawerContent'
+import DrawerContent from './DrawerContent'
 
 const Tab = createMaterialBottomTabNavigator()
 const Drawer = createDrawerNavigator()

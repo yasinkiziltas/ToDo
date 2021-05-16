@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import LandingScreen from './components/auth/LandingScreen'
@@ -73,7 +73,7 @@ export default class App extends Component {
 
     if (!loggedIn) {
       return (
-        <NavigationContainer>
+        <NavigationContainer theme={MyTheme}>
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />

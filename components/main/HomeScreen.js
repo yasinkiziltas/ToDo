@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal';
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HomeScreen() {
     const [isModalVisible, setModalVisible] = useState(false);
