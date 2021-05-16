@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaVie
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 
-export default function AddTodoScreen() {
+export default function AddTodoScreen({navigation}) {
+
     const [todo, setTodo] = useState(null);
     const [title, setTitle] = useState(null);
 
@@ -26,7 +27,7 @@ export default function AddTodoScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1}}>
-          <CustomHeader title=""/>
+          <CustomHeader title="" navigation={navigation}/>
 
           <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
             <TextInput

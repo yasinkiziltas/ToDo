@@ -5,20 +5,20 @@ import { useNavigation } from '@react-navigation/native';
 
 import CustomHeader from '../CustomHeader'
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     }
 
-    const navigation = useNavigation()
+    // const navigation = useNavigation()
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <CustomHeader title="Home"/>
+            <CustomHeader title="Home" navigation={navigation}/>
             <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Button title="Open drawer" onPress={() => navigation.openDrawer()} />   
+                {/* <Button title="Open drawer" onPress={() => navigation.openDrawer()} />    */}
             </View>
         </SafeAreaView>
     )

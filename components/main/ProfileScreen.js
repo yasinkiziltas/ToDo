@@ -13,7 +13,7 @@ const signOut = () => {
 }
 
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
 
@@ -45,7 +45,7 @@ export default function ProfileScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-            <CustomHeader title="Profile"/>
+            <CustomHeader title="Profile" navigation={navigation}/>
             <ScrollView
                 style={container}
                 contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', }}

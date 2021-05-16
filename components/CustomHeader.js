@@ -1,15 +1,22 @@
 import React from 'react'
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function CustomHeader({title}) {
+export default function CustomHeader({title, navigation}) {
 
     const {container, contentHeader, contentHeaderTitle, titleText, menuIcon} = styles;
+
+
+    // const navigation = useNavigation();
 
     return (
         <SafeAreaView style={container}>
              <View style={contentHeader}>
-                 <MaterialCommunityIcons style={menuIcon} name="menu" size={30} />
+                 <TouchableOpacity  onPress={() => navigation.openDrawer()} >
+                    <Image source={require('../assets/img/menu.png')} resizeMode="contain" style={{width:25,height:25, marginLeft:10}} />
+                 </TouchableOpacity>
+                 
              </View>
 
              <View style={contentHeaderTitle}>
