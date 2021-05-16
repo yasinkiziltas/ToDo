@@ -107,9 +107,8 @@ const styles = StyleSheet.create({
         marginVertical: 35,
     },
     registerButton: {
-        position: 'absolute',     
-        right: 150,
-        bottom: 20,
+        position: 'absolute',
+        bottom: 50,
     },
     registerButtonText: {
         fontWeight: 'bold',
