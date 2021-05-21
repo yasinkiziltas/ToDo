@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text} from 'react-native'
+import { SafeAreaView, View, Text } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
+import { useTheme } from '@react-navigation/native'
 
 import CustomHeader from '../CustomHeader'
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({ navigation }) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-
+    const { colors } = useTheme()
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     }
@@ -22,17 +23,17 @@ export default function HomeScreen({navigation}) {
             .then((snapshot) => {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
-                    const email = snapshot.data().email;               
+                    const email = snapshot.data().email;
 
                     setUserName(name)
                     setUserEmail(email)
                     // console.log(snapshot.data())
-                   
+
                 }
                 else (
                     console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
                 )
-    
+
             })
     }
 
@@ -41,11 +42,11 @@ export default function HomeScreen({navigation}) {
     }, [])
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <CustomHeader title="" navigation={navigation} />
 
-            <View style={{marginLeft:20, marginTop:10}}>
-                 <Text style={{fontWeight:'500', fontSize:30}}>What's up,  {userName}!</Text>
+            <View style={{ marginLeft: 20, marginTop: 10 }}>
+                <Text style={{ fontWeight: '500', fontSize: 30, color: colors.text }}>What's up,  {userName}!</Text>
             </View>
         </SafeAreaView>
     )
@@ -77,4 +78,3 @@ export default function HomeScreen({navigation}) {
             //         elevation: 5
             //     }
             // })
-            

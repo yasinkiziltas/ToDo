@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { EventRegister } from 'react-native-event-listeners'
 import {
     Avatar,
     Title,
@@ -18,6 +20,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import firebase from 'firebase'
+import { useTheme } from '@react-navigation/native'
 
 
 const signOut = () => {
@@ -32,11 +35,12 @@ const signOut = () => {
 
 export default function DrawerContent(props) {
 
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+    const [darkMode, setIsDarkMode] = React.useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const [todo, setTodo] = useState([]);
-   
+    const { colors } = useTheme()
+
 
     const fetchUser = () => {
         firebase.firestore()
@@ -46,57 +50,57 @@ export default function DrawerContent(props) {
             .then((snapshot) => {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
-                    const email = snapshot.data().email;               
+                    const email = snapshot.data().email;
 
                     setUserName(name)
                     setUserEmail(email)
                     // console.log(snapshot.data())
-                   
+
                 }
                 else (
                     console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
                 )
-    
+
             })
     }
 
     const fetchPosts = () => {
         try {
             firebase.firestore()
-            .collection("todos")
-            .doc(firebase.auth().currentUser.uid)
-            .collection("userTodos")
-            .get()
-            .then((snapshot) => {
-                let todos = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    return {
-                        id,
-                        ...data
-                    }
+                .collection("todos")
+                .doc(firebase.auth().currentUser.uid)
+                .collection("userTodos")
+                .get()
+                .then((snapshot) => {
+                    let todos = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        const id = doc.id;
+                        return {
+                            id,
+                            ...data
+                        }
+                    })
+                    setTodo(todos)
                 })
-             setTodo(todos)
-            })
         } catch (error) {
             console.log('Error: ', error)
         }
 
-      
+
     }
-    
-    
+
+
     useEffect(() => {
         fetchUser()
         fetchPosts()
     }, [])
-    
 
-    
 
-    const toggleTheme = () => {
-        setIsDarkTheme(!isDarkTheme)
-    }
+
+
+    // const toggleTheme = () => {
+    //     setIsDarkTheme(!isDarkTheme)
+    // }
 
     return (
         <View style={{ flex: 1 }}>
@@ -111,8 +115,8 @@ export default function DrawerContent(props) {
                             />
 
                             <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                <Title>{userName}</Title>
-                                <Caption>{userEmail}</Caption>
+                                <Title style={{ color: colors.text }}>{userName}</Title>
+                                <Caption style={{ color: colors.text }}>{userEmail}</Caption>
                             </View>
 
                         </View>
@@ -120,13 +124,13 @@ export default function DrawerContent(props) {
 
                     <View style={styles.row}>
                         <View style={styles.section}>
-                            <Paragraph style={[styles.paragraph, styles.caption]}>{todo.length}</Paragraph>
-                            <Caption style={styles.caption}>Todo</Caption>
+                            <Paragraph style={[styles.paragraph, styles.caption, { color: colors.text }]}>{todo.length}</Paragraph>
+                            <Caption style={[styles.caption, { color: colors.text }]}>Todo</Caption>
                         </View>
 
                         <View style={styles.section}>
-                             <Paragraph style={[styles.paragraph, styles.caption]}>0</Paragraph>
-                            <Caption style={styles.caption}>Completed</Caption>
+                            <Paragraph style={[styles.paragraph, styles.caption, { color: colors.text }]}>0</Paragraph>
+                            <Caption style={[styles.caption, { color: colors.text }]}>Completed</Caption>
                         </View>
                     </View>
                 </View>
@@ -169,7 +173,7 @@ export default function DrawerContent(props) {
                     />
                 </Drawer.Section>
 
-                <Drawer.Section title="Preferences">
+                {/* <Drawer.Section title="Preferences">
                     <TouchableRipple onPress={() => { toggleTheme() }}>
                         <View style={styles.preference}>
                             <Text>Dark Theme</Text>
@@ -179,7 +183,15 @@ export default function DrawerContent(props) {
 
                         </View>
                     </TouchableRipple>
-                </Drawer.Section>
+                </Drawer.Section> */}
+
+                <View style={styles.preference}>
+                    <Text style={{ color: colors.text }}>Dark Mode</Text>
+                    <Switch value={darkMode} onValueChange={(val) => {
+                        setIsDarkMode(val);
+                        EventRegister.emit('changeThemeEvent', val)
+                    }} />
+                </View>
 
             </DrawerContentScrollView>
 
@@ -247,4 +259,3 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
 });
- 

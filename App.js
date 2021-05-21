@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { NavigationContainer} from '@react-navigation/native'
+import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
+import { DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
+
 import { createStackNavigator } from '@react-navigation/stack'
 
 import LandingScreen from './components/auth/LandingScreen'
@@ -12,94 +14,86 @@ import HomeScreen from './components/main/HomeScreen'
 import MainScreen from './components/Main'
 
 import firebase from 'firebase'
+import { EventRegister } from 'react-native-event-listeners';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAT5NsVt7pm-JZagSKZtrKP1FZZCQeQbU4",
-  authDomain: "todo-d0b60.firebaseapp.com",
-  projectId: "todo-d0b60",
-  storageBucket: "todo-d0b60.appspot.com",
-  messagingSenderId: "175167771348",
-  appId: "1:175167771348:web:a99d55c23426e98d8da141"
+    apiKey: "AIzaSyAT5NsVt7pm-JZagSKZtrKP1FZZCQeQbU4",
+    authDomain: "todo-d0b60.firebaseapp.com",
+    projectId: "todo-d0b60",
+    storageBucket: "todo-d0b60.appspot.com",
+    messagingSenderId: "175167771348",
+    appId: "1:175167771348:web:a99d55c23426e98d8da141"
 };
 
 
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
 }
 
 const Stack = createStackNavigator();
 
-export default class App extends Component {
+export default function App() {
 
-  constructor(props) {
-    super(props)
+    const [loaded, setLoaded] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(null)
+    const [darkApp, setDarkApp] = useState(false)
+    const appTheme = darkApp ? DarkTheme : DefaultTheme;
 
-    this.state = {
-      loaded: false
-    }
-  }
+    useEffect(() => {
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        this.setState({
-          loggedIn: false,
-          loaded: true
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                setLoggedIn(false)
+                setLoaded(true)
+            }
+
+            else {
+                setLoggedIn(true)
+                setLoaded(true)
+            }
         })
-      }
 
-      else {
-        this.setState({
-          loggedIn: true,
-          loaded: true
-        })
-      }
-    })
-  }
+        let eventListener = EventRegister.addEventListener(
+            'changeThemeEvent',
+            data => {
+                setDarkApp(data)
+            }
+        )
 
-  render() {
-    const { loggedIn, loaded } = this.state;
+        // return(
+        //     EventRegister.removeEventListener(eventListener)
+        // )
+    }, [])
 
     if (!loaded) {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-          <Text>Loading..</Text>
-        </View>
-      )
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                <Text>Loading..</Text>
+            </View>
+        )
     }
-
 
 
     if (!loggedIn) {
-      return (
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Landing">
-            <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      )
+        return (
+            <NavigationContainer theme={appTheme}>
+                <Stack.Navigator initialRouteName="Landing">
+                    <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        )
     }
 
     return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer theme={appTheme}>
+            <Stack.Navigator initialRouteName="Main">
+                <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </NavigationContainer>
 
 
     )
-  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
