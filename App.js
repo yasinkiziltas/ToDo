@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
 import { DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
@@ -69,7 +69,7 @@ export default function App() {
     if (!loaded) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                <Text>Loading..</Text>
+                <ActivityIndicator size={35} />
             </View>
         )
     }

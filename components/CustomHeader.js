@@ -23,14 +23,14 @@ export default function CustomHeader({ title, navigation }) {
             </View>
 
 
-            <View>
-                <TouchableOpacity onPress={() => navigation.openDrawer()} >
+            <View style={contentHeader}>
+                <TouchableOpacity>
                     <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 90 }} />
                 </TouchableOpacity>
             </View>
 
             <View style={contentHeader}>
-                <TouchableOpacity onPress={() => navigation.openDrawer()} >
+                <TouchableOpacity>
                     <Image source={require('../assets/img/notify.png')} resizeMode="contain" style={{ width: 20, height: 20, marginLeft: 50 }} />
                 </TouchableOpacity>
             </View>
