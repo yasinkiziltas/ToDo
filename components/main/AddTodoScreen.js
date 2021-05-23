@@ -88,11 +88,10 @@ export default function AddTodoScreen({ navigation }) {
                     cancelBtnText="Cancel"
                 />
 
-
-
                 <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
                     <Text style={[styles.addPostButtonText]}>New task  ^</Text>
                 </TouchableOpacity>
+                
             </View>
 
         </SafeAreaView>
@@ -104,7 +103,7 @@ export default function AddTodoScreen({ navigation }) {
 const styles = StyleSheet.create({
     InputField: {   
         justifyContent: 'center',
-        padding:5,
+        padding: 15,
         alignItems: 'center',
         fontSize: 24,
         textAlign: 'center',

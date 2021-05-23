@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import CustomHeader from '../CustomHeader'
 
 export default function HomeScreen({ navigation }) {
+    const [todos, setTodos] = useState(null)
     const [isModalVisible, setModalVisible] = useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
@@ -16,7 +17,7 @@ export default function HomeScreen({ navigation }) {
         setModalVisible(!isModalVisible);
     }
 
-    const {container, containerTitle, containerText, iconButton, iconText} = styles;
+    const {container, containerTitle, containerText, iconButton, iconText, todoContainer} = styles;
 
     const fetchUser = () => {
         firebase.firestore()
@@ -40,9 +41,36 @@ export default function HomeScreen({ navigation }) {
             })
     }
 
+    const fetchTodos = () => {
+        firebase.firestore()
+          .collection("todos")
+          .doc(firebase.auth().currentUser.uid)
+          .collection("userTodos")
+          .orderBy("todoTime", "asc")
+          .get()
+          .then((snapshot) => {
+              let todos = snapshot.docs.map(doc => {
+                  const data = doc.data();
+                  const id = doc.id;
+                  return {
+                      id,
+                      ...data
+                  }
+              })
+              setTodos(todos)
+              console.log('Todos ', todos)
+          })
+      }
+
+
     useEffect(() => {
         fetchUser()
+        fetchTodos()
     }, [])
+
+
+   
+ 
 
     return (
         <SafeAreaView style={container}>
@@ -51,10 +79,24 @@ export default function HomeScreen({ navigation }) {
             <View style={containerTitle}>
                 <Text style={[containerText, {color: colors.text}]}>What's up,  {userName}!</Text>
             </View>
+            
+            <View style={todoContainer}>           
+                <FlatList
+                    numColumns={1}
+                    horizontal={false}
+                    data={todos}
+                    renderItem={({ item }) => (
+                        <Text>{item.todo}</Text>   
+
+                    )}
+                />
+            </View>
+
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
                     <Ionicons size={35} name="add" style={iconText}/>
-                </TouchableOpacity>
+            </TouchableOpacity>
+
         </SafeAreaView>
     )
 }
@@ -63,6 +105,9 @@ const styles = StyleSheet.create({
     container:{
         flex:1
     },
+    containerGallery: {
+        flex: 1,
+    },
     containerTitle:{
         marginLeft:20, 
         marginTop:10
@@ -70,6 +115,11 @@ const styles = StyleSheet.create({
     containerText:{
         fontSize:28,
         fontWeight:'bold',
+    },
+    todoContainer:{
+        flex:1, 
+        justifyContent:'center', 
+        alignItems:'center'
     },
     iconButton:{
         backgroundColor: '#2E9298',
