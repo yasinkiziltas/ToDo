@@ -74,13 +74,13 @@ export default function HomeScreen({ navigation }) {
 
 
     useEffect(() => {
-        fetchUser()
         fetchTodos()
+        fetchUser()
     }, [])
 
 
     return (
-        <SafeAreaView style={container}>
+        <SafeAreaView style={container}>    
             <CustomHeader title="" navigation={navigation} />
 
             <View style={containerTitle}>
@@ -88,25 +88,20 @@ export default function HomeScreen({ navigation }) {
             </View>
             
             <View style={{flex:1,justifyContent:'center',alignItems:'center', paddingTop:150 }}>  
-
-               <Drawer.Section title="TODAY'S TASKS">
-                          
-
-                <FlatList
-                    style={{width:'100%'}}
-                    numColumns={1}
-                    horizontal={false}
-                    data={todos}
-                    renderItem={({ item }) => (
-                       <View style={row}>
-                            {/* <Text>{item.title}</Text> */}
-                            <Ionicons name="ellipse-outline" size={20} style={[{paddingRight:10, color:colors.text}]}/>
-                            <Text style={[rowText, {color: colors.text}]}>{item.todo}</Text>
-                       </View>
-                    )}
-                />
-
-</Drawer.Section> 
+                <Drawer.Section title="TODAY'S TASKS">
+                           <FlatList
+                              style={{width:'100%'}}
+                              numColumns={1}
+                              horizontal={false}
+                               data={todos}
+                              renderItem={({ item }) => (
+                                <View style={row}>
+                                     <Ionicons name="ellipse-outline" size={20} style={[{paddingRight:10, color:colors.text}]}/>
+                                     <Text style={[rowText, {color: colors.text}]}>{item.todo}</Text>
+                                </View>
+                             )}
+                          />
+                 </Drawer.Section> 
             </View>
 
 

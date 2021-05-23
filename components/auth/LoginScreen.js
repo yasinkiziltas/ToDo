@@ -14,7 +14,6 @@ export default function LoginScreen({ navigation }) {
     const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
 
 
-
     const signIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
@@ -26,7 +25,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <Animatable.View animation="fadeInDownBig" style={container}>
+        <Animatable.View animation="fadeInDownBig" style={container}> 
             <View>
                 <Image source={require('../../assets/img/signin.png')}
                     resizeMode="contain"
