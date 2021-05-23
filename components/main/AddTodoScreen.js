@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView} from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 import { useTheme } from '@react-navigation/native'
+import DatePicker from 'react-native-datepicker';
 
 export default function AddTodoScreen({ navigation }) {
 
     const [todo, setTodo] = useState(null);
     const [title, setTitle] = useState(null);
+    const [date, setDate] = useState('21-10-2021')
     const { colors } = useTheme()
 
     // const submitTodo = () => {
@@ -34,8 +36,9 @@ export default function AddTodoScreen({ navigation }) {
             .collection("userTodos")
             .add({
                 userId: firebase.auth().currentUser.uid,
-                title: title,
+                // title: title,
                 todo: todo,
+                date: date,
                 todoTime: firebase.firestore.Timestamp.fromDate(new Date())
             }).then(() => {
                 console.log('Todo Added!')
@@ -52,7 +55,7 @@ export default function AddTodoScreen({ navigation }) {
             <CustomHeader title="" navigation={navigation} />
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                <TextInput
+                {/* <TextInput
                     style={styles.InputField}
                     placeholder="Title"
                     placeholderTextColor={colors.text}
@@ -60,20 +63,35 @@ export default function AddTodoScreen({ navigation }) {
                     numberOfLines={2}
                     onChangeText={(content) => setTitle(content)}
                     value={title}
-                />
+                /> */}
 
                 <TextInput
                     style={styles.InputField}
-                    placeholder="What's on your mind?"
-                    placeholderTextColor={colors.text}
+                    placeholder="Enter new task"
+                    //placeholderTextColor={colors.text}
+                    placeholderTextColor="gray"
                     multiline
                     numberOfLines={2}
                     onChangeText={(content) => setTodo(content)}
                     value={todo}
                 />
 
+                <DatePicker 
+                    style={styles.InputField}
+                    date={date}
+                    placeholder="Select date.."
+                    onDateChange={(date) => {
+                        setDate(date);
+                      }}
+                    mode="date"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                />
+
+
+
                 <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
-                    <Text style={styles.addPostButtonTextn, { color: colors.text }}>Add Todo</Text>
+                    <Text style={[styles.addPostButtonText]}>New task  ^</Text>
                 </TouchableOpacity>
             </View>
 
@@ -84,25 +102,42 @@ export default function AddTodoScreen({ navigation }) {
 
 
 const styles = StyleSheet.create({
-    InputField: {
+    InputField: {   
         justifyContent: 'center',
+        padding:5,
         alignItems: 'center',
         fontSize: 24,
         textAlign: 'center',
         width: "90%",
     },
 
+    // addPostButton: {
+    //     flexDirection: 'row',
+    //     justifyContent: 'center',
+    //     backgroundColor: '#2e64e515',
+    //     borderRadius: 5,
+    //     padding: 10
+    // },
+
     addPostButton: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: '#2e64e515',
-        borderRadius: 5,
-        padding: 10
+        backgroundColor: '#2E9298',
+        borderRadius: 30,
+        padding:15,
+       
+        shadowOffset: {
+        width: 0,
+        height: 3
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+       position:'absolute',
+       bottom:35,
+       right:15,
     },
 
     addPostButtonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#2e64e5'
+        fontWeight:'bold',
+        fontSize: 17,
+        color:'white'
     }
 });

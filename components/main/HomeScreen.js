@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import CustomHeader from '../CustomHeader'
 
@@ -14,6 +15,8 @@ export default function HomeScreen({ navigation }) {
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     }
+
+    const {container, containerTitle, containerText, iconButton, iconText} = styles;
 
     const fetchUser = () => {
         firebase.firestore()
@@ -42,16 +45,51 @@ export default function HomeScreen({ navigation }) {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={container}>
             <CustomHeader title="" navigation={navigation} />
 
-            <View style={{ marginLeft: 20, marginTop: 10 }}>
-                <Text style={{ fontWeight: '500', fontSize: 30, color: colors.text }}>What's up,  {userName}!</Text>
+            <View style={containerTitle}>
+                <Text style={[containerText, {color: colors.text}]}>What's up,  {userName}!</Text>
             </View>
+
+            <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
+                    <Ionicons size={35} name="add" style={iconText}/>
+                </TouchableOpacity>
         </SafeAreaView>
     )
 }
 
+const styles = StyleSheet.create({
+    container:{
+        flex:1
+    },
+    containerTitle:{
+        marginLeft:20, 
+        marginTop:10
+    },
+    containerText:{
+        fontSize:28,
+        fontWeight:'bold',
+    },
+    iconButton:{
+        backgroundColor: '#2E9298',
+        borderRadius: 40,
+        padding: 10,
+        shadowColor: '#000000',
+        shadowOffset: {
+        width: 0,
+        height: 3,
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.25,
+           position:'absolute',
+           bottom:35,
+           right:15,
+    },
+    iconText:{
+        color:'white'
+    }
+})
 
 
 /* <Modal isVisible={isModalVisible} style={styles.modalView}>
