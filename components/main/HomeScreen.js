@@ -5,6 +5,16 @@ import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import {
+    Avatar,
+    Title,
+    Caption,
+    Paragraph,
+    Drawer,
+    TouchableRipple,
+    Switch
+} from 'react-native-paper'
+
 import CustomHeader from '../CustomHeader'
 
 export default function HomeScreen({ navigation }) {
@@ -17,7 +27,7 @@ export default function HomeScreen({ navigation }) {
         setModalVisible(!isModalVisible);
     }
 
-    const {container, containerTitle, containerText, iconButton, iconText, todoContainer} = styles;
+    const {container, containerTitle, containerText, iconButton, iconText, row, rowText} = styles;
 
     const fetchUser = () => {
         firebase.firestore()
@@ -69,9 +79,6 @@ export default function HomeScreen({ navigation }) {
     }, [])
 
 
-   
- 
-
     return (
         <SafeAreaView style={container}>
             <CustomHeader title="" navigation={navigation} />
@@ -80,16 +87,26 @@ export default function HomeScreen({ navigation }) {
                 <Text style={[containerText, {color: colors.text}]}>What's up,  {userName}!</Text>
             </View>
             
-            <View style={todoContainer}>           
+            <View style={{flex:1,justifyContent:'center',alignItems:'center', paddingTop:150 }}>  
+
+               <Drawer.Section title="TODAY'S TASKS">
+                          
+
                 <FlatList
+                    style={{width:'100%'}}
                     numColumns={1}
                     horizontal={false}
                     data={todos}
                     renderItem={({ item }) => (
-                        <Text>{item.todo}</Text>   
-
+                       <View style={row}>
+                            {/* <Text>{item.title}</Text> */}
+                            <Ionicons name="ellipse-outline" size={20} style={[{paddingRight:10, color:colors.text}]}/>
+                            <Text style={[rowText, {color: colors.text}]}>{item.todo}</Text>
+                       </View>
                     )}
                 />
+
+</Drawer.Section> 
             </View>
 
 
@@ -103,10 +120,7 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container:{
-        flex:1
-    },
-    containerGallery: {
-        flex: 1,
+        flex:1,
     },
     containerTitle:{
         marginLeft:20, 
@@ -138,6 +152,19 @@ const styles = StyleSheet.create({
     },
     iconText:{
         color:'white'
+    },
+    row: {
+        flex:1,
+        paddingVertical: 25,
+        paddingHorizontal: 25,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        borderBottomWidth: 1,
+        borderBottomColor:'gray',
+        alignSelf:'flex-start',
+    },
+    rowText:{
+        fontSize:20
     }
 })
 

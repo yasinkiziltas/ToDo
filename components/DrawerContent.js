@@ -108,6 +108,7 @@ export default function DrawerContent(props) {
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
+
                         <View style={{ flexDirection: 'row', marginTop: 15 }}>
                             <Avatar.Image
                                 source={(require('../assets/img/avatar.png'))}
