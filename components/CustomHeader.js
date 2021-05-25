@@ -19,7 +19,7 @@ export default function CustomHeader({ title, navigation }) {
 
 
             <View style={contentHeader}>
-                <Text style={{ textAlign: 'center', color: colors.text }}>{title}</Text>
+                <Text style={{ textAlign: 'center', color: colors.text, fontWeight: 'bold' }}>{title}</Text>
             </View>
 
 
@@ -29,11 +29,11 @@ export default function CustomHeader({ title, navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <View style={contentHeader}>
+            {/* <View style={contentHeader}>
                 <TouchableOpacity>
                     <Image source={require('../assets/img/notify.png')} resizeMode="contain" style={{ width: 20, height: 20, marginLeft: 50 }} />
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
 
         </SafeAreaView>

@@ -8,6 +8,7 @@ import * as Animatable from 'react-native-animatable';
 export default function RegisterScreen({ navigation }) {
 
     const [name, setName] = useState();
+    const [userName, setUserName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -20,12 +21,13 @@ export default function RegisterScreen({ navigation }) {
                     .doc(firebase.auth().currentUser.uid)
                     .set({
                         name,
+                        userName,
                         email,
                     })
                 console.log('New user: ', result)
             })
             .catch((error) => {
-                console.log('Sign Up Error: ', error)
+                console.log('Error: ', error)
             })
     }
 
@@ -40,36 +42,46 @@ export default function RegisterScreen({ navigation }) {
 
             <Text style={signInText}>Sign Up to continue</Text>
 
-            <KeyboardAvoidingView style={{justifyContent: 'center', alignItems: 'center',}}behavior="padding">
-            <FormInput
-                labelValue={name}
-                onChangeText={(userName) => setName(userName)}
-                placeholderText="Name"
-                iconType="user"
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
+            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding">
 
-            <FormInput
-                labelValue={email}
-                onChangeText={(userEmail) => setEmail(userEmail)}
-                placeholderText="Email"
-                iconType="mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
-            <FormInput
-                labelValue={password}
-                onChangeText={(userPassword) => setPassword(userPassword)}
-                placeholderText="Password"
-                iconType="lock"
-                secureTextEntry={true}
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
+                <FormInput
+                    labelValue={name}
+                    onChangeText={(userName) => setName(userName)}
+                    placeholderText="Name"
+                    iconType="user"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+
+                <FormInput
+                    labelValue={userName}
+                    onChangeText={(userName) => setUserName(userName)}
+                    placeholderText="User Name"
+                    iconType="user"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+
+                <FormInput
+                    labelValue={email}
+                    onChangeText={(userEmail) => setEmail(userEmail)}
+                    placeholderText="Email"
+                    iconType="mail"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+                <FormInput
+                    labelValue={password}
+                    onChangeText={(userPassword) => setPassword(userPassword)}
+                    placeholderText="Password"
+                    iconType="lock"
+                    secureTextEntry={true}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
             </KeyboardAvoidingView>
-          
+
 
             <FormButton
                 buttonTitle="Register"
@@ -95,7 +107,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 150,
         height: 150,
-        marginBottom:15
+        marginBottom: 15
     },
     forgotText: {
         color: "#7209F6",

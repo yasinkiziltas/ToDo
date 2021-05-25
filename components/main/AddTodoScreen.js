@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView} from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 import { useTheme } from '@react-navigation/native'
@@ -52,7 +52,7 @@ export default function AddTodoScreen({ navigation }) {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
-            <CustomHeader title="" navigation={navigation} />
+            <CustomHeader title="Add Todo" navigation={navigation} />
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                 {/* <TextInput
@@ -76,13 +76,13 @@ export default function AddTodoScreen({ navigation }) {
                     value={todo}
                 />
 
-                <DatePicker 
+                <DatePicker
                     style={styles.InputField}
                     date={date}
                     placeholder="Select date.."
                     onDateChange={(date) => {
                         setDate(date);
-                      }}
+                    }}
                     mode="date"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
@@ -91,7 +91,7 @@ export default function AddTodoScreen({ navigation }) {
                 <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
                     <Text style={[styles.addPostButtonText]}>New task  ^</Text>
                 </TouchableOpacity>
-                
+
             </View>
 
         </SafeAreaView>
@@ -101,7 +101,7 @@ export default function AddTodoScreen({ navigation }) {
 
 
 const styles = StyleSheet.create({
-    InputField: {   
+    InputField: {
         justifyContent: 'center',
         padding: 15,
         alignItems: 'center',
@@ -121,22 +121,22 @@ const styles = StyleSheet.create({
     addPostButton: {
         backgroundColor: '#2E9298',
         borderRadius: 30,
-        padding:15,
-       
+        padding: 15,
+
         shadowOffset: {
-        width: 0,
-        height: 3
-    },
-    shadowRadius: 10,
-    shadowOpacity: 0.25,
-       position:'absolute',
-       bottom:35,
-       right:15,
+            width: 0,
+            height: 3
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.25,
+        position: 'absolute',
+        bottom: 35,
+        right: 15,
     },
 
     addPostButtonText: {
-        fontWeight:'bold',
+        fontWeight: 'bold',
         fontSize: 17,
-        color:'white'
+        color: 'white'
     }
 });
