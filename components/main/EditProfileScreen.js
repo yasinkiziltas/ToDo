@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, TouchableOpacity, ImageBackground, Text, SafeAreaView, TextInput } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ImageBackground, Text, SafeAreaView, TextInput, Alert } from 'react-native'
 import CustomHeader from '../CustomHeader'
 import {
     Avatar,
@@ -19,6 +19,7 @@ export default function EditProfileScreen({ navigation }) {
     const [name, setName] = useState(null);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [userData, setUserData] = useState(null)
     const { colors } = useTheme();
 
     const fetchUser = () => {
@@ -35,6 +36,7 @@ export default function EditProfileScreen({ navigation }) {
                     setName(name)
                     setUserName(username)
                     setUserEmail(email)
+                    setUserData(snapshot.data());
                 }
                 else (
                     console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
@@ -42,6 +44,30 @@ export default function EditProfileScreen({ navigation }) {
 
             })
     }
+
+
+    const handleUpdate = () => {
+        try {
+            firebase.firestore()
+                .collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .update({
+                    name: userData.name,
+                    uname: userData.userName,
+                    email: userData.email
+                })
+                .then(() => {
+                    console.log('user updated!')
+                    Alert.alert(
+                        'Profile Updated!',
+                        'Your profile has been updated successfully.'
+                    )
+                })
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+    }
+
 
 
     useEffect(() => {
@@ -77,6 +103,8 @@ export default function EditProfileScreen({ navigation }) {
                     <View style={styles.action}>
                         <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
                         <TextInput
+                            value={userData ? userData.name : ''}
+                            onChangeText={(txt) => setUserData({ ...userData, name: txt })}
                             placeholder="Name..."
                             style={styles.textInput}
                             placeholderTextColor={colors.text}
@@ -87,6 +115,8 @@ export default function EditProfileScreen({ navigation }) {
                     <View style={styles.action}>
                         <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
                         <TextInput
+                            value={userData ? userData.userName : ''}
+                            onChangeText={(txt) => setUserData({ ...userData, userName: txt })}
                             placeholder="Username.."
                             style={styles.textInput}
                             placeholderTextColor={colors.text}
@@ -97,6 +127,8 @@ export default function EditProfileScreen({ navigation }) {
                     <View style={styles.action}>
                         <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
                         <TextInput
+                            value={userData ? userData.email : ''}
+                            onChangeText={(txt) => setUserData({ ...userData, email: txt })}
                             placeholder="Email.."
                             style={styles.textInput}
                             keyboardType="email-address"
@@ -106,8 +138,8 @@ export default function EditProfileScreen({ navigation }) {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={() => { }} style={styles.commandButton}>
-                    <Text style={styles.panelButtonTitle}>Submit</Text>
+                <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
+                    <Text style={styles.panelButtonTitle}>Update</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

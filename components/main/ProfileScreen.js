@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, StyleSheet, SafeAreaView, Image, Text, Button, View } from 'react-native'
+import { TouchableOpacity, StyleSheet, SafeAreaView, Image, Text, Button, View, Alert } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 import {
@@ -12,15 +12,6 @@ import {
 import { useTheme } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-const signOut = () => {
-    try {
-        firebase.auth().signOut();
-        console.log('Logout success')
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 
 export default function ProfileScreen({ navigation }) {
