@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
-import { DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -10,11 +9,12 @@ import LandingScreen from './components/auth/LandingScreen'
 import LoginScreen from './components/auth/LoginScreen'
 import RegisterScreen from './components/auth/RegisterScreen'
 
-import HomeScreen from './components/main/HomeScreen'
 import MainScreen from './components/Main'
 
 import firebase from 'firebase'
 import { EventRegister } from 'react-native-event-listeners';
+
+import LottieView from 'lottie-react-native';
 
 
 const firebaseConfig = {
@@ -42,24 +42,30 @@ export default function App() {
 
     useEffect(() => {
 
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                setLoggedIn(false)
-                setLoaded(true)
-            }
+        setTimeout(() => {
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    setLoggedIn(false)
+                    setLoaded(true)
+                }
 
-            else {
-                setLoggedIn(true)
-                setLoaded(true)
-            }
-        })
+                else {
+                    setLoggedIn(true)
+                    setLoaded(true)
+                }
+            })
 
-        let eventListener = EventRegister.addEventListener(
-            'changeThemeEvent',
-            data => {
-                setDarkApp(data)
-            }
-        )
+            let eventListener = EventRegister.addEventListener(
+                'changeThemeEvent',
+                data => {
+                    setDarkApp(data)
+                }
+            )
+
+        }, 2500)
+
+
+
 
         // return(
         //     EventRegister.removeEventListener(eventListener)
@@ -69,7 +75,8 @@ export default function App() {
     if (!loaded) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                <ActivityIndicator size={35} />
+                <LottieView source={require('./assets/img/todoLaunch.json')} autoPlay loop />
+                {/* <ActivityIndicator size={35} /> */}
             </View>
         )
     }
