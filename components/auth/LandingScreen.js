@@ -17,7 +17,7 @@ const Skip = ({ ...props }) => {
     return (
         <Button
             title={"Skip"}
-            color="#000000"
+            color="#a6e4d0"
             {...props}
         />
     )
@@ -27,7 +27,7 @@ const Next = ({ ...props }) => {
     return (
         <Button
             title={"Next"}
-            color="#000000"
+            color="#a6e4d0"
             {...props}
         />
     )
@@ -39,7 +39,7 @@ const Done = ({ ...props }) => {
             style={{ marginHorizontal: 8 }}
             {...props}
         >
-            <Text style={{ fontSize: 16 }}>Done</Text>
+            <Text style={{ fontSize: 20, color: "#fff" }}>Done</Text>
         </TouchableOpacity>
     )
 }
@@ -48,7 +48,7 @@ const Done = ({ ...props }) => {
 export default function LandingScreen({ navigation }) {
     return (
         <Onboarding
-            onSkip={() => this.props.navigation.replace('Login')}
+            onSkip={() => navigation.replace('Login')}
             onDone={() => navigation.navigate('Login')}
             SkipButtonComponent={Skip}
             NextButtonComponent={Next}
@@ -60,12 +60,12 @@ export default function LandingScreen({ navigation }) {
                     image: <Image source={require('../../assets/img/onboarding-img2.png')} />,
                     title: "Plan your work and",
                     subtitle: '',
-                     
+
                 },
 
                 {
                     backgroundColor: '#fdeb93',
-                    image: <Image source={require('../../assets/img/onboarding-img1.png')}/>,
+                    image: <Image source={require('../../assets/img/onboarding-img1.png')} />,
                     title: "Start working!",
                     subtitle: ''
                 }
