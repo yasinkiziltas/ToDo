@@ -15,6 +15,7 @@ import firebase from 'firebase'
 import { EventRegister } from 'react-native-event-listeners';
 
 import LottieView from 'lottie-react-native';
+import ForgotPasswordScreen from './components/auth/ForgotPasswordScreen';
 
 
 const firebaseConfig = {
@@ -89,6 +90,7 @@ export default function App() {
                     <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         )

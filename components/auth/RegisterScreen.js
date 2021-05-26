@@ -42,7 +42,7 @@ export default function RegisterScreen({ navigation }) {
 
             <Text style={signInText}>Sign Up to continue</Text>
 
-            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding">
+            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={120}>
 
                 <FormInput
                     labelValue={name}
@@ -80,13 +80,14 @@ export default function RegisterScreen({ navigation }) {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
+
+                <FormButton
+                    buttonTitle="Register"
+                    onPress={() => signUp()}
+                />
+
             </KeyboardAvoidingView>
 
-
-            <FormButton
-                buttonTitle="Register"
-                onPress={() => signUp()}
-            />
 
             <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
                 <Text style={registerButtonText}>Go Back</Text>

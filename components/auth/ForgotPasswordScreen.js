@@ -6,36 +6,32 @@ import firebase from 'firebase'
 import * as Animatable from 'react-native-animatable';
 
 
-export default function LoginScreen({ navigation }) {
+export default function ForgotPasswordScreen({ navigation }) {
 
     const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
 
     const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
 
 
-    const signIn = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((result) => {
-                console.log('Success login!: ', result)
-            })
-            .catch((error) => {
-                console.log('Error: ', error)
+    const forgotPassword = (Email) => {
+        firebase.auth().sendPasswordResetEmail(Email)
+            .then(function (user) {
+                alert('Please check your email...')
+            }).catch(function (e) {
+                console.log(e)
             })
     }
 
-
-
     return (
-        <Animatable.View animation="fadeInDownBig" style={container}>
-            <View>
+        <Animatable.View animation="zoomInUp" style={container}>
+            {/* <View>
                 <Image source={require('../../assets/img/signin.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
-            </View>
+            </View> */}
 
-            <Text style={signInText}>Sign In to continue</Text>
+            <Text style={signInText}>Reset password</Text>
 
             <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={100}>
                 <FormInput
@@ -47,31 +43,21 @@ export default function LoginScreen({ navigation }) {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                <FormInput
-                    labelValue={password}
-                    onChangeText={(userPassword) => setPassword(userPassword)}
-                    placeholderText="Password"
-                    iconType="lock"
-                    secureTextEntry={true}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+
                 <FormButton
-                    buttonTitle="Sign In"
-                    onPress={() => signIn()}
+                    buttonTitle="Submit"
+                    onPress={() => forgotPassword(email)}
                 />
             </KeyboardAvoidingView>
 
 
 
 
-            <TouchableOpacity style={forgotButton} onPress={() => navigation.navigate('ForgotPassword')}>
-                <Text style={forgotText}>Forgot Password?</Text>
+            <TouchableOpacity style={forgotButton} onPress={() => navigation.goBack()}>
+                <Text style={forgotText}>Go back</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={registerButton} onPress={() => navigation.navigate('Register')}>
-                <Text style={registerButtonText}>Dont have any account? <Text style={registerButtonTextInput}>Register</Text></Text>
-            </TouchableOpacity>
+
 
         </Animatable.View >
     )

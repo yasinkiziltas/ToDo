@@ -13,7 +13,8 @@ export default function FormButton({ buttonTitle, ...rest }) {
 const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 10,
-        width: '90%',
+        // width: '90%',
+        width: windowWidth / 1.1,
         height: windowHeight / 15,
         backgroundColor: '#029571',
         padding: 10,
