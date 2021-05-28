@@ -4,6 +4,8 @@ import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
 import * as Animatable from 'react-native-animatable';
+import {Formik} from 'formik'
+import * as Yup from 'yup'
 
 
 export default function ForgotPasswordScreen({ navigation }) {
@@ -22,36 +24,56 @@ export default function ForgotPasswordScreen({ navigation }) {
             })
     }
 
+
+    const handleSubmit  = values => {
+        firebase.auth().sendPasswordResetEmail(values.email)
+        .then(function (user) {
+            alert('Please check your email...')
+        }).catch(function (e) {
+            console.log(e)
+        })
+    }
+
+
     return (
         <Animatable.View animation="zoomInUp" style={container}>
-            {/* <View>
-                <Image source={require('../../assets/img/signin.png')}
-                    resizeMode="contain"
-                    style={styles.logo}
-                />
-            </View> */}
 
             <Text style={signInText}>Reset password</Text>
 
-            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={100}>
-                <FormInput
-                    labelValue={email}
-                    onChangeText={(userEmail) => setEmail(userEmail)}
-                    placeholderText="Email"
-                    iconType="mail"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+            <Formik 
+            initialValues={{email}}
+            onSubmit={handleSubmit}
+            validationSchema={
+                Yup.object().shape({
+                    email: Yup.string()
+                        .email()
+                        .required()
+                })
+            }
+        >
+                {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched}) => (
+                    <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={100}>
+                    <FormInput
+                        labelValue={values.email}
+                        // onChangeText={(userEmail) => setEmail(userEmail)}
+                        onChangeText={handleChange('email')}
+                        onBlur={() => setFieldTouched('email')}
+                        placeholderText="Email"
+                        iconType="mail"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
 
-                <FormButton
-                    buttonTitle="Submit"
-                    onPress={() => forgotPassword(email)}
-                />
-            </KeyboardAvoidingView>
-
-
-
+                    { (errors.email && touched.email) && <Text style={{color:'red', fontWeight:'bold'}}>{errors.email}</Text> }
+    
+                    <FormButton
+                        buttonTitle="Submit"
+                        onPress={() => handleSubmit()}
+                    />
+                </KeyboardAvoidingView>
+                )}
+            </Formik>
 
             <TouchableOpacity style={forgotButton} onPress={() => navigation.goBack()}>
                 <Text style={forgotText}>Go back</Text>

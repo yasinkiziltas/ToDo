@@ -12,7 +12,7 @@ export default function RegisterScreen({ navigation }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText } = styles;
+    const { container, signInText, registerButton, registerButtonText } = styles;
 
     const signUp = () => {
         firebase.auth().createUserWithEmailAndPassword(email, password)

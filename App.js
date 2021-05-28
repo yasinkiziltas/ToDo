@@ -86,7 +86,7 @@ export default function App() {
     if (!loggedIn) {
         return (
             <NavigationContainer theme={appTheme}>
-                <Stack.Navigator initialRouteName="Landing">
+                <Stack.Navigator initialRouteName="ForgotPassword">
                     <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />

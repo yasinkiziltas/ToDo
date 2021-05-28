@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
+
 const Dots = ({ selected }) => {
     let backgroundColor;
     backgroundColor = selected ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.3)'
@@ -17,7 +18,7 @@ const Skip = ({ ...props }) => {
     return (
         <Button
             title={"Skip"}
-            color="#a6e4d0"
+            color="black"
             {...props}
         />
     )
@@ -27,7 +28,7 @@ const Next = ({ ...props }) => {
     return (
         <Button
             title={"Next"}
-            color="#a6e4d0"
+            color="black"
             {...props}
         />
     )
@@ -39,7 +40,7 @@ const Done = ({ ...props }) => {
             style={{ marginHorizontal: 8 }}
             {...props}
         >
-            <Text style={{ fontSize: 20, color: "#fff" }}>Done</Text>
+            <Text style={{ fontSize: 20, color: "black"}}>Done</Text>
         </TouchableOpacity>
     )
 }
