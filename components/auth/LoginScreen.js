@@ -55,12 +55,13 @@ export default function LoginScreen({ navigation }) {
         >
             {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched}) => (
                  <Animatable.View animation="fadeInDownBig" style={container}>
-                 <View>
-                     <Image source={require('../../assets/img/signin.png')}
+
+                 <Animatable.View animation="fadeInDownBig">
+                     <Image source={require('../../assets/img/signin2.png')}
                          resizeMode="contain"
                          style={styles.logo}
                      />
-                 </View>
+                 </Animatable.View>
      
                  <Text style={signInText}>Sign In to continue</Text>
      
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
         // paddingTop: 50
     },
     logo: {
-        width: 200,
-        height: 200
+        width: 180,
+        height: 180
     },
     forgotText: {
         color: "#5882FD",

@@ -12,17 +12,17 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     const [email, setEmail] = useState();
 
-    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
+    const { container, forgotButton, forgotText, signInText } = styles;
 
 
-    const forgotPassword = (Email) => {
-        firebase.auth().sendPasswordResetEmail(Email)
-            .then(function (user) {
-                alert('Please check your email...')
-            }).catch(function (e) {
-                console.log(e)
-            })
-    }
+    // const forgotPassword = (Email) => {
+    //     firebase.auth().sendPasswordResetEmail(Email)
+    //         .then(function (user) {
+    //             alert('Please check your email...')
+    //         }).catch(function (e) {
+    //             console.log(e)
+    //         })
+    // }
 
 
     const handleSubmit  = values => {
@@ -37,6 +37,13 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     return (
         <Animatable.View animation="zoomInUp" style={container}>
+
+             <Animatable.View animation="fadeInDownBig">
+                     <Image source={require('../../assets/img/reset.png')}
+                         resizeMode="contain"
+                         style={styles.logo}
+                     />
+                 </Animatable.View>
 
             <Text style={signInText}>Reset password</Text>
 
@@ -73,12 +80,14 @@ export default function ForgotPasswordScreen({ navigation }) {
                     />
                 </KeyboardAvoidingView>
                 )}
+
+           
             </Formik>
 
+        
             <TouchableOpacity style={forgotButton} onPress={() => navigation.goBack()}>
                 <Text style={forgotText}>Go back</Text>
             </TouchableOpacity>
-
 
 
         </Animatable.View >
@@ -95,8 +104,9 @@ const styles = StyleSheet.create({
         // paddingTop: 50
     },
     logo: {
-        width: 200,
-        height: 200
+        width: 150,
+        height: 150,
+        marginBottom:10,
     },
     forgotText: {
         color: "#5882FD",
@@ -105,7 +115,7 @@ const styles = StyleSheet.create({
     signInText: {
         fontWeight: 'bold',
         fontSize: 25,
-        marginBottom: 25
+        marginBottom: 10
     },
     forgotButton: {
         marginVertical: 35,

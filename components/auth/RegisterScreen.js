@@ -34,7 +34,7 @@ export default function RegisterScreen({ navigation }) {
     return (
         <Animatable.View style={container} animation="fadeInUpBig">
             <View>
-                <Image source={require('../../assets/img/register.png')}
+                <Image source={require('../../assets/img/signup2.png')}
                     resizeMode="contain"
                     style={styles.logo}
                 />
