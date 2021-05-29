@@ -54,9 +54,9 @@ export default function LoginScreen({ navigation }) {
             }
         >
             {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched}) => (
-                 <Animatable.View animation="fadeInDownBig" style={container}>
+                 <Animatable.View animation="fadeInUpBig" style={container}>
 
-                 <Animatable.View animation="fadeInDownBig">
+                 <Animatable.View animation="fadeInRightBig">
                      <Image source={require('../../assets/img/signin2.png')}
                          resizeMode="contain"
                          style={styles.logo}
