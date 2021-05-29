@@ -63,7 +63,7 @@ export default function LoginScreen({ navigation }) {
                      />
                  </Animatable.View>
      
-                 <Text style={signInText}>Sign In to continue</Text>
+                 {/* <Text style={signInText}>Sign In to continue</Text> */}
      
                  <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={100}>
                      <FormInput

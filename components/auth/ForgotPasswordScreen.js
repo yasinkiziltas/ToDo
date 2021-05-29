@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
