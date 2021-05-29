@@ -41,7 +41,7 @@ export default function RegisterScreen({ navigation }) {
                 />
             </Animatable.View>
 
-            <Text style={signInText}>Sign Up to continue</Text>
+            {/* <Text style={signInText}>Sign Up to continue</Text> */}
 
             <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={120}>
 

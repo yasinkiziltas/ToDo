@@ -45,7 +45,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                 />
             </Animatable.View>
 
-            <Text style={signInText}>Reset password</Text>
+            {/* <Text style={signInText}>Reset password</Text> */}
 
             <Formik
                 initialValues={{ email }}
