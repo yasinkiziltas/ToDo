@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-
-import {
-    Avatar,
-    Title,
-    Caption,
-    Paragraph,
-    Drawer,
-    TouchableRipple,
-    Switch
-} from 'react-native-paper'
-
+import { Drawer, DefaultTheme } from 'react-native-paper'
+import { Tabs, TabScreen } from 'react-native-paper-tabs';
 import CustomHeader from '../CustomHeader'
 
 export default function HomeScreen({ navigation }) {
@@ -28,7 +18,17 @@ export default function HomeScreen({ navigation }) {
         setModalVisible(!isModalVisible);
     }
 
-    const {container, containerTitle, containerText, iconButton, iconText, row, rowText} = styles;
+    const theme = {
+        ...DefaultTheme,
+        roundness: 3,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: 'black',
+            accent: 'white',
+        },
+    };
+
+    const { container, containerTitle, containerText, iconButton, iconText, row, rowText } = styles;
 
     const fetchUser = () => {
         firebase.firestore()
@@ -54,24 +54,24 @@ export default function HomeScreen({ navigation }) {
 
     const fetchTodos = () => {
         firebase.firestore()
-          .collection("todos")
-          .doc(firebase.auth().currentUser.uid)
-          .collection("userTodos")
-          .orderBy("todoTime", "asc")
-          .get()
-          .then((snapshot) => {
-              let todos = snapshot.docs.map(doc => {
-                  const data = doc.data();
-                  const id = doc.id;
-                  return {
-                      id,
-                      ...data
-                  }
-              })
-              setTodos(todos)
-              console.log('Todos ', todos)
-          })
-      }
+            .collection("todos")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userTodos")
+            .orderBy("todoTime", "asc")
+            .get()
+            .then((snapshot) => {
+                let todos = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return {
+                        id,
+                        ...data
+                    }
+                })
+                setTodos(todos)
+                console.log('Todos ', todos)
+            })
+    }
 
 
     useEffect(() => {
@@ -81,33 +81,77 @@ export default function HomeScreen({ navigation }) {
 
 
     return (
-        <SafeAreaView style={container}>    
-            <CustomHeader title="" navigation={navigation} />
+        <SafeAreaView style={container}>
+            <CustomHeader title="Home" navigation={navigation} />
 
             <View style={containerTitle}>
-                <Text style={[containerText, {color: colors.text}]}>What's up,  {userName}!</Text>
+                <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
             </View>
-            
-            <View style={{flex:1,justifyContent:'center',alignItems:'center', paddingTop:150 }}>  
+
+            <Tabs
+                uppercase={false} // true/false | default=true | labels are uppercase
+                iconPosition={"top"} // leading, top | default=leading
+                style={{ backgroundColor: '#2E9298' }} // works the same as AppBar in react-native-paper
+                theme={theme}
+            >
+                <TabScreen label="Personal" icon="compass" >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
+                        <Drawer.Section title="TODAY'S TASKS">
+                            <FlatList
+                                style={{ width: '100%' }}
+                                numColumns={1}
+                                horizontal={false}
+                                data={todos}
+                                renderItem={({ item }) => (
+                                    <View style={row}>
+                                        <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
+                                        <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                                    </View>
+                                )}
+                            />
+                        </Drawer.Section>
+                    </View>
+                </TabScreen>
+
+                <TabScreen label="Business" icon="airplane">
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
+                        <Drawer.Section title="TODAY'S TASKS">
+                            <FlatList
+                                style={{ width: '100%' }}
+                                numColumns={1}
+                                horizontal={false}
+                                data={todos}
+                                renderItem={({ item }) => (
+                                    <View style={row}>
+                                        <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
+                                        <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                                    </View>
+                                )}
+                            />
+                        </Drawer.Section>
+                    </View>
+                </TabScreen>
+            </Tabs>
+            {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
                 <Drawer.Section title="TODAY'S TASKS">
-                           <FlatList
-                              style={{width:'100%'}}
-                              numColumns={1}
-                              horizontal={false}
-                               data={todos}
-                              renderItem={({ item }) => (
-                                <View style={row}>
-                                     <Ionicons name="ellipse-outline" size={20} style={[{paddingRight:10, color:colors.text}]}/>
-                                     <Text style={[rowText, {color: colors.text}]}>{item.todo}</Text>
-                                </View>
-                             )}
-                          />
-                 </Drawer.Section> 
-            </View>
+                    <FlatList
+                        style={{ width: '100%' }}
+                        numColumns={1}
+                        horizontal={false}
+                        data={todos}
+                        renderItem={({ item }) => (
+                            <View style={row}>
+                                <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
+                                <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                            </View>
+                        )}
+                    />
+                </Drawer.Section>
+            </View> */}
 
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
-                    <Ionicons size={35} name="add" style={iconText}/>
+                <Ionicons size={35} name="add" style={iconText} />
             </TouchableOpacity>
 
         </SafeAreaView>
@@ -115,52 +159,53 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
     },
-    containerTitle:{
-        marginLeft:20, 
-        marginTop:10
+    containerTitle: {
+        marginLeft: 20,
+        marginTop: 10,
+        marginBottom: 20
     },
-    containerText:{
-        fontSize:28,
-        fontWeight:'bold',
+    containerText: {
+        fontSize: 28,
+        fontWeight: 'bold',
     },
-    todoContainer:{
-        flex:1, 
-        justifyContent:'center', 
-        alignItems:'center'
+    todoContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    iconButton:{
+    iconButton: {
         backgroundColor: '#2E9298',
         borderRadius: 40,
         padding: 10,
         shadowColor: '#000000',
         shadowOffset: {
-        width: 3,
-        height: 3,
+            width: 3,
+            height: 3,
         },
         shadowRadius: 15,
         shadowOpacity: 0.50,
-           position:'absolute',
-           bottom:35,
-           right:15,
+        position: 'absolute',
+        bottom: 35,
+        right: 15,
     },
-    iconText:{
-        color:'white'
+    iconText: {
+        color: 'white'
     },
     row: {
-        flex:1,
+        flex: 1,
         paddingVertical: 25,
         paddingHorizontal: 25,
-        flexDirection:'row',
-        justifyContent:'space-between',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         borderBottomWidth: 1,
-        borderBottomColor:'gray',
-        alignSelf:'flex-start',
+        borderBottomColor: 'gray',
+        alignSelf: 'flex-start',
     },
-    rowText:{
-        fontSize:20
+    rowText: {
+        fontSize: 20
     }
 })
 
