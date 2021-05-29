@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+
 import {
     Avatar,
     Title,
