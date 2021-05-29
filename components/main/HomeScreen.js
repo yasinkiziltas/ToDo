@@ -14,6 +14,7 @@ export default function HomeScreen({ navigation }) {
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const { colors } = useTheme()
+
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     }
@@ -69,10 +70,9 @@ export default function HomeScreen({ navigation }) {
                     }
                 })
                 setTodos(todos)
-                console.log('Todos ', todos)
+                console.log('Todos: ', todos)
             })
     }
-
 
     useEffect(() => {
         fetchTodos()
@@ -89,11 +89,12 @@ export default function HomeScreen({ navigation }) {
             </View>
 
             <Tabs
-                uppercase={false} // true/false | default=true | labels are uppercase
-                iconPosition={"top"} // leading, top | default=leading
-                style={{ backgroundColor: '#2E9298' }} // works the same as AppBar in react-native-paper
+                uppercase={false}
+                iconPosition={"top"}
+                style={{ backgroundColor: '#2E9298' }}
                 theme={theme}
             >
+
                 <TabScreen label="Personal" icon="compass" >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
                         <Drawer.Section title="TODAY'S TASKS">
@@ -103,10 +104,14 @@ export default function HomeScreen({ navigation }) {
                                 horizontal={false}
                                 data={todos}
                                 renderItem={({ item }) => (
-                                    <View style={row}>
-                                        <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
-                                        <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
-                                    </View>
+
+                                    item.todoType == "Personal" ?
+                                        <View style={row}>
+                                            <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
+                                            <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                                        </View>
+                                        :
+                                        null
                                 )}
                             />
                         </Drawer.Section>
@@ -122,10 +127,14 @@ export default function HomeScreen({ navigation }) {
                                 horizontal={false}
                                 data={todos}
                                 renderItem={({ item }) => (
-                                    <View style={row}>
-                                        <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
-                                        <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
-                                    </View>
+
+                                    item.todoType == "Business" ?
+                                        <View style={row}>
+                                            <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
+                                            <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                                        </View>
+                                        :
+                                        null
                                 )}
                             />
                         </Drawer.Section>
