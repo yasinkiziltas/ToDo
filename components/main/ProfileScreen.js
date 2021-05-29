@@ -19,6 +19,8 @@ export default function ProfileScreen({ navigation }) {
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const [todo, setTodo] = useState([]);
+    const [todosPersonal, setTodosPersonal] = useState([]);
+    const [todosBusiness, setTodosBusiness] = useState([]);
     const { colors } = useTheme()
 
     const { container, userImg, userNameStyl } = styles;
@@ -70,6 +72,55 @@ export default function ProfileScreen({ navigation }) {
 
     }
 
+    const fetchPostsPersonal = () => {
+        try {
+            firebase.firestore()
+                .collection("todos")
+                .doc(firebase.auth().currentUser.uid)
+                .collection("userTodos")
+                .where('todoType', '==', 'Personal')
+                .get()
+                .then((snapshot) => {
+                    let personalTodos = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        const id = doc.id;
+                        return {
+                            id,
+                            ...data
+                        }
+                    })
+                    setTodosPersonal(personalTodos)
+                })
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+
+    }
+
+    const fetchPostsBusiness = () => {
+        try {
+            firebase.firestore()
+                .collection("todos")
+                .doc(firebase.auth().currentUser.uid)
+                .collection("userTodos")
+                .where('todoType', '==', 'Business')
+                .get()
+                .then((snapshot) => {
+                    let businessTodos = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        const id = doc.id;
+                        return {
+                            id,
+                            ...data
+                        }
+                    })
+                    setTodosBusiness(businessTodos)
+                })
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+
+    }
 
     const signOut = () => {
         try {
@@ -81,6 +132,8 @@ export default function ProfileScreen({ navigation }) {
 
     useEffect(() => {
         fetchPosts()
+        fetchPostsPersonal()
+        fetchPostsBusiness()
         fetchUser()
     }, [])
 
@@ -139,11 +192,27 @@ export default function ProfileScreen({ navigation }) {
                     borderRightWidth: 1
                 }]}>
                     <Title style={{ color: colors.text }}>{todo.length}</Title>
-                    <Caption style={{ color: colors.text }}>Todo</Caption>
+                    <Caption style={{ color: colors.text, padding: 5 }}>Todo</Caption>
+                    {
+                        todosPersonal || todosBusiness != null
+                            ?
+
+                            <Caption style={[{ fontWeight: 'bold', color: colors.border, position: 'absolute', bottom: 10, flexDirection: 'row', borderBottomColor: '#2E9298', borderBottomWidth: 0.2 }]}>({todosPersonal.length} personal, {todosBusiness.length} business)</Caption>
+
+                            :
+
+                            null
+                    }
+
+                    {/* <Title style={{ color: colors.text }}>{todosPersonal.length}</Title>
+                    <Caption style={{ color: colors.text, padding: 5 }}>Personal</Caption>
+
+                    <Title style={{ color: colors.text }}>{todosBusiness.length}</Title>
+                    <Caption style={{ color: colors.text, padding: 5 }}>Business</Caption> */}
                 </View>
 
                 <View style={styles.infoBox}>
-                    <Title style={{ color: colors.text }}>0</Title>
+                    <Title style={{ color: colors.text, padding: 5 }}>0</Title>
                     <Caption style={{ color: colors.text }}>Completed</Caption>
                 </View>
             </View>
@@ -215,6 +284,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     infoBox: {
+        flexDirection: 'row',
         width: '50%',
         alignItems: 'center',
         justifyContent: 'center',
