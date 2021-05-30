@@ -236,12 +236,12 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={styles.menuWrapper}>
 
-                <TouchableRipple onPress={() => { }}>
+                {/* <TouchableRipple onPress={() => { }}>
                     <View style={styles.menuItem}>
                         <Icon name="credit-card" size={25} color="#2E9298" />
                         <Text style={styles.menuItemText}>Payment</Text>
                     </View>
-                </TouchableRipple>
+                </TouchableRipple> */}
 
                 <TouchableRipple onPress={() => onShare()}>
                     <View style={styles.menuItem}>
@@ -265,6 +265,10 @@ export default function ProfileScreen({ navigation }) {
                 </TouchableRipple>
 
 
+            </View>
+
+            <View style={{ position: 'absolute', left: 0, right: 0, bottom: 15, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ color: '' }}>V.01</Text>
             </View>
         </SafeAreaView>
     )
