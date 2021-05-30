@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
@@ -81,7 +81,9 @@ export default function HomeScreen({ navigation }) {
 
 
     return (
+
         <SafeAreaView style={container}>
+            <StatusBar hidden />
             <CustomHeader title="Home" navigation={navigation} />
 
             <View style={containerTitle}>
@@ -141,29 +143,13 @@ export default function HomeScreen({ navigation }) {
                     </View>
                 </TabScreen>
             </Tabs>
-            {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
-                <Drawer.Section title="TODAY'S TASKS">
-                    <FlatList
-                        style={{ width: '100%' }}
-                        numColumns={1}
-                        horizontal={false}
-                        data={todos}
-                        renderItem={({ item }) => (
-                            <View style={row}>
-                                <Ionicons name="ellipse-outline" size={20} style={[{ paddingRight: 10, color: colors.text }]} />
-                                <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
-                            </View>
-                        )}
-                    />
-                </Drawer.Section>
-            </View> */}
-
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
                 <Ionicons size={35} name="add" style={iconText} />
             </TouchableOpacity>
 
         </SafeAreaView>
+
     )
 }
 

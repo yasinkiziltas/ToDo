@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, StyleSheet, SafeAreaView, Image, Text, Button, View, Alert } from 'react-native'
+import { StyleSheet, SafeAreaView, Share, Text, View } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 import {
@@ -24,6 +24,23 @@ export default function ProfileScreen({ navigation }) {
     const { colors } = useTheme()
 
     const { container, userImg, userNameStyl } = styles;
+
+    const onShare = () => {
+        const result = Share.share({
+            title: 'App link',
+            message: 'Please install this app and stay safe , AppLink :https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en',
+            url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en' //https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en
+        });
+        if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+                // shared with activity type of result.activityType
+            } else {
+                // shared
+            }
+        } else if (result.action === Share.dismissedAction) {
+            // dismissed
+        }
+    }
 
     const fetchUser = () => {
         firebase.firestore()
@@ -226,7 +243,7 @@ export default function ProfileScreen({ navigation }) {
                     </View>
                 </TouchableRipple>
 
-                <TouchableRipple onPress={() => { }}>
+                <TouchableRipple onPress={() => onShare()}>
                     <View style={styles.menuItem}>
                         <Icon name="share-outline" size={25} color="#2E9298" />
                         <Text style={styles.menuItemText}>Tell your friends</Text>
