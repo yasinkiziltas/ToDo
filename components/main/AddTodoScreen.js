@@ -12,7 +12,7 @@ export default function AddTodoScreen({ navigation }) {
     const [todo, setTodo] = useState(null);
     const [todoType, setTodoType] = useState(null)
     const [title, setTitle] = useState(null);
-    const [date, setDate] = useState('21-10-2021')
+    const [date, setDate] = useState(null)
     const { colors } = useTheme()
 
     // const submitTodo = () => {
@@ -59,19 +59,22 @@ export default function AddTodoScreen({ navigation }) {
             <CustomHeader title="Add Todo" navigation={navigation} />
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                {/* <TextInput
-                    style={styles.InputField}
-                    placeholder="Title"
-                    placeholderTextColor={colors.text}
+                <TextInput
+                    style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
+                    placeholder="Enter new title.."
+                    placeholderTextColor="gray"
                     multiline
+                    format="DD-MM-YYYY"
+                    minDate="01-01-1900"
+                    maxDate="01-01-2050"
                     numberOfLines={2}
                     onChangeText={(content) => setTitle(content)}
                     value={title}
-                /> */}
+                />
 
                 <TextInput
-                    style={styles.InputField}
-                    placeholder="Enter new task"
+                    style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
+                    placeholder="Enter new task.."
                     //placeholderTextColor={colors.text}
                     placeholderTextColor="gray"
                     multiline
@@ -92,15 +95,20 @@ export default function AddTodoScreen({ navigation }) {
                     cancelBtnText="Cancel"
                 />
 
-                <RNPickerSelect
-                    placeholder={{ label: "Select your todo type: ", value: null }}
-                    onValueChange={(value) => setTodoType(value)}
-                    items={[
-                        { label: "Personal", value: "Personal" },
-                        { label: "Business", value: "Business" },
-                    ]}
-                />
-                <Text>{todoType ? todoType : ''}</Text>
+                <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                    <RNPickerSelect
+                        style={{ fontWeight: 'bold' }}
+                        placeholder={{ label: "Select your todo type: ", value: null }}
+                        onValueChange={(value) => setTodoType(value)}
+                        items={[
+                            { label: "Personal", value: "Personal" },
+                            { label: "Business", value: "Business" },
+                        ]}
+                    />
+                </View>
+
+
+                {/* <Text>{todoType ? todoType : ''}</Text> */}
 
 
                 <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
