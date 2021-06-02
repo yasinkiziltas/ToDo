@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useTheme } from '@react-navigation/native'
 
 export default function SearchScreen({ navigation }) {
     const [searchTodos, setSearchTodos] = useState([])
-
-    const { container, containerTitle, containerText, iconButton, iconText, row, rowText } = styles;
+    const { colors } = useTheme()
+    const { row, rowText } = styles;
 
     const fetchSearchTodos = (search) => {
         firebase.firestore()
@@ -30,34 +32,36 @@ export default function SearchScreen({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+        <View style={{ flex: 1 }}>
             <CustomHeader title="" navigation={navigation} isBack={true} />
 
-            <TextInput
-                onChangeText={(search) => fetchSearchTodos(search)}
-                returnKeyType="next"
-                style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
-                placeholder="Search todo.."
-                placeholderTextColor="gray"
-                multiline
-                numberOfLines={2}
-            />
+            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={50} >
+                <TextInput
+                    onChangeText={(search) => fetchSearchTodos(search)}
+                    returnKeyType="next"
+                    style={styles.InputField}
+                    placeholder="Search todo.."
+                    placeholderTextColor="gray"
+                    multiline
+                    numberOfLines={2}
+                />
 
-            {/* <TextInput placeholder="Search todo.." onChangeText={(search) => fetchSearchTodos(search)} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} /> */}
+                <FlatList
+                    numColumns={1}
+                    data={searchTodos}
+                    horizontal={false}
+                    renderItem={({ item }) => (
+                        <View style={row}>
+                            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { }}>
+                                <Ionicons name="ellipse-outline" size={20} style={[{ flexDirection: 'row', paddingRight: 10, color: colors.text }]} />
+                                <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
+                            </TouchableOpacity>
 
-            <FlatList
+                        </View>
+                    )}
+                />
+            </KeyboardAvoidingView>
 
-                numColumns={1}
-                data={searchTodos}
-                horizontal={false}
-                renderItem={({ item }) => (
-                    <Text style={row}>{item.todo}</Text>
-
-                    // <TouchableOpacity onPress={() => props.navigation.navigate('Profile', { uid: item.id })}>
-                    //     <Text>{item.todo}</Text>
-                    // </TouchableOpacity>
-                )}
-            />
         </View>
     )
 }
@@ -65,6 +69,7 @@ export default function SearchScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     InputField: {
+        flex: 1,
         justifyContent: 'center',
         padding: 15,
         alignItems: 'center',
@@ -74,7 +79,6 @@ const styles = StyleSheet.create({
     },
     row: {
         flex: 1,
-        borderWidth: 1,
         margin: 10,
         paddingVertical: 5,
         paddingHorizontal: 5,
@@ -84,4 +88,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'gray',
         alignSelf: 'flex-start',
     },
+    rowText: {
+        fontSize: 20
+    }
 })
