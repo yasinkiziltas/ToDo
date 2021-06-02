@@ -77,7 +77,7 @@ export default function EditProfileScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <CustomHeader title="Edit Profile" navigation={navigation} isEditProfile={true} />
+            <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
 
             <View style={{ margin: 20 }}>
                 <View style={{ alignItems: 'center' }}>

@@ -19,23 +19,6 @@ export default function AddTodoScreen({ navigation }) {
     const ref_input3 = useRef();
     const ref_input4 = useRef();
 
-    // const submitTodo = () => {
-    //     firebase.firestore()
-    //         .collection('todos')
-    //         .add({
-    //             userId: firebase.auth().currentUser.uid,
-    //             title: title,
-    //             todo: todo,
-    //             todoTime: firebase.firestore.Timestamp.fromDate(new Date())
-    //         }).then(() => {
-    //             console.log('Todo Added!')
-    //             Alert.alert(
-    //                 'Todo added!',
-    //                 'Your todo has been published successfully!',
-    //             )
-    //         })
-    // }
-
     const submitTodo = () => {
         firebase.firestore()
             .collection('todos')
@@ -43,7 +26,7 @@ export default function AddTodoScreen({ navigation }) {
             .collection("userTodos")
             .add({
                 userId: firebase.auth().currentUser.uid,
-                // title: title,
+                title: title,
                 todo: todo,
                 date: date,
                 todoTime: firebase.firestore.Timestamp.fromDate(new Date()),

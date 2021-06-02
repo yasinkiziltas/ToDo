@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image } from 'r
 import { useTheme } from '@react-navigation/native'
 
 
-export default function CustomHeader({ title, navigation, isEditProfile }) {
+export default function CustomHeader({ title, navigation, isBack, isHome }) {
 
     const { container, contentHeader } = styles;
     const { colors } = useTheme()
@@ -13,7 +13,7 @@ export default function CustomHeader({ title, navigation, isEditProfile }) {
         <SafeAreaView style={container}>
             <View style={contentHeader}>
                 {
-                    isEditProfile
+                    isBack
                         ?
 
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -36,9 +36,16 @@ export default function CustomHeader({ title, navigation, isEditProfile }) {
 
 
             <View style={contentHeader}>
-                <TouchableOpacity>
-                    <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 90 }} />
-                </TouchableOpacity>
+                {
+                    isHome ?
+                        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                            <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 90 }} />
+                        </TouchableOpacity>
+                        :
+
+                        null
+                }
+
             </View>
 
             {/* <View style={contentHeader}>

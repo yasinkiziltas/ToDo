@@ -160,7 +160,7 @@ export default function ProfileScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <CustomHeader title="" navigation={navigation} />
+            <CustomHeader title="Profile" navigation={navigation} />
 
             <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>

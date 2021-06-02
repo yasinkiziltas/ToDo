@@ -53,6 +53,8 @@ export default function HomeScreen({ navigation }) {
             })
     }
 
+
+
     const fetchTodos = () => {
         firebase.firestore()
             .collection("todos")
@@ -84,7 +86,7 @@ export default function HomeScreen({ navigation }) {
 
         <SafeAreaView style={container}>
             <StatusBar hidden />
-            <CustomHeader title="" navigation={navigation} />
+            <CustomHeader title="" navigation={navigation} isHome={true} />
 
             <View style={containerTitle}>
                 <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>

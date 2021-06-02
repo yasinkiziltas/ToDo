@@ -9,11 +9,17 @@ import HomeScreen from './main/HomeScreen'
 import AddTodoScreen from './main/AddTodoScreen'
 import ProfileScreen from './main/ProfileScreen'
 import EditProfileScreen from './main/EditProfileScreen'
+import SearchScreen from './main/SearchScreen'
 
 import DrawerContent from './DrawerContent'
 
 const Tab = createMaterialBottomTabNavigator()
 const Drawer = createDrawerNavigator()
+
+// const EmptyScreen = () => {
+//     return (null)
+// }
+
 
 export default function Main(navigation) {
 
@@ -51,6 +57,32 @@ export default function Main(navigation) {
                     )
                 }}
             />
+
+            <Drawer.Screen name="Search" component={SearchScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="account-circle" color={color} size={24} />
+                    )
+                }}
+            />
+
         </Drawer.Navigator>
     )
+
+    {/* <Drawer.Screen name="Search" component={EmptyScreen}
+                listeners={({ navigation }) => ({
+                    tabPress: event => {
+                        event.preventDefault();
+                        navigation.navigate("Search")
+                    }
+                })}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="account-circle" color={color} size={24} />
+                    )
+                }}
+            />
+
+        </Drawer.Navigator>
+    ) */}
 }
