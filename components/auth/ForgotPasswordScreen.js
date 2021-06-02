@@ -38,7 +38,7 @@ export default function ForgotPasswordScreen({ navigation }) {
     return (
         <Animatable.View animation="fadeInLeft" style={container}>
 
-            <Animatable.View animation="lightSpeedIn">
+            <Animatable.View animation="fadeInRight">
                 <Image source={require('../../assets/img/reset.png')}
                     resizeMode="contain"
                     style={styles.logo}
