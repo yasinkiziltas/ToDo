@@ -8,7 +8,7 @@ import { useTheme } from '@react-navigation/native'
 export default function SearchScreen({ navigation }) {
     const [searchTodos, setSearchTodos] = useState([])
     const { colors } = useTheme()
-    const { row, rowText } = styles;
+    const { container, row, rowText, inputField, btnDetail } = styles;
 
     const fetchSearchTodos = (search) => {
         firebase.firestore()
@@ -32,17 +32,17 @@ export default function SearchScreen({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <CustomHeader title="" navigation={navigation} isBack={true} />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <CustomHeader title="Search" navigation={navigation} isBack={true} />
 
-            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={50} >
+            <KeyboardAvoidingView style={container} behavior="padding" keyboardVerticalOffset={50} >
                 <TextInput
                     onChangeText={(search) => fetchSearchTodos(search)}
                     returnKeyType="next"
-                    style={styles.InputField}
+                    style={[inputField, { color: colors.text }]}
                     placeholder="Search todo.."
                     placeholderTextColor="gray"
-                    multiline
+                    // multiline
                     numberOfLines={2}
                 />
 
@@ -52,7 +52,7 @@ export default function SearchScreen({ navigation }) {
                     horizontal={false}
                     renderItem={({ item }) => (
                         <View style={row}>
-                            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { }}>
+                            <TouchableOpacity style={btnDetail} onPress={() => { }}>
                                 <Ionicons name="ellipse-outline" size={20} style={[{ flexDirection: 'row', paddingRight: 10, color: colors.text }]} />
                                 <Text style={[rowText, { color: colors.text }]}>{item.todo}</Text>
                             </TouchableOpacity>
@@ -68,14 +68,22 @@ export default function SearchScreen({ navigation }) {
 
 
 const styles = StyleSheet.create({
-    InputField: {
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    inputField: {
         flex: 1,
         justifyContent: 'center',
         padding: 15,
         alignItems: 'center',
         fontSize: 24,
         textAlign: 'center',
-        width: "90%",
+        width: "10%",
+    },
+    btnDetail: {
+        flexDirection: 'row'
     },
     row: {
         flex: 1,

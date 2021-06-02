@@ -21,6 +21,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 const signOut = () => {
@@ -33,7 +34,7 @@ const signOut = () => {
 }
 
 
-export default function DrawerContent(props) {
+export default function DrawerContent({ props, navigation }) {
 
     const [darkMode, setIsDarkMode] = React.useState(false);
     const [userName, setUserName] = useState(null);
@@ -107,21 +108,24 @@ export default function DrawerContent(props) {
 
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
-                    <View style={styles.userInfoSection}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                        <View style={styles.userInfoSection}>
 
-                        <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                            <Avatar.Image
-                                source={(require('../assets/img/avatar.png'))}
-                                size={50}
-                            />
+                            <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                                <Avatar.Image
+                                    source={(require('../assets/img/avatar.png'))}
+                                    size={50}
+                                />
 
-                            <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                <Title style={{ color: colors.text }}>{userName}</Title>
-                                <Caption style={{ color: colors.text }}>{userEmail}</Caption>
+                                <View style={{ marginLeft: 15, flexDirection: 'column' }}>
+                                    <Title style={{ color: colors.text }}>{userName}</Title>
+                                    <Caption style={{ color: colors.text }}>{userEmail}</Caption>
+                                </View>
+
                             </View>
-
                         </View>
-                    </View>
+                    </TouchableOpacity>
+
 
                     <View style={styles.row}>
                         <View style={styles.section}>
@@ -145,7 +149,7 @@ export default function DrawerContent(props) {
                                 size={size}
                             />
                         )}
-                        onPress={() => props.navigation.navigate('Home')}
+                        onPress={() => navigation.navigate('Home')}
                         label="Home"
                     />
 
@@ -157,7 +161,7 @@ export default function DrawerContent(props) {
                                 size={size}
                             />
                         )}
-                        onPress={() => props.navigation.navigate('Add')}
+                        onPress={() => navigation.navigate('Add')}
                         label="Add Todo"
                     />
 
@@ -169,22 +173,12 @@ export default function DrawerContent(props) {
                                 size={size}
                             />
                         )}
-                        onPress={() => props.navigation.navigate('Profile')}
+                        onPress={() => navigation.navigate('Profile')}
                         label="Profile"
                     />
                 </Drawer.Section>
 
-                {/* <Drawer.Section title="Preferences">
-                    <TouchableRipple onPress={() => { toggleTheme() }}>
-                        <View style={styles.preference}>
-                            <Text>Dark Theme</Text>
-                            <View pointerEvents="none">
-                                <Switch value={isDarkTheme} />
-                            </View>
 
-                        </View>
-                    </TouchableRipple>
-                </Drawer.Section> */}
 
                 <View style={styles.preference}>
                     <Text style={{ color: colors.text }}>Dark Mode</Text>

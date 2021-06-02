@@ -2,7 +2,6 @@ import React from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
-
 export default function CustomHeader({ title, navigation, isBack, isHome }) {
 
     const { container, contentHeader } = styles;
@@ -17,13 +16,13 @@ export default function CustomHeader({ title, navigation, isBack, isHome }) {
                         ?
 
                         <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Image source={require('../assets/img/back.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 10, tintColor: colors.border }} />
+                            <Image source={require('../assets/img/back.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 10, tintColor: colors.text }} />
                         </TouchableOpacity>
 
                         :
 
                         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                            <Image source={require('../assets/img/menu.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 10, }} />
+                            <Image source={require('../assets/img/menu.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 10, tintColor: colors.text }} />
                         </TouchableOpacity>
                 }
 
@@ -39,7 +38,7 @@ export default function CustomHeader({ title, navigation, isBack, isHome }) {
                 {
                     isHome ?
                         <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                            <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 90 }} />
+                            <Image source={require('../assets/img/search.png')} resizeMode="contain" style={{ width: 25, height: 25, marginLeft: 90, tintColor: colors.text }} />
                         </TouchableOpacity>
                         :
 

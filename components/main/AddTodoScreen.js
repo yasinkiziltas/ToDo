@@ -43,7 +43,7 @@ export default function AddTodoScreen({ navigation }) {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
-            <CustomHeader title="Add Todo" navigation={navigation} />
+            <CustomHeader title="Add Todo" navigation={navigation} isBack={true} />
 
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                 <TextInput
