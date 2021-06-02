@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView, KeyboardAvoidingView } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
 import { useTheme } from '@react-navigation/native'
@@ -58,7 +58,7 @@ export default function AddTodoScreen({ navigation }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
             <CustomHeader title="Add Todo" navigation={navigation} />
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                 <TextInput
                     style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
                     placeholder="Enter new title.."
@@ -115,7 +115,7 @@ export default function AddTodoScreen({ navigation }) {
                     <Text style={[styles.addPostButtonText]}>New task  ^</Text>
                 </TouchableOpacity>
 
-            </View>
+            </KeyboardAvoidingView>
 
         </SafeAreaView>
 

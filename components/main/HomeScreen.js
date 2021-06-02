@@ -84,7 +84,7 @@ export default function HomeScreen({ navigation }) {
 
         <SafeAreaView style={container}>
             <StatusBar hidden />
-            <CustomHeader title="Home" navigation={navigation} />
+            <CustomHeader title="" navigation={navigation} />
 
             <View style={containerTitle}>
                 <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
