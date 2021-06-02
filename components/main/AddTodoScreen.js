@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, SafeAreaView, KeyboardAvoidingView } from 'react-native'
 import firebase from 'firebase'
 import CustomHeader from '../CustomHeader'
@@ -14,6 +14,10 @@ export default function AddTodoScreen({ navigation }) {
     const [title, setTitle] = useState(null);
     const [date, setDate] = useState(null)
     const { colors } = useTheme()
+
+    const ref_input2 = useRef();
+    const ref_input3 = useRef();
+    const ref_input4 = useRef();
 
     // const submitTodo = () => {
     //     firebase.firestore()
@@ -60,6 +64,7 @@ export default function AddTodoScreen({ navigation }) {
 
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                 <TextInput
+                    returnKeyType="next"
                     style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
                     placeholder="Enter new title.."
                     placeholderTextColor="gray"
@@ -70,9 +75,11 @@ export default function AddTodoScreen({ navigation }) {
                     numberOfLines={2}
                     onChangeText={(content) => setTitle(content)}
                     value={title}
+                    onSubmitEditing={() => ref_input2.current.focus()}
                 />
 
                 <TextInput
+                    returnKeyType="next"
                     style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
                     placeholder="Enter new task.."
                     //placeholderTextColor={colors.text}
@@ -81,6 +88,8 @@ export default function AddTodoScreen({ navigation }) {
                     numberOfLines={2}
                     onChangeText={(content) => setTodo(content)}
                     value={todo}
+                    // onSubmitEditing={() => ref_input3.current.focus()}
+                    ref={ref_input2}
                 />
 
                 <DatePicker
