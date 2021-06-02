@@ -98,7 +98,7 @@ export default function EditProfileScreen({ navigation }) {
                         </View>
                     </TouchableOpacity>
 
-                    <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text>
+                    {/* <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text> */}
 
                     <View style={styles.action}>
                         <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
@@ -106,7 +106,7 @@ export default function EditProfileScreen({ navigation }) {
                             value={userData ? userData.name : ''}
                             onChangeText={(txt) => setUserData({ ...userData, name: txt })}
                             placeholder="Name..."
-                            style={styles.textInput}
+                            style={[styles.textInput, { color: colors.text }]}
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
                         />
@@ -118,7 +118,7 @@ export default function EditProfileScreen({ navigation }) {
                             value={userData ? userData.userName : ''}
                             onChangeText={(txt) => setUserData({ ...userData, userName: txt })}
                             placeholder="Username.."
-                            style={styles.textInput}
+                            style={[styles.textInput, { color: colors.text }]}
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
                         />
@@ -130,7 +130,7 @@ export default function EditProfileScreen({ navigation }) {
                             value={userData ? userData.email : ''}
                             onChangeText={(txt) => setUserData({ ...userData, email: txt })}
                             placeholder="Email.."
-                            style={styles.textInput}
+                            style={[styles.textInput, { color: colors.text }]}
                             keyboardType="email-address"
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2',
         paddingBottom: 5,
+        marginTop: 25,
     },
     actionError: {
         flexDirection: 'row',
@@ -227,9 +228,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     textInput: {
+        marginLeft: 15,
         flex: 1,
-        // marginTop: Platform.OS === 'ios' ? 0 : -12,
-        paddingLeft: 10,
+        // marginTop: Platform.OS === 'ios' ? 20 : -12,
         color: '#05375a',
+        textAlign: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray'
     },
 });
