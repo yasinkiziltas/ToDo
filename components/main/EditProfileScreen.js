@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, TouchableOpacity, ImageBackground, Text, SafeAreaView, TextInput, Alert } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ImageBackground, Text, SafeAreaView, TextInput, Alert, KeyboardAvoidingView } from 'react-native'
 import CustomHeader from '../CustomHeader'
 import {
     Avatar,
@@ -47,6 +47,8 @@ export default function EditProfileScreen({ navigation }) {
 
 
     const handleUpdate = () => {
+        let user = firebase.auth().currentUser;
+
         try {
             firebase.firestore()
                 .collection('users')
@@ -56,17 +58,22 @@ export default function EditProfileScreen({ navigation }) {
                     uname: userData.userName,
                     email: userData.email
                 })
+
                 .then(() => {
-                    console.log('user updated!')
+                    user.updateEmail(userData.email)
                     Alert.alert(
                         'Profile Updated!',
                         'Your profile has been updated successfully.'
                     )
+                    console.log('user updated!')
+
+
                 })
         } catch (error) {
             console.log('Error: ', error)
         }
     }
+
 
 
 
@@ -79,69 +86,71 @@ export default function EditProfileScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
             <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
 
-            <View style={{ margin: 20 }}>
-                <View style={{ alignItems: 'center' }}>
-                    <TouchableOpacity>
-                        <View style={{ height: 100, width: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
-                            <ImageBackground source={require('../../assets/img/avatar.png')} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 15 }}>
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                    <Icon name="camera" color="#fff" size={30} style={{
-                                        opacity: 0.7,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderWidth: 1,
-                                        borderColor: "#fff",
-                                        borderRadius: 35
-                                    }} />
-                                </View>
-                            </ImageBackground>
+            <KeyboardAvoidingView>
+                <View style={{ margin: 20 }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <TouchableOpacity>
+                            <View style={{ height: 100, width: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
+                                <ImageBackground source={require('../../assets/img/user.png')} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 15 }}>
+                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                                        <Icon name="camera" color="#fff" size={30} style={{
+                                            opacity: 0.7,
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderWidth: 1,
+                                            borderColor: "#fff",
+                                            borderRadius: 35
+                                        }} />
+                                    </View>
+                                </ImageBackground>
+                            </View>
+                        </TouchableOpacity>
+
+                        {/* <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text> */}
+
+                        <View style={styles.action}>
+                            <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
+                            <TextInput
+                                value={userData ? userData.name : ''}
+                                onChangeText={(txt) => setUserData({ ...userData, name: txt })}
+                                placeholder="Name..."
+                                style={[styles.textInput, { color: colors.text }]}
+                                placeholderTextColor={colors.text}
+                                autoCorrect={false}
+                            />
                         </View>
+
+                        <View style={styles.action}>
+                            <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
+                            <TextInput
+                                value={userData ? userData.userName : ''}
+                                onChangeText={(txt) => setUserData({ ...userData, userName: txt })}
+                                placeholder="Username.."
+                                style={[styles.textInput, { color: colors.text }]}
+                                placeholderTextColor={colors.text}
+                                autoCorrect={false}
+                            />
+                        </View>
+
+                        <View style={styles.action}>
+                            <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
+                            <TextInput
+                                value={userData ? userData.email : ''}
+                                onChangeText={(txt) => setUserData({ ...userData, email: txt })}
+                                placeholder="Email.."
+                                style={[styles.textInput, { color: colors.text }]}
+                                keyboardType="email-address"
+                                placeholderTextColor={colors.text}
+                                autoCorrect={false}
+                            />
+                        </View>
+                    </View>
+
+                    <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
+                        <Text style={styles.panelButtonTitle}>Submit</Text>
                     </TouchableOpacity>
-
-                    {/* <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text> */}
-
-                    <View style={styles.action}>
-                        <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
-                        <TextInput
-                            value={userData ? userData.name : ''}
-                            onChangeText={(txt) => setUserData({ ...userData, name: txt })}
-                            placeholder="Name..."
-                            style={[styles.textInput, { color: colors.text }]}
-                            placeholderTextColor={colors.text}
-                            autoCorrect={false}
-                        />
-                    </View>
-
-                    <View style={styles.action}>
-                        <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
-                        <TextInput
-                            value={userData ? userData.userName : ''}
-                            onChangeText={(txt) => setUserData({ ...userData, userName: txt })}
-                            placeholder="Username.."
-                            style={[styles.textInput, { color: colors.text }]}
-                            placeholderTextColor={colors.text}
-                            autoCorrect={false}
-                        />
-                    </View>
-
-                    <View style={styles.action}>
-                        <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
-                        <TextInput
-                            value={userData ? userData.email : ''}
-                            onChangeText={(txt) => setUserData({ ...userData, email: txt })}
-                            placeholder="Email.."
-                            style={[styles.textInput, { color: colors.text }]}
-                            keyboardType="email-address"
-                            placeholderTextColor={colors.text}
-                            autoCorrect={false}
-                        />
-                    </View>
                 </View>
-
-                <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
-                    <Text style={styles.panelButtonTitle}>Update</Text>
-                </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
@@ -161,12 +170,6 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#FFFFFF',
         paddingTop: 20,
-        // borderTopLeftRadius: 20,
-        // borderTopRightRadius: 20,
-        // shadowColor: '#000000',
-        // shadowOffset: {width: 0, height: 0},
-        // shadowRadius: 5,
-        // shadowOpacity: 0.4,
     },
     header: {
         backgroundColor: '#FFFFFF',
@@ -174,7 +177,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: -1, height: -3 },
         shadowRadius: 2,
         shadowOpacity: 0.4,
-        // elevation: 5,
         paddingTop: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // marginTop: Platform.OS === 'ios' ? 20 : -12,
         color: '#05375a',
-        textAlign: 'center',
+        // textAlign: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'gray'
     },

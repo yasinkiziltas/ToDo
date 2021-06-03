@@ -113,7 +113,7 @@ export default function DrawerContent({ props, navigation }) {
 
                             <View style={{ flexDirection: 'row', marginTop: 15 }}>
                                 <Avatar.Image
-                                    source={(require('../assets/img/avatar.png'))}
+                                    source={(require('../assets/img/user.png'))}
                                     size={50}
                                 />
 

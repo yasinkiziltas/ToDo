@@ -45,7 +45,7 @@ export default function AddTodoScreen({ navigation }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.card }}>
             <CustomHeader title="Add Todo" navigation={navigation} isBack={true} />
 
-            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput
                     returnKeyType="next"
                     style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
@@ -106,8 +106,8 @@ export default function AddTodoScreen({ navigation }) {
                 <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
                     <Text style={[styles.addPostButtonText]}>New task  ^</Text>
                 </TouchableOpacity>
+            </View>
 
-            </KeyboardAvoidingView>
 
         </SafeAreaView>
 

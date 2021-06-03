@@ -165,7 +165,7 @@ export default function ProfileScreen({ navigation }) {
             <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
                     <Avatar.Image
-                        source={require('../../assets/img/avatar.png')}
+                        source={require('../../assets/img/user.png')}
                         size={80}
                     />
                     <View style={{ marginLeft: 20 }}>

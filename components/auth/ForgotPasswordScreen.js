@@ -12,18 +12,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     const [email, setEmail] = useState();
 
-    const { container, forgotButton, forgotText, signInText } = styles;
-
-
-    // const forgotPassword = (Email) => {
-    //     firebase.auth().sendPasswordResetEmail(Email)
-    //         .then(function (user) {
-    //             alert('Please check your email...')
-    //         }).catch(function (e) {
-    //             console.log(e)
-    //         })
-    // }
-
+    const { container, forgotButton, forgotText } = styles;
 
     const handleSubmit = values => {
         firebase.auth().sendPasswordResetEmail(values.email)
