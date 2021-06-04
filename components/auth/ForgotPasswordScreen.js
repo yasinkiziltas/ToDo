@@ -48,7 +48,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                 }
             >
                 {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched }) => (
-                    <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={100}>
+                    <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={2}>
                         <FormInput
                             labelValue={values.email}
                             // onChangeText={(userEmail) => setEmail(userEmail)}

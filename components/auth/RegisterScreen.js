@@ -43,7 +43,7 @@ export default function RegisterScreen({ navigation }) {
 
             {/* <Text style={signInText}>Sign Up to continue</Text> */}
 
-            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={120}>
+            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={2}>
 
                 <FormInput
                     labelValue={name}
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 20,
     },
     registerButtonText: {
         fontWeight: 'bold',

@@ -100,8 +100,8 @@ export default function HomeScreen({ navigation }) {
             >
 
                 <TabScreen label="Personal" icon="compass" >
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
-                        <Drawer.Section title="TODAY'S TASKS">
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
+                        <Drawer.Section title="TODAY'S TASKS" style={{ alignItems: 'center' }}>
                             <FlatList
                                 style={{ width: '100%' }}
                                 numColumns={1}
@@ -123,8 +123,8 @@ export default function HomeScreen({ navigation }) {
                 </TabScreen>
 
                 <TabScreen label="Business" icon="airplane">
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 150 }}>
-                        <Drawer.Section title="TODAY'S TASKS">
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
+                        <Drawer.Section title="TODAY'S TASKS" style={{ alignItems: 'center' }}>
                             <FlatList
                                 style={{ width: '100%' }}
                                 numColumns={1}

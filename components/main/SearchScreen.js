@@ -35,7 +35,7 @@ export default function SearchScreen({ navigation }) {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <CustomHeader title="Search" navigation={navigation} isBack={true} />
 
-            <KeyboardAvoidingView style={container} behavior="padding" keyboardVerticalOffset={50} >
+            <KeyboardAvoidingView style={container} keyboardVerticalOffset={2}  >
                 <TextInput
                     onChangeText={(search) => fetchSearchTodos(search)}
                     returnKeyType="next"
