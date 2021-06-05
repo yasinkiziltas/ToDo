@@ -30,7 +30,7 @@ export default function EditProfileScreen({ navigation }) {
             .then((snapshot) => {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
-                    const username = snapshot.data().userName;
+                    // const username = snapshot.data().userName;
                     const email = snapshot.data().email;
 
                     setName(name)
@@ -55,7 +55,7 @@ export default function EditProfileScreen({ navigation }) {
                 .doc(firebase.auth().currentUser.uid)
                 .update({
                     name: userData.name,
-                    uname: userData.userName,
+                    // uname: userData.userName,
                     email: userData.email
                 })
 
@@ -120,7 +120,7 @@ export default function EditProfileScreen({ navigation }) {
                             />
                         </View>
 
-                        <View style={styles.action}>
+                        {/* <View style={styles.action}>
                             <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
                             <TextInput
                                 value={userData ? userData.userName : ''}
@@ -130,7 +130,7 @@ export default function EditProfileScreen({ navigation }) {
                                 placeholderTextColor={colors.text}
                                 autoCorrect={false}
                             />
-                        </View>
+                        </View> */}
 
                         <View style={styles.action}>
                             <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />

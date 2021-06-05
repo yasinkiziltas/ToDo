@@ -192,7 +192,7 @@ export default function ProfileScreen({ navigation }) {
             <View style={styles.userInfoSection}>
                 <View style={styles.row}>
                     <Icon name="account" size={20} color="#777777" />
-                    {userName ? <Text style={{ marginLeft: 20, color: "#777777" }}>{userName}</Text> : <Text>Boş</Text>}
+                    {userName ? <Text style={{ marginLeft: 20, color: "#777777" }}>{name}</Text> : <Text>Boş</Text>}
                 </View>
 
                 <View style={styles.row}>

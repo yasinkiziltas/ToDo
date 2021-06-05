@@ -21,7 +21,7 @@ export default function RegisterScreen({ navigation }) {
                     .doc(firebase.auth().currentUser.uid)
                     .set({
                         name,
-                        userName,
+                        // userName,
                         email,
                     })
                 console.log('New user: ', result)
@@ -54,14 +54,14 @@ export default function RegisterScreen({ navigation }) {
                     autoCorrect={false}
                 />
 
-                <FormInput
+                {/* <FormInput
                     labelValue={userName}
                     onChangeText={(userName) => setUserName(userName)}
                     placeholderText="User Name"
                     iconType="user"
                     autoCapitalize="none"
                     autoCorrect={false}
-                />
+                /> */}
 
                 <FormInput
                     labelValue={email}
