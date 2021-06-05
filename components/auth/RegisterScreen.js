@@ -23,6 +23,7 @@ export default function RegisterScreen({ navigation }) {
                         name,
                         // userName,
                         email,
+                        password
                     })
                 console.log('New user: ', result)
             })

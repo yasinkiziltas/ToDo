@@ -17,8 +17,9 @@ import { useTheme } from '@react-navigation/native'
 
 export default function EditProfileScreen({ navigation }) {
     const [name, setName] = useState(null);
-    const [userName, setUserName] = useState(null);
+    // const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [password, setPassword] = useState(null);
     const [userData, setUserData] = useState(null)
     const { colors } = useTheme();
 
@@ -32,10 +33,12 @@ export default function EditProfileScreen({ navigation }) {
                     const name = snapshot.data().name;
                     // const username = snapshot.data().userName;
                     const email = snapshot.data().email;
+                    const upassword = snapshot.data().password;
 
                     setName(name)
-                    setUserName(username)
+                    // setUserName(username)
                     setUserEmail(email)
+                    setPassword(upassword)
                     setUserData(snapshot.data());
                 }
                 else (
@@ -44,7 +47,6 @@ export default function EditProfileScreen({ navigation }) {
 
             })
     }
-
 
     const handleUpdate = () => {
         let user = firebase.auth().currentUser;
@@ -56,27 +58,23 @@ export default function EditProfileScreen({ navigation }) {
                 .update({
                     name: userData.name,
                     // uname: userData.userName,
-                    email: userData.email
+                    email: userData.email,
+                    password: userData.password
                 })
-
-                .then(() => {
-                    user.updateEmail(userData.email)
-                    Alert.alert(
-                        'Profile Updated!',
-                        'Your profile has been updated successfully.'
-                    )
-                    console.log('user updated!')
-
-
-                })
+                user.updateEmail(userData.email)
+                user.updatePassword(userData.password)
+                Alert.alert(
+                    'Profile Updated!',
+                    'Your profile has been updated successfully.'
+                )
+                console.log('user updated!', user)
+                
         } catch (error) {
             console.log('Error: ', error)
         }
     }
-
-
-
-
+  
+ 
     useEffect(() => {
         fetchUser()
     }, [])
@@ -86,7 +84,7 @@ export default function EditProfileScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
             <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
 
-            <KeyboardAvoidingView>
+            <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={5}>
                 <View style={{ margin: 20 }}>
                     <View style={{ alignItems: 'center' }}>
                         <TouchableOpacity>
@@ -140,6 +138,19 @@ export default function EditProfileScreen({ navigation }) {
                                 placeholder="Email.."
                                 style={[styles.textInput, { color: colors.text }]}
                                 keyboardType="email-address"
+                                placeholderTextColor={colors.text}
+                                autoCorrect={false}
+                            />
+                        </View>
+
+                        <View style={styles.action}>
+                            <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
+                            <TextInput
+                              
+                                value={userData ? userData.password : ''}
+                                onChangeText={(txt) => setUserData({ ...userData, password: txt })}
+                                placeholder="Password.."
+                                style={[styles.textInput, { color: colors.text }]}
                                 placeholderTextColor={colors.text}
                                 autoCorrect={false}
                             />
