@@ -10,6 +10,7 @@ export default function RegisterScreen({ navigation }) {
     const [name, setName] = useState();
     const [userName, setUserName] = useState();
     const [email, setEmail] = useState();
+    const [uploadImg, setUploadImg] = useState()
     const [password, setPassword] = useState();
 
     const { container, signInText, registerButton, registerButtonText } = styles;
@@ -23,7 +24,8 @@ export default function RegisterScreen({ navigation }) {
                         name,
                         // userName,
                         email,
-                        password
+                        password,
+                        uploadImg: null
                     })
                 console.log('New user: ', result)
             })
