@@ -39,6 +39,7 @@ export default function DrawerContent({ props, navigation }) {
     const [darkMode, setIsDarkMode] = React.useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [img, setImg] = useState(null);
     const [todo, setTodo] = useState([]);
     const { colors } = useTheme()
 
@@ -52,9 +53,11 @@ export default function DrawerContent({ props, navigation }) {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
                     const email = snapshot.data().email;
+                    const userImg = snapshot.data().uploadImg;
 
                     setUserName(name)
                     setUserEmail(email)
+                    setImg(userImg)
                     // console.log(snapshot.data())
 
                 }
@@ -112,10 +115,21 @@ export default function DrawerContent({ props, navigation }) {
                         <View style={styles.userInfoSection}>
 
                             <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                                <Avatar.Image
-                                    source={(require('../assets/img/user.png'))}
-                                    size={50}
-                                />
+                               {
+                                   img 
+                                   ?
+                                   <Avatar.Image
+                                   source={{uri: img}}
+                                   size={50}
+                               />
+
+                               :
+
+                               <Avatar.Image
+                               source={(require('../assets/img/user.png'))}
+                               size={50}
+                           />
+                               }
 
                                 <View style={{ marginLeft: 15, flexDirection: 'column' }}>
                                     <Title style={{ color: colors.text }}>{userName}</Title>

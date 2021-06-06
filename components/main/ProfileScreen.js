@@ -18,6 +18,7 @@ export default function ProfileScreen({ navigation }) {
     const [name, setName] = useState(null);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [img, setImg] = useState(null);
     const [todo, setTodo] = useState([]);
     const [todosPersonal, setTodosPersonal] = useState([]);
     const [todosBusiness, setTodosBusiness] = useState([]);
@@ -52,10 +53,12 @@ export default function ProfileScreen({ navigation }) {
                     const name = snapshot.data().name;
                     const username = snapshot.data().userName;
                     const email = snapshot.data().email;
+                    const userImg = snapshot.data().uploadImg;
 
                     setName(name)
                     setUserName(username)
                     setUserEmail(email)
+                    setImg(userImg)
                 }
                 else (
                     console.log('Lütfen kayıt olduğunuz kullanıcı ile giriniz, firebase tarafında el ile eklediniğiniz değil!')
@@ -164,10 +167,22 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                    <Avatar.Image
-                        source={require('../../assets/img/user.png')}
-                        size={80}
-                    />
+                   {
+                       img 
+                       ?
+                       <Avatar.Image
+                       source={{uri: img}}
+                       size={80}
+                   />
+                   
+                   :
+
+                   <Avatar.Image
+                   source={require('../../assets/img/user.png')}
+                   size={80}
+               />
+
+                   }
                     <View style={{ marginLeft: 20 }}>
                         <Title style={{ color: colors.text, marginTop: 5 }}>
                             {
