@@ -250,17 +250,6 @@ export default function EditProfileScreen({ navigation }) {
 
                                     :
                                     null
-                                // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                //     <Icon name="camera" color="#2E9298" size={30} style={{
-                                //         opacity: 0.7,
-                                //         alignItems: 'center',
-                                //         justifyContent: 'center',
-                                //         borderWidth: 1,
-                                //         borderColor: "#fff",
-                                //         borderRadius: 35
-                                //     }} />
-                                // </View>
-
                             }
 
                             {

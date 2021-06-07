@@ -184,6 +184,7 @@ export default function ProfileScreen({ navigation }) {
 
 
                     }
+
                     <View style={{ marginLeft: 20 }}>
                         <Title style={{ color: colors.text, marginTop: 5 }}>
                             {
@@ -195,9 +196,8 @@ export default function ProfileScreen({ navigation }) {
                             <Text style={styles.iconText}>Edit Profile</Text>
                         </TouchableRipple>
 
-                        {/* <Caption style={{ color: colors.text }}>Edit Profile</Caption> */}
-
                     </View>
+
                 </View>
             </View>
 
@@ -205,7 +205,7 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.iconText}>Edit Profile</Text>
             </TouchableOpacity> */}
 
-            <View style={styles.userInfoSection}>
+            {/* <View style={styles.userInfoSection}>
                 <View style={styles.row}>
                     <Icon name="account" size={20} color="#777777" />
                     {userName ? <Text style={{ marginLeft: 20, color: "#777777" }}>{name}</Text> : <Text>Boş</Text>}
@@ -215,7 +215,7 @@ export default function ProfileScreen({ navigation }) {
                     <Icon name="email" size={20} color="#777777" />
                     {userEmail ? <Text style={{ marginLeft: 20, color: "#777777" }}>{userEmail}</Text> : <Text>Boş</Text>}
                 </View>
-            </View>
+            </View> */}
 
 
 
@@ -224,9 +224,9 @@ export default function ProfileScreen({ navigation }) {
                     borderRightColor: "#dddddd",
                     borderRightWidth: 1
                 }]}>
-                    <Title style={{ color: colors.text }}>{todo.length}</Title>
-                    <Caption style={{ color: colors.text, padding: 5 }}>Todo</Caption>
-                    {
+                    <Title style={{ color: colors.text }}>{todosPersonal.length}</Title>
+                    <Caption style={{ color: colors.text, padding: 5 }}>Personal Todo</Caption>
+                    {/* {
                         todosPersonal || todosBusiness != null
                             ?
 
@@ -235,7 +235,7 @@ export default function ProfileScreen({ navigation }) {
                             :
 
                             null
-                    }
+                    } */}
 
                     {/* <Title style={{ color: colors.text }}>{todosPersonal.length}</Title>
                     <Caption style={{ color: colors.text, padding: 5 }}>Personal</Caption>
@@ -245,8 +245,8 @@ export default function ProfileScreen({ navigation }) {
                 </View>
 
                 <View style={styles.infoBox}>
-                    <Title style={{ color: colors.text, padding: 5 }}>0</Title>
-                    <Caption style={{ color: colors.text }}>Completed</Caption>
+                    <Title style={{ color: colors.text, padding: 5 }}>{todosBusiness.length}</Title>
+                    <Caption style={{ color: colors.text }}>Business Todo</Caption>
                 </View>
             </View>
 
