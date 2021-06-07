@@ -28,8 +28,8 @@ export default function EditProfileScreen({ navigation }) {
     let bs = React.createRef();
     let fall = new Animated.Value(1);
 
-    const fetchUser = () => {
-        firebase.firestore()
+    const fetchUser = async () => {
+        await firebase.firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
             .get()
@@ -226,6 +226,43 @@ export default function EditProfileScreen({ navigation }) {
                 <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
                         <View style={{ height: 100, width: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
+                            {
+                                image != null
+                                    ?
+                                    <ImageBackground source={{ uri: image }} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 15 }}>
+                                        {
+                                            userData.uploadImg == null
+                                                ?
+                                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <Icon name="camera" color="#fff" size={30} style={{
+                                                        opacity: 0.7,
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        borderWidth: 1,
+                                                        borderColor: "#fff",
+                                                        borderRadius: 35,
+                                                    }} />
+                                                </View>
+                                                :
+                                                null
+                                        }
+                                    </ImageBackground>
+
+                                    :
+                                    null
+                                // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                                //     <Icon name="camera" color="#2E9298" size={30} style={{
+                                //         opacity: 0.7,
+                                //         alignItems: 'center',
+                                //         justifyContent: 'center',
+                                //         borderWidth: 1,
+                                //         borderColor: "#fff",
+                                //         borderRadius: 35
+                                //     }} />
+                                // </View>
+
+                            }
+
                             {
                                 userData != null
                                     ?
