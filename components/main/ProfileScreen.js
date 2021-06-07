@@ -7,12 +7,11 @@ import {
     Title,
     Caption,
     Text as PaperText,
-    TouchableRipple
+    TouchableRipple,
+    ActivityIndicator
 } from 'react-native-paper'
 import { useTheme } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-
 
 export default function ProfileScreen({ navigation }) {
     const [name, setName] = useState(null);
@@ -167,26 +166,28 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={styles.userInfoSection}>
                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                   {
-                       img 
-                       ?
-                       <Avatar.Image
-                       source={{uri: img}}
-                       size={80}
-                   />
-                   
-                   :
+                    {
+                        img
+                            ?
+                            <Avatar.Image
+                                source={{ uri: img }}
+                                size={80}
+                            />
 
-                   <Avatar.Image
-                   source={require('../../assets/img/user.png')}
-                   size={80}
-               />
+                            :
+                            <ActivityIndicator size={20} style={userNameStyl}>
+                                <Avatar.Image
+                                    source={require('../../assets/img/user.png')}
+                                    size={80}
+                                />
+                            </ActivityIndicator>
 
-                   }
+
+                    }
                     <View style={{ marginLeft: 20 }}>
                         <Title style={{ color: colors.text, marginTop: 5 }}>
                             {
-                                name ? <Text style={userNameStyl}>{name}</Text> : <Text style={userNameStyl}>Firebase tarafında eklenen kullanıcı;</Text>
+                                name ? <Text style={userNameStyl}>{name}</Text> : <ActivityIndicator size={20} style={userNameStyl} />
                             }
                         </Title>
 

@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, TouchableOpacity, ImageBackground, ActivityIndicator, Text, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, Image } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, ImageBackground, ActivityIndicator, Text, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, Image, Platform } from 'react-native'
 import CustomHeader from '../CustomHeader'
-import {
-    Avatar,
-    Title,
-    Caption,
-    Text as PaperText,
-    TouchableRipple,
-} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 
@@ -79,14 +71,14 @@ export default function EditProfileScreen({ navigation }) {
                     // password: userData.password,
                     uploadImg: imageUrl
                 })
-                user.updateEmail(userData.email)
-                // user.updatePassword(userData.password)
-                Alert.alert(
-                    'Profile Updated!',
-                    'Your profile has been updated successfully.'
-                )
-                console.log('user updated!', user)
-                
+            user.updateEmail(userData.email)
+            // user.updatePassword(userData.password)
+            Alert.alert(
+                'Profile Updated!',
+                'Your profile has been updated successfully.'
+            )
+            console.log('user updated!', user)
+
         } catch (error) {
             console.log('Error: ', error)
         }
@@ -113,9 +105,9 @@ export default function EditProfileScreen({ navigation }) {
         else {
             Alert.alert("You need to give up permission to work!")
         }
-      }
-    
-      const choosePhotoFromLibrary = async () => {
+    }
+
+    const choosePhotoFromLibrary = async () => {
         const { granted } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
 
         if (granted) {
@@ -131,15 +123,15 @@ export default function EditProfileScreen({ navigation }) {
                 setImage(imageUri)
                 bs.current.snapTo(1);
             })
-            
+
         }
-        
+
         else {
             Alert.alert("You need to give up permission to work!")
         }
-      }
+    }
 
-      const uploadImage = async () => {
+    const uploadImage = async () => {
         if (image == null) {
             return null;
         }
@@ -177,38 +169,38 @@ export default function EditProfileScreen({ navigation }) {
             return null;
         }
     }
-    
-      const renderInner = () => (
+
+    const renderInner = () => (
         <View style={styles.panel}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={styles.panelTitle}>Upload Photo</Text>
-            <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-          </View>
-          <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
-            <Text style={styles.panelButtonTitle}>Take Photo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
-            <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.panelButton}
-            onPress={() => bs.current.snapTo(1)}>
-            <Text style={styles.panelButtonTitle}>Cancel</Text>
-          </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+                <Text style={styles.panelTitle}>Upload Photo</Text>
+                <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+            </View>
+            <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+                <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+                <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.panelButton}
+                onPress={() => bs.current.snapTo(1)}>
+                <Text style={styles.panelButtonTitle}>Cancel</Text>
+            </TouchableOpacity>
         </View>
-      );
-    
-      const renderHeader = () => (
+    );
+
+    const renderHeader = () => (
         <View style={styles.header}>
-          <View style={styles.panelHeader}>
-            <View style={styles.panelHandle} />
-          </View>
+            <View style={styles.panelHeader}>
+                <View style={styles.panelHandle} />
+            </View>
         </View>
-      );
-    
-    
-  
- 
+    );
+
+
+
+
     useEffect(() => {
         fetchUser()
     }, [])
@@ -216,73 +208,80 @@ export default function EditProfileScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-          <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
+            <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
 
-        <BottomSheet
-          ref={bs}
-          snapPoints={[330, 0]}
-          renderContent={renderInner}
-          renderHeader={renderHeader}
-          initialSnap={1}
-          callbackNode={fall}
-          enabledGestureInteraction={true}
-        />
-        <Animated.View style={{margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-      }}>
-          <View style={{alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-            <View style={{ height: 100, width: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
-                                {                                    
-                                   userData 
-                                   ?
-                                    <ImageBackground source={{ uri: userData.uploadImg}}  style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 15 }}>
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                        <Icon name="camera" color="#fff" size={30} style={{
-                                            opacity: 0.7,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderWidth: 1,
-                                            borderColor: "#fff",
-                                            borderRadius: 35
-                                        }} />
-                                    </View>
-                                </ImageBackground>
+            <BottomSheet
+                ref={bs}
+                snapPoints={[330, 0]}
+                renderContent={renderInner}
+                renderHeader={renderHeader}
+                initialSnap={1}
+                callbackNode={fall}
+                enabledGestureInteraction={true}
+            />
+            <Animated.View style={{
+                margin: 20,
+                opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+            }}>
+                <View style={{ alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+                        <View style={{ height: 100, width: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
+                            {
+                                userData != null
+                                    ?
+                                    <ImageBackground source={{ uri: userData.uploadImg }} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 15 }}>
+                                        {
+                                            userData.uploadImg == null
+                                                ?
+                                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                                                    <Icon name="camera" color="#fff" size={30} style={{
+                                                        opacity: 0.7,
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        borderWidth: 1,
+                                                        borderColor: "#fff",
+                                                        borderRadius: 35,
+                                                    }} />
+                                                </View>
+                                                :
+                                                null
+                                        }
+                                    </ImageBackground>
 
                                     :
 
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                        <Icon name="camera" color="#fff" size={30} style={{
+                                        <Icon name="camera" color="#2E9298" size={30} style={{
                                             opacity: 0.7,
                                             alignItems: 'center',
-                                            backgroundColor:'red',
                                             justifyContent: 'center',
                                             borderWidth: 1,
                                             borderColor: "#fff",
                                             borderRadius: 35
                                         }} />
                                     </View>
-                                }
-                            </View>
-                            
-            </TouchableOpacity>
-             {/* <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text> */}
-          </View>
-                
-          <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={5}>
-                 <View style={styles.action}>
-                            <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
-                            <TextInput
-                                value={userData ? userData.name : ''}
-                                onChangeText={(txt) => setUserData({ ...userData, name: txt })}
-                                placeholder="Name..."
-                                style={[styles.textInput, { color: colors.text }]}
-                                placeholderTextColor={colors.text}
-                                autoCorrect={false}
-                            />
+
+                            }
+                        </View>
+
+                    </TouchableOpacity>
+                    {/* <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 18 }}>{name}</Text> */}
+                </View>
+
+                <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={5}>
+                    <View style={styles.action}>
+                        <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
+                        <TextInput
+                            value={userData ? userData.name : ''}
+                            onChangeText={(txt) => setUserData({ ...userData, name: txt })}
+                            placeholder="Name..."
+                            style={[styles.textInput, { color: colors.text }]}
+                            placeholderTextColor={colors.text}
+                            autoCorrect={false}
+                        />
                     </View>
 
-                       {/* <View style={styles.action}>
+                    {/* <View style={styles.action}>
                             <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
                             <TextInput
                                 value={userData ? userData.userName : ''}
@@ -293,20 +292,20 @@ export default function EditProfileScreen({ navigation }) {
                                 autoCorrect={false}
                             />
                         </View> */}
-                        <View style={styles.action}>
-                            <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
-                            <TextInput
-                                value={userData ? userData.email : ''}
-                                onChangeText={(txt) => setUserData({ ...userData, email: txt })}
-                                placeholder="Email.."
-                                style={[styles.textInput, { color: colors.text }]}
-                                keyboardType="email-address"
-                                placeholderTextColor={colors.text}
-                                autoCorrect={false}
-                            />
-                        </View>
+                    <View style={styles.action}>
+                        <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
+                        <TextInput
+                            value={userData ? userData.email : ''}
+                            onChangeText={(txt) => setUserData({ ...userData, email: txt })}
+                            placeholder="Email.."
+                            style={[styles.textInput, { color: colors.text }]}
+                            keyboardType="email-address"
+                            placeholderTextColor={colors.text}
+                            autoCorrect={false}
+                        />
+                    </View>
 
-                        {/* <View style={styles.action}>
+                    {/* <View style={styles.action}>
                             <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
                             <TextInput
                                 secureTextEntry={true}
@@ -318,18 +317,19 @@ export default function EditProfileScreen({ navigation }) {
                                 autoCorrect={false}
                             />
                         </View> */}
-                           <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
+                    <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
                         <Text style={styles.panelButtonTitle}>Submit</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
-        </Animated.View>
-      </View>
+            </Animated.View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: Platform.OS === 'ios' ? 15 : null
     },
     commandButton: {
         padding: 15,
