@@ -284,7 +284,7 @@ export default function ProfileScreen({ navigation }) {
             </View>
 
             <View style={{ position: 'absolute', left: 0, right: 0, bottom: 15, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '' }}>V.01</Text>
+                <Text style={{ color: '', fontStyle: 'italic', fontSize: 9, fontWeight: 'bold' }}>V.01</Text>
             </View>
         </SafeAreaView>
     )

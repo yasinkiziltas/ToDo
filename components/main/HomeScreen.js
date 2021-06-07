@@ -29,6 +29,14 @@ export default function HomeScreen({ navigation }) {
         },
     };
 
+
+    const tabsSettings = {
+        uppercase: false,
+        // iconPosition: "top",
+        theme: theme
+    }
+
+
     const { container, containerTitle, containerText, iconButton, iconText, row, rowText } = styles;
 
     const fetchUser = () => {
@@ -92,12 +100,7 @@ export default function HomeScreen({ navigation }) {
                 <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
             </View>
 
-            <Tabs
-                uppercase={false}
-                iconPosition={"top"}
-                style={{ backgroundColor: '#2E9298' }}
-                theme={theme}
-            >
+            <Tabs {...tabsSettings} style={{ backgroundColor: '#2E9298' }}>
 
                 <TabScreen label="Personal" icon="compass" >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
