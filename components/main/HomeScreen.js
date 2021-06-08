@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import {
+    SafeAreaView,
+    View,
+    Text,
+    StatusBar,
+    TouchableOpacity,
+    StyleSheet,
+    FlatList,
+    Animated,
+    TouchableHighlight,
+} from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
@@ -7,6 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Drawer, DefaultTheme } from 'react-native-paper'
 import { Tabs, TabScreen } from 'react-native-paper-tabs';
 import CustomHeader from '../CustomHeader'
+import { SwipeListView } from 'react-native-swipe-list-view'
 
 export default function HomeScreen({ navigation }) {
     const [todos, setTodos] = useState(null)
@@ -14,6 +25,40 @@ export default function HomeScreen({ navigation }) {
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const { colors } = useTheme()
+
+    const VisibleItem = props => {
+        const { data } = props;
+        return (
+            <View>
+                {
+                    data.item.todoType === 'Personal'
+                        ?
+                        <View style={styles.rowFront}>
+                            <TouchableHighlight style={styles.rowFrontVisible}>
+                                <View>
+                                    <Text style={styles.title} numberOfLines={1}>{data.item.todo}</Text>
+                                </View>
+
+                            </TouchableHighlight>
+                        </View>
+                        :
+                        null
+                }
+            </View>
+
+
+        )
+    }
+
+    const renderItem = (data, rowMap) => {
+        return (
+            <VisibleItem data={data} />
+        )
+    }
+
+    const renderHiddenItem = () => {
+
+    }
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -105,7 +150,14 @@ export default function HomeScreen({ navigation }) {
                 <TabScreen label="Personal" icon="compass" >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
                         <Drawer.Section title="TODAY'S TASKS" style={{ alignItems: 'center' }}>
-                            <FlatList
+
+                            <SwipeListView
+                                data={todos}
+                                renderItem={renderItem}
+                                renderHiddenItem={renderHiddenItem}
+                            />
+
+                            {/* <FlatList
                                 style={{ width: '100%' }}
                                 numColumns={1}
                                 horizontal={false}
@@ -120,7 +172,8 @@ export default function HomeScreen({ navigation }) {
                                         :
                                         null
                                 )}
-                            />
+                            /> */}
+
                         </Drawer.Section>
                     </View>
                 </TabScreen>
@@ -206,7 +259,74 @@ const styles = StyleSheet.create({
     },
     rowText: {
         fontSize: 20
-    }
+    },
+    backTextWhite: {
+        color: '#FFF',
+    },
+    rowFront: {
+        backgroundColor: '#FFF',
+        borderRadius: 5,
+        height: 60,
+        margin: 5,
+        marginBottom: 15,
+        shadowColor: '#999',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
+    },
+    rowFrontVisible: {
+        backgroundColor: '#FFF',
+        borderRadius: 5,
+        height: 60,
+        padding: 10,
+        marginBottom: 15,
+    },
+    rowBack: {
+        alignItems: 'center',
+        backgroundColor: '#DDD',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        margin: 5,
+        marginBottom: 15,
+        borderRadius: 5,
+    },
+    backRightBtn: {
+        alignItems: 'flex-end',
+        bottom: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        width: 75,
+        paddingRight: 17,
+    },
+    backRightBtnLeft: {
+        backgroundColor: '#1f65ff',
+        right: 75,
+    },
+    backRightBtnRight: {
+        backgroundColor: 'red',
+        right: 0,
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+    },
+    trash: {
+        height: 25,
+        width: 25,
+        marginRight: 7,
+    },
+    title: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: '#666',
+    },
+    details: {
+        fontSize: 12,
+        color: '#999',
+    },
 })
 
 
