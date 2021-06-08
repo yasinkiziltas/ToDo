@@ -9,6 +9,7 @@ import {
     FlatList,
     Animated,
     TouchableHighlight,
+    Alert,
 } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
@@ -18,9 +19,10 @@ import { Drawer, DefaultTheme } from 'react-native-paper'
 import { Tabs, TabScreen } from 'react-native-paper-tabs';
 import CustomHeader from '../CustomHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default function HomeScreen({ navigation }) {
-    const [todos, setTodos] = useState(null)
+    const [todos, setTodos] = useState([])
     const [isModalVisible, setModalVisible] = useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
@@ -34,9 +36,14 @@ export default function HomeScreen({ navigation }) {
                     data.item.todoType === 'Personal'
                         ?
                         <View style={styles.rowFront}>
-                            <TouchableHighlight style={styles.rowFrontVisible}>
+                            <TouchableHighlight style={[styles.rowFrontVisible, { backgroundColor: colors.card }]}>
                                 <View>
-                                    <Text style={styles.title} numberOfLines={1}>{data.item.todo}</Text>
+                                    <Text style={styles.title} numberOfLines={1}>
+                                        {data.item.title}
+                                    </Text>
+                                    <Text style={styles.details} numberOfLines={1}>
+                                        {data.item.todo}
+                                    </Text>
                                 </View>
 
                             </TouchableHighlight>
@@ -50,15 +57,110 @@ export default function HomeScreen({ navigation }) {
         )
     }
 
+    const closeRow = (rowMap, rowKey) => {
+        if (rowMap[rowKey]) {
+            rowMap[rowKey].closeRow();
+        }
+    };
+
+    const deleteRow = (rowMap, rowKey) => {
+        closeRow(rowMap, rowKey);
+        const newData = [...todos]
+        const prevIndex = todos.findIndex(item => item.key === rowKey)
+        newData.splice(prevIndex, 1);
+        setTodos(newData)
+    }
+
     const renderItem = (data, rowMap) => {
         return (
             <VisibleItem data={data} />
         )
     }
 
-    const renderHiddenItem = () => {
+    const HiddenItemWithActions = props => {
+        const {
+            swipeAnimatedValue,
+            leftActionActivated,
+            rightActionActivated,
+            rowActionAnimatedValue,
+            rowHeightAnimatedValue,
+            onClose,
+            onDelete,
+        } = props;
 
+        if (rightActionActivated) {
+            Animated.spring(rowActionAnimatedValue, {
+                toValue: 500,
+            }).start();
+        }
+
+        return (
+            <Animated.View style={[styles.rowBack, { height: rowHeightAnimatedValue }]}>
+                <Text>Left</Text>
+
+                {/* <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={onClose}>
+                    <Text>Close</Text>
+                </TouchableOpacity> */}
+
+                <Animated.View style={[styles.backRightBtn, styles.backRightBtnRight, {
+                    flex: 1, width: rowActionAnimatedValue
+                }]}>
+                    <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={onDelete}>
+                        <Animated.View style={[styles.trash, {
+                            transform: [
+                                {
+                                    scale: swipeAnimatedValue.interpolate({
+                                        inputRange: [-90, -45],
+                                        outputRange: [1.7, 0],
+                                        extrapolate: 'clamp'
+                                    })
+                                }
+                            ]
+                        }]}>
+                            <MaterialCommunityIcons name="trash-can-outline" size={25} color="#fff" style={styles.trash} />
+                        </Animated.View>
+                    </TouchableOpacity>
+                </Animated.View>
+
+            </Animated.View>
+        )
     }
+
+    const renderHiddenItem = (data, rowMap) => {
+        const rowActionAnimatedValue = new Animated.Value(75);
+        const rowHeightAnimatedValue = new Animated.Value(60);
+
+        return (
+            <HiddenItemWithActions
+                data={data}
+                rowMap={rowMap}
+                rowActionAnimatedValue={rowActionAnimatedValue}
+                rowHeightAnimatedValue={rowHeightAnimatedValue}
+                onClose={() => closeRow(rowMap, data.item.key)}
+                onDelete={() => deleteRow(rowMap, data.item.key)}
+            />
+        )
+    }
+
+    const onRowDidOpen = rowKey => {
+        console.log('This row opened', rowKey);
+    };
+
+    const onLeftActionStatusChange = rowKey => {
+        console.log('onLeftActionStatusChange', rowKey);
+    };
+
+    const onRightActionStatusChange = rowKey => {
+        console.log('onRightActionStatusChange', rowKey);
+    };
+
+    const onRightAction = rowKey => {
+        console.log('onRightAction', rowKey);
+    };
+
+    const onLeftAction = rowKey => {
+        console.log('onLeftAction', rowKey);
+    };
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -119,13 +221,15 @@ export default function HomeScreen({ navigation }) {
                 let todos = snapshot.docs.map(doc => {
                     const data = doc.data();
                     const id = doc.id;
+                    const todo = doc.data().todo;
                     return {
                         id,
                         ...data
                     }
+
                 })
                 setTodos(todos)
-                console.log('Todos: ', todos)
+                console.log(todos)
             })
     }
 
@@ -145,8 +249,34 @@ export default function HomeScreen({ navigation }) {
                 <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
             </View>
 
-            <Tabs {...tabsSettings} style={{ backgroundColor: '#2E9298' }}>
+            {/* {
+                todos != null ?
+                    <Drawer.Section title="MY TASKS" style={{ alignItems: 'center' }} />
+                    :
+                    <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
+            } */}
+            <Drawer.Section title="MY TASKS" style={{ alignItems: 'center' }} />
 
+            <SwipeListView
+                data={todos}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={75}
+                rightOpenValue={-75}
+                disableRightSwipe
+                onRowDidOpen={onRowDidOpen}
+                leftActivationValue={100}
+                rightActivationValue={-200}
+                leftActionValue={0}
+                rightActionValue={-500}
+                onLeftAction={onLeftAction}
+                onRightAction={onRightAction}
+                onLeftActionStatusChange={onLeftActionStatusChange}
+                onRightActionStatusChange={onRightActionStatusChange}
+
+            />
+
+            {/* <Tabs {...tabsSettings} style={{ backgroundColor: '#2E9298' }}>
                 <TabScreen label="Personal" icon="compass" >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
                         <Drawer.Section title="TODAY'S TASKS" style={{ alignItems: 'center' }}>
@@ -155,9 +285,11 @@ export default function HomeScreen({ navigation }) {
                                 data={todos}
                                 renderItem={renderItem}
                                 renderHiddenItem={renderHiddenItem}
+                                leftOpenValue={75}
+                                rightActionValue={150}
                             />
 
-                            {/* <FlatList
+                            <FlatList
                                 style={{ width: '100%' }}
                                 numColumns={1}
                                 horizontal={false}
@@ -172,7 +304,7 @@ export default function HomeScreen({ navigation }) {
                                         :
                                         null
                                 )}
-                            /> */}
+                            />
 
                         </Drawer.Section>
                     </View>
@@ -200,7 +332,7 @@ export default function HomeScreen({ navigation }) {
                         </Drawer.Section>
                     </View>
                 </TabScreen>
-            </Tabs>
+            </Tabs> */}
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
                 <Ionicons size={35} name="add" style={iconText} />
@@ -303,7 +435,7 @@ const styles = StyleSheet.create({
         paddingRight: 17,
     },
     backRightBtnLeft: {
-        backgroundColor: '#1f65ff',
+        backgroundColor: '#2E9298', //1f65ff
         right: 75,
     },
     backRightBtnRight: {
