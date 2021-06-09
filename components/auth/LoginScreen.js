@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
@@ -11,20 +11,10 @@ import * as Yup from 'yup'
 export default function LoginScreen({ navigation }) {
 
     const [email, setEmail] = useState();
+    const [err, setErr] = useState();
     const [password, setPassword] = useState();
 
     const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
-
-
-    // const signIn = () => {
-    //     firebase.auth().signInWithEmailAndPassword(email, password)
-    //         .then((result) => {
-    //             console.log('Success login!: ', result)
-    //         })
-    //         .catch((error) => {
-    //             console.log('Error: ', error)
-    //         })
-    // }
 
     const handleSubmit = values => {
         firebase.auth().signInWithEmailAndPassword(values.email, values.password)
@@ -32,10 +22,9 @@ export default function LoginScreen({ navigation }) {
                 console.log('Success login!: ', result)
             })
             .catch((error) => {
-                console.log('Error: ', error)
+                alert(error)
             })
     }
-
 
     return (
         <Formik
@@ -93,6 +82,7 @@ export default function LoginScreen({ navigation }) {
                         />
 
                         {(errors.password && touched.password) && <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors.password}</Text>}
+                        <Text>{err}</Text>
 
                         <FormButton
                             buttonTitle="Sign In"

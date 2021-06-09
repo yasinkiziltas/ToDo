@@ -30,7 +30,7 @@ export default function RegisterScreen({ navigation }) {
                 console.log('New user: ', result)
             })
             .catch((error) => {
-                console.log('Error: ', error)
+                alert(error)
             })
     }
 
