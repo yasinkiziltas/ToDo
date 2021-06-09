@@ -98,11 +98,7 @@ export default function HomeScreen({ navigation }) {
                         <MaterialCommunityIcons style={{ color: colors.text }} name="account" size={25} />
                         <Text style={{ color: colors.text }}> Personal</Text>
                     </TabHeading>}
-
-                // tabStyle={{ backgroundColor: 'red' }} 
-                // textStyle={{ color: '#fff' }} 
-                // activeTabStyle={{ backgroundColor: 'red' }} 
-                // activeTextStyle={{ color: '#fff', fontWeight: 'normal' }}
+                    style={{ backgroundColor: colors.card, }}
                 >
                     {/* <Drawer.Section title="MY PERSONAL TASKS" style={{ alignItems: 'center' }} /> */}
                     <PersonalTodo />
@@ -113,6 +109,7 @@ export default function HomeScreen({ navigation }) {
                         <MaterialCommunityIcons style={{ color: colors.text }} name="card-account-details-outline" size={25} />
                         <Text style={{ color: colors.text }}> Business</Text>
                     </TabHeading>}
+                    style={{ backgroundColor: colors.card, }}
                 >
                     <BusinessTodo />
                 </Tab>
