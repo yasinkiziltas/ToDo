@@ -17,6 +17,7 @@ import { EventRegister } from 'react-native-event-listeners';
 import LottieView from 'lottie-react-native';
 import ForgotPasswordScreen from './components/auth/ForgotPasswordScreen';
 
+import { Container, Header, Content, Spinner } from 'native-base';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAT5NsVt7pm-JZagSKZtrKP1FZZCQeQbU4",
@@ -78,6 +79,7 @@ export default function App() {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                 <LottieView source={require('./assets/img/todoLaunch.json')} autoPlay loop />
                 {/* <ActivityIndicator size={35} /> */}
+                <Spinner color='#2E9298' size={25} style={{ marginTop: 35 }} />
             </View>
         )
     }
@@ -102,7 +104,5 @@ export default function App() {
                 <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
-
-
     )
 }
