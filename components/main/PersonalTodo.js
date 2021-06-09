@@ -11,7 +11,7 @@ import firebase from 'firebase'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from '@react-navigation/native'
-import { Drawer } from 'react-native-paper'
+
 
 export default function PersonalTodo() {
     const [todos, setTodos] = useState([])
@@ -189,13 +189,25 @@ export default function PersonalTodo() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
             {
-                todos.length > 0 ?
-                    <Drawer.Section title="PERSONAL TASKS" style={{ alignItems: 'center' }} />
+                todos.length > 0
+                    ?
+                    <Text style={{ color: colors.text }} >PERSONAL TASKS</Text>
+
                     :
-                    <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
+                    <Text style={{ color: colors.text }}>NO TASKS</Text>
             }
 
+            <View
+                style={{
+                    marginTop: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'lightgray',
+                    width: 220,
+                }}
+            />
+
             <SwipeListView
+                style={{ marginTop: 15 }}
                 data={todos}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}

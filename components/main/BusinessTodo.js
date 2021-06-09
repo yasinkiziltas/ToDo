@@ -186,13 +186,25 @@ export default function BusinessTodo() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
             {
-                todos.length > 0 ?
-                    <Drawer.Section title="PERSONAL TASKS" style={{ alignItems: 'center' }} />
+                todos.length > 0
+                    ?
+                    <Text style={{ color: colors.text }} >BUSINESS TASKS</Text>
+
                     :
-                    <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
+                    <Text style={{ color: colors.text }}>NO TASKS</Text>
             }
 
+            <View
+                style={{
+                    marginTop: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'lightgray',
+                    width: 220,
+                }}
+            />
+
             <SwipeListView
+                style={{ marginTop: 15 }}
                 data={todos}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}

@@ -100,14 +100,14 @@ export default function HomeScreen({ navigation }) {
                     </TabHeading>}
                     style={{ backgroundColor: colors.card, }}
                 >
-                    {/* <Drawer.Section title="MY PERSONAL TASKS" style={{ alignItems: 'center' }} /> */}
+
                     <PersonalTodo />
                 </Tab>
 
                 <Tab
                     heading={<TabHeading style={{ backgroundColor: colors.border }}>
                         <MaterialCommunityIcons style={{ color: colors.text }} name="card-account-details-outline" size={25} />
-                        <Text style={{ color: colors.text }}> Business</Text>
+                        <Text style={{ color: colors.text }}>  Business</Text>
                     </TabHeading>}
                     style={{ backgroundColor: colors.card, }}
                 >
