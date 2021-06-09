@@ -4,6 +4,8 @@ import FormButton from '../FormButton'
 import FormInput from '../FormInput'
 import firebase from 'firebase'
 import * as Animatable from 'react-native-animatable';
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 export default function RegisterScreen({ navigation }) {
 
@@ -13,18 +15,18 @@ export default function RegisterScreen({ navigation }) {
     const [uploadImg, setUploadImg] = useState()
     const [password, setPassword] = useState();
 
-    const { container, signInText, registerButton, registerButtonText } = styles;
+    const { container, registerButton, registerButtonText } = styles;
 
-    const signUp = () => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+    const handleSubmit = values => {
+        firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
             .then((result) => {
                 firebase.firestore().collection("users")
                     .doc(firebase.auth().currentUser.uid)
                     .set({
-                        name,
+                        name: values.name,
                         // userName,
-                        email,
-                        password,
+                        email: values.email,
+                        password: values.password,
                         uploadImg: null
                     })
                 console.log('New user: ', result)
@@ -35,69 +37,102 @@ export default function RegisterScreen({ navigation }) {
     }
 
     return (
-        <Animatable.View style={container} animation="fadeInUpBig">
+        <Formik
+            initialValues={{ name, email, password }}
+            onSubmit={handleSubmit}
+            validationSchema={
+                Yup.object().shape({
 
-            <Animatable.View animation="fadeInLeftBig">
-                <Image source={require('../../assets/img/signup2.png')}
-                    resizeMode="contain"
-                    style={styles.logo}
-                />
-            </Animatable.View>
+                    name: Yup.string()
+                        .required(),
 
-            {/* <Text style={signInText}>Sign Up to continue</Text> */}
+                    email: Yup.string()
+                        .email()
+                        .required(),
 
-            <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={2}>
+                    password: Yup.string()
+                        .min(7, 'Password is too short - should be 7 chars minimum')
+                        .required('No password provided.')
+                })
+            }
+        >
+            {({ values, handleChange, handleSubmit, errors, touched, setFieldTouched }) => (
+                <Animatable.View style={container} animation="fadeInUpBig">
 
-                <FormInput
-                    labelValue={name}
-                    onChangeText={(userName) => setName(userName)}
-                    placeholderText="Name"
-                    iconType="user"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+                    <Animatable.View animation="fadeInLeftBig">
+                        <Image source={require('../../assets/img/signup2.png')}
+                            resizeMode="contain"
+                            style={styles.logo}
+                        />
+                    </Animatable.View>
 
-                {/* <FormInput
-                    labelValue={userName}
-                    onChangeText={(userName) => setUserName(userName)}
-                    placeholderText="User Name"
-                    iconType="user"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                /> */}
+                    {/* <Text style={signInText}>Sign Up to continue</Text> */}
 
-                <FormInput
-                    labelValue={email}
-                    onChangeText={(userEmail) => setEmail(userEmail)}
-                    placeholderText="Email"
-                    iconType="mail"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-                <FormInput
-                    labelValue={password}
-                    onChangeText={(userPassword) => setPassword(userPassword)}
-                    placeholderText="Password"
-                    iconType="lock"
-                    secureTextEntry={true}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+                    <KeyboardAvoidingView style={{ justifyContent: 'center', alignItems: 'center', }} behavior="padding" keyboardVerticalOffset={2}>
 
-                <FormButton
-                    buttonTitle="Register"
-                    onPress={() => signUp()}
-                />
+                        <FormInput
+                            onBlur={() => setFieldTouched('name')}
+                            labelValue={values.name}
+                            onChangeText={handleChange('name')}
+                            placeholderText="Name"
+                            iconType="user"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
 
-            </KeyboardAvoidingView>
+                        {(errors.name && touched.name) && <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors.name}</Text>}
 
+                        {/* <FormInput
+                         labelValue={userName}
+                         onChangeText={(userName) => setUserName(userName)}
+                         placeholderText="User Name"
+                         iconType="user"
+                         autoCapitalize="none"
+                        autoCorrect={false}
+                        /> */}
 
-            <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
-                <Text style={registerButtonText}>Go Back</Text>
-            </TouchableOpacity>
+                        <FormInput
+                            onBlur={() => setFieldTouched('email')}
+                            labelValue={values.email}
+                            onChangeText={handleChange('email')}
+                            placeholderText="Email"
+                            iconType="mail"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
 
-        </Animatable.View >
+                        {(errors.email && touched.email) && <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors.email}</Text>}
+
+                        <FormInput
+                            onBlur={() => setFieldTouched('password')}
+                            labelValue={values.password}
+                            onChangeText={handleChange('password')}
+                            placeholderText="Password"
+                            iconType="lock"
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+
+                        {(errors.password && touched.password) && <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors.password}</Text>}
+
+                        <FormButton
+                            buttonTitle="Register"
+                            onPress={() => handleSubmit()}
+                        />
+
+                    </KeyboardAvoidingView>
+
+                    <TouchableOpacity style={registerButton} onPress={() => navigation.goBack()}>
+                        <Text style={registerButtonText}>Go Back</Text>
+                    </TouchableOpacity>
+
+                </Animatable.View >
+            )}
+
+        </Formik>
+
     )
 }
 

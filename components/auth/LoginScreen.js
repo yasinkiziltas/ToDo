@@ -9,12 +9,10 @@ import * as Yup from 'yup'
 
 
 export default function LoginScreen({ navigation }) {
-
     const [email, setEmail] = useState();
-    const [err, setErr] = useState();
     const [password, setPassword] = useState();
 
-    const { container, forgotButton, forgotText, signInText, registerButton, registerButtonText, registerButtonTextInput } = styles;
+    const { container, forgotButton, forgotText, registerButton, registerButtonText, registerButtonTextInput } = styles;
 
     const handleSubmit = values => {
         firebase.auth().signInWithEmailAndPassword(values.email, values.password)
@@ -82,7 +80,6 @@ export default function LoginScreen({ navigation }) {
                         />
 
                         {(errors.password && touched.password) && <Text style={{ color: 'red', fontWeight: 'bold' }}>{errors.password}</Text>}
-                        <Text>{err}</Text>
 
                         <FormButton
                             buttonTitle="Sign In"
