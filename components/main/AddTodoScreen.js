@@ -20,7 +20,7 @@ export default function AddTodoScreen({ navigation }) {
     const ref_input3 = useRef();
     const ref_input4 = useRef();
 
-
+    const { InputField, addPostButton,addPostButtonText, } = styles;
 
     const submitTodo = async () => {
         var datet = new Date().getDate();
@@ -58,7 +58,7 @@ export default function AddTodoScreen({ navigation }) {
                 <TextInput
                     returnKeyType="next"
                     // borderBottomWidth: 1, borderColor: '#2E9298', 
-                    style={[styles.InputField, { marginBottom: 25 }]}
+                    style={[InputField, { marginBottom: 25 }]}
                     placeholder="Enter todo title.."
                     placeholderTextColor="gray"
                     multiline
@@ -73,7 +73,7 @@ export default function AddTodoScreen({ navigation }) {
 
                 <TextInput
                     returnKeyType="next"
-                    style={[styles.InputField, {marginBottom: 25 }]}
+                    style={[InputField, {marginBottom: 25 }]}
                     placeholder="Enter new todo.."
                     //placeholderTextColor={colors.text}
                     placeholderTextColor="gray"
@@ -86,7 +86,7 @@ export default function AddTodoScreen({ navigation }) {
                 />
 
                 <DatePicker
-                    style={styles.InputField}
+                    style={InputField}
                     date={date}
                     placeholder="Select date.."
                     onDateChange={(date) => {
@@ -113,8 +113,8 @@ export default function AddTodoScreen({ navigation }) {
                 {/* <Text>{todoType ? todoType : ''}</Text> */}
 
 
-                <TouchableOpacity style={styles.addPostButton} onPress={submitTodo}>
-                    <Text style={[styles.addPostButtonText]}>New task  ^</Text>
+                <TouchableOpacity style={addPostButton} onPress={submitTodo}>
+                    <Text style={addPostButtonText}>New task  ^</Text>
                 </TouchableOpacity>
             </View>
 
@@ -134,15 +134,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: "90%",
     },
-
-    // addPostButton: {
-    //     flexDirection: 'row',
-    //     justifyContent: 'center',
-    //     backgroundColor: '#2e64e515',
-    //     borderRadius: 5,
-    //     padding: 10
-    // },
-
+   
     addPostButton: {
         backgroundColor: '#2E9298',
         borderRadius: 30,
