@@ -76,6 +76,34 @@ export default function HomeScreen({ navigation }) {
             })
     }
 
+    // const fetchTodos = async () => {
+    //     var date = new Date().getDate();
+    //     var month = new Date().getMonth() + 1;
+    //     var year = new Date().getFullYear();
+    //     setCurrentDate(year + '-' + '0' + month + '-' + date);
+    //     console.log(currentDate)
+
+    //     await firebase.firestore()
+    //         .collection("todos")
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .collection("userTodos")
+    //         .where('date', '==', currentDate)
+    //         .get()
+    //         .then((snapshot) => {
+    //             let todos = snapshot.docs.map(doc => {
+    //                 const data = doc.data();
+    //                 const id = doc.id;
+    //                 return {
+    //                     id,
+    //                     ...data
+    //                 }
+
+    //             })
+    //             setTodos(todos)
+    //             console.log(todos)
+    //         })
+    // }
+
     const fetchTodos = async () => {
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
@@ -83,25 +111,30 @@ export default function HomeScreen({ navigation }) {
         setCurrentDate(year + '-' + '0' + month + '-' + date);
         console.log(currentDate)
 
+        const list = []
+
         await firebase.firestore()
             .collection("todos")
             .doc(firebase.auth().currentUser.uid)
             .collection("userTodos")
             .where('date', '==', currentDate)
             .get()
-            .then((snapshot) => {
-                let todos = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    return {
-                        id,
-                        ...data
-                    }
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
 
-                })
-                setTodos(todos)
-                console.log(todos)
-            })
+                    const { date, title, todo, todoTime, todoType, userId } = doc.data();
+                    list.push({
+                        id: doc.id,
+                        date,
+                        title,
+                        todo,
+                        todoTime,
+                        todoType,
+                        userId
+                    })
+                 })
+             })
+             setTodos(list)
     }
 
     const handleDelete = (todoId) => {
