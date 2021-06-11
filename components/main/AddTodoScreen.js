@@ -25,7 +25,7 @@ export default function AddTodoScreen({ navigation }) {
     const submitTodo = async () => {
         var datet = new Date().getDate();
         var month = new Date().getMonth() + 1;
-        var year = new Date().getFullYear()
+        var year = new Date().getFullYear();
         setCurrentDate(datet + '/' + month + '/' + year);
 
         await firebase.firestore()

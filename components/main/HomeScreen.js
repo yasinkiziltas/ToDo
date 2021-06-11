@@ -208,7 +208,7 @@ export default function HomeScreen({ navigation }) {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25, }}>
                         {
-                            todos.length > 0 ?
+                            todos.length > 0 && todos.todoTime == currentDate ?
                                 <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
                                 :
                                 <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
