@@ -7,11 +7,8 @@ import {
     TouchableOpacity,
     StyleSheet,
     FlatList,
-    Animated,
-    TouchableHighlight,
     Alert,
 } from 'react-native'
-import Modal from 'react-native-modal';
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -27,7 +24,6 @@ import BusinessTodo from './BusinessTodo'
 export default function HomeScreen({ navigation }) {
     const [todos, setTodos] = useState([])
     const [deleted, setDeleted] = useState(null)
-    const [isModalVisible, setModalVisible] = useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const [currentDate, setCurrentDate] = useState('');
@@ -204,7 +200,8 @@ export default function HomeScreen({ navigation }) {
 
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         {
-                            todos.length > 0 ?
+                            // && todos.todoTime == currentDate 
+                            todos.length > 0  ?
                                 <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
                                 :
                                 <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
@@ -239,7 +236,8 @@ export default function HomeScreen({ navigation }) {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25, }}>
                         {
-                            todos.length > 0 && todos.todoTime == currentDate ?
+                            // && todos.todoTime == currentDate
+                            todos.length > 0  ?
                                 <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
                                 :
                                 <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
@@ -263,10 +261,8 @@ export default function HomeScreen({ navigation }) {
                         />
 
                     </View>
-
-
+                                
                 </Tab>
-
             </Tabs>
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
@@ -309,30 +305,6 @@ const styles = StyleSheet.create({
     iconText: {
         color: 'white'
     },
+   
 })
-
-
-/* <Modal isVisible={isModalVisible} style={styles.modalView}>
-                <View style={{ flex: 1 }}>
-                    <Button
-                        style={{ flex: 1 }}
-                        title="Hoşgeldiniz!"
-                        onPress={toggleModal} />
-                </View>
-            </Modal> */
-
-
-            // const styles = StyleSheet.create({
-            //     modalView: {
-            //         margin: 20,
-            //         alignItems: "center",
-            //         shadowColor: "#000",
-            //         shadowOffset: {
-            //             width: 0,
-            //             height: 2
-            //         },
-            //         shadowOpacity: 0.25,
-            //         shadowRadius: 4,
-            //         elevation: 5
-            //     }
-            // })
+ 
