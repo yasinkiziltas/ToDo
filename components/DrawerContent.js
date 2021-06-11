@@ -44,8 +44,8 @@ export default function DrawerContent({ props, navigation }) {
     const { colors } = useTheme()
 
 
-    const fetchUser = () => {
-        firebase.firestore()
+    const fetchUser = async () => {
+        await firebase.firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
             .get()
@@ -68,9 +68,9 @@ export default function DrawerContent({ props, navigation }) {
             })
     }
 
-    const fetchPosts = () => {
+    const fetchPosts = async () => {
         try {
-            firebase.firestore()
+            await firebase.firestore()
                 .collection("todos")
                 .doc(firebase.auth().currentUser.uid)
                 .collection("userTodos")
@@ -93,22 +93,13 @@ export default function DrawerContent({ props, navigation }) {
 
     }
 
-
     useEffect(() => {
         fetchUser()
         fetchPosts()
     }, [])
 
-
-
-
-    // const toggleTheme = () => {
-    //     setIsDarkTheme(!isDarkTheme)
-    // }
-
     return (
         <View style={{ flex: 1 }}>
-
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
