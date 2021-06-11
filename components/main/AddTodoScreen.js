@@ -57,8 +57,9 @@ export default function AddTodoScreen({ navigation }) {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TextInput
                     returnKeyType="next"
-                    style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
-                    placeholder="Enter new title.."
+                    // borderBottomWidth: 1, borderColor: '#2E9298', 
+                    style={[styles.InputField, { marginBottom: 25 }]}
+                    placeholder="Enter todo title.."
                     placeholderTextColor="gray"
                     multiline
                     format="DD-MM-YYYY"
@@ -72,8 +73,8 @@ export default function AddTodoScreen({ navigation }) {
 
                 <TextInput
                     returnKeyType="next"
-                    style={[styles.InputField, { borderBottomWidth: 1, borderColor: '#2E9298', marginBottom: 25, }]}
-                    placeholder="Enter new task.."
+                    style={[styles.InputField, {marginBottom: 25 }]}
+                    placeholder="Enter new todo.."
                     //placeholderTextColor={colors.text}
                     placeholderTextColor="gray"
                     multiline
@@ -96,7 +97,7 @@ export default function AddTodoScreen({ navigation }) {
                     cancelBtnText="Cancel"
                 />
 
-                <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', borderWidth:1, borderRadius: 3 }}>
                     <RNPickerSelect
                         style={{ fontWeight: 'bold' }}
                         placeholder={{ label: "Select your todo type: ", value: null }}
