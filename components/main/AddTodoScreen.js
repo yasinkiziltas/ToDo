@@ -38,7 +38,7 @@ export default function AddTodoScreen({ navigation }) {
                 todo: todo,
                 date: date,
                 // todoTime: firebase.firestore.Timestamp.fromDate(new Date()),
-                todoTime: currentDate,
+                // todoTime: currentDate,
                 todoType: todoType
             }).then(() => {
                 console.log('Todo Added!')

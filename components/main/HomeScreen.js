@@ -80,20 +80,19 @@ export default function HomeScreen({ navigation }) {
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
         var year = new Date().getFullYear();
-        setCurrentDate(date + '/' + month + '/' + year);
+        setCurrentDate(year + '-' + '0' + month + '-' + date);
         console.log(currentDate)
 
         await firebase.firestore()
             .collection("todos")
             .doc(firebase.auth().currentUser.uid)
             .collection("userTodos")
-            .where('todoTime', '==', currentDate)
+            .where('date', '==', currentDate)
             .get()
             .then((snapshot) => {
                 let todos = snapshot.docs.map(doc => {
                     const data = doc.data();
                     const id = doc.id;
-                    const todo = doc.data().todo;
                     return {
                         id,
                         ...data
@@ -148,7 +147,6 @@ export default function HomeScreen({ navigation }) {
         fetchUser()
         setDeleted(false)
 
-        console.log(currentDate)
     }, [deleted])
 
 
