@@ -20,7 +20,9 @@ export default function PersonalTodo({ item, onDelete }) {
         modalTextTitle,
         button,
         buttonClose,
-        textStyle
+        textStyle,
+        editBtn,
+        editBtnIcon,
     } = styles;
 
     const toggleModal = () => {
@@ -32,13 +34,14 @@ export default function PersonalTodo({ item, onDelete }) {
             {
                 item.todoType === 'Personal'
                 ?
-                <TouchableOpacity onPress={toggleModal}>
+                // onPress={toggleModal}
+                <TouchableOpacity onPress={() => {}}>  
                   <Modal
                     animationType="slide"
                     transparent={true}
                      visible={isModalVisible}
                      onRequestClose={() => {
-                     console.log('Modal has been closed.');
+                    //  console.log('Detail has been closed.');
           }}>
                 <View style={centeredView}>
                     <View style={modalView}>
@@ -69,9 +72,14 @@ export default function PersonalTodo({ item, onDelete }) {
                             <Text style={title}>{item.title}</Text>
                             <Text style={details}>{item.todo}</Text>
 
-                            <TouchableOpacity style={deleteBtn} onPress={() => onDelete(item.id)}>
-                                <MaterialCommunityIcons style={deleteBtnIcon} name="delete" size={25} />
+                            <TouchableOpacity style={editBtn} onPress={toggleModal}>
+                                <MaterialCommunityIcons style={editBtnIcon} name="pencil" size={30} />
                             </TouchableOpacity>
+
+                            <TouchableOpacity style={deleteBtn} onPress={() => onDelete(item.id)}>
+                                <MaterialCommunityIcons style={deleteBtnIcon} name="delete-circle" size={30} />
+                            </TouchableOpacity>
+                          
                         </Card>
                     </View>
                 </TouchableOpacity>
@@ -83,6 +91,17 @@ export default function PersonalTodo({ item, onDelete }) {
 }
 
 const styles = StyleSheet.create({
+    editBtn:{
+        position: 'absolute', 
+        right:30, 
+        margin:5,
+        paddingRight:15
+    },
+    editBtnIcon:{
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#4BB543'
+    },
     deleteBtn: {
         margin: 5,
         position: 'absolute',
@@ -91,7 +110,7 @@ const styles = StyleSheet.create({
     deleteBtnIcon: {
         fontWeight: 'bold',
         textAlign: 'center',
-        color: '#2E9298'
+        color: 'red'
     },
     title: {
         fontSize: 14,
