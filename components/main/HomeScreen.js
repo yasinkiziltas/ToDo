@@ -6,6 +6,10 @@ import {
     StatusBar,
     TouchableOpacity,
     StyleSheet,
+    FlatList,
+    Animated,
+    TouchableHighlight,
+    Alert,
 } from 'react-native'
 import Modal from 'react-native-modal';
 import firebase from 'firebase'
@@ -13,17 +17,22 @@ import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Drawer, DefaultTheme } from 'react-native-paper'
 import CustomHeader from '../CustomHeader'
+import { SwipeListView } from 'react-native-swipe-list-view'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Tab, Tabs, Icon, TabHeading } from 'native-base';
 
 import PersonalTodo from './PersonalTodo'
 import BusinessTodo from './BusinessTodo'
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
 export default function HomeScreen({ navigation }) {
+    const [todos, setTodos] = useState([])
+    const [deleted, setDeleted] = useState(null)
+    const [isModalVisible, setModalVisible] = useState(false);
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [currentDate, setCurrentDate] = useState('');
     const { colors } = useTheme()
+
 
     const theme = {
         ...DefaultTheme,
@@ -42,20 +51,11 @@ export default function HomeScreen({ navigation }) {
         theme: theme,
     }
 
-    const tabIcon = () => {
-        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', alignSelf: 'center', justifyContent: 'center' }}>
-            <View>
-                <MaterialCommunityIcons name="account" size={30} color="red" />
-            </View>
-        </View>
 
-    }
+    const { container, containerTitle, containerText, iconButton, iconText, row, rowText } = styles;
 
-
-    const { container, containerTitle, containerText, iconButton, iconText } = styles;
-
-    const fetchUser = () => {
-        firebase.firestore()
+    const fetchUser = async () => {
+        await firebase.firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
             .get()
@@ -76,9 +76,80 @@ export default function HomeScreen({ navigation }) {
             })
     }
 
+    const fetchTodos = async () => {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        setCurrentDate(date + '/' + month + '/' + year);
+        console.log(currentDate)
+
+        await firebase.firestore()
+            .collection("todos")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userTodos")
+            .where('todoTime', '==', currentDate)
+            .get()
+            .then((snapshot) => {
+                let todos = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    const todo = doc.data().todo;
+                    return {
+                        id,
+                        ...data
+                    }
+
+                })
+                setTodos(todos)
+                console.log(todos)
+            })
+    }
+
+    const handleDelete = (todoId) => {
+        Alert.alert(
+            'Delete todo',
+            'Are you sure?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed!'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Confirm',
+                    onPress: () => deleteTodo(todoId),
+                },
+            ],
+            { cancelable: false },
+        );
+    };
+
+    const deleteTodo = async (todoId) => {
+        console.log('Current todo Id: ', todoId);
+
+        await firebase.firestore()
+            .collection("todos")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userTodos")
+            .doc(todoId)
+            .delete()
+            .then(() => {
+                Alert.alert(
+                    'Todo deleted!',
+                    'Your todo has been deleted successfully!',
+                );
+                setDeleted(true)
+            })
+            .catch((e) => console.log('Error deleting todo.', e));
+    };
+
     useEffect(() => {
+        fetchTodos()
         fetchUser()
-    }, [])
+        setDeleted(false)
+
+        console.log(currentDate)
+    }, [deleted])
 
 
     return (
@@ -90,9 +161,8 @@ export default function HomeScreen({ navigation }) {
                 <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
             </View>
 
-            {/* <Drawer.Section title="MY TASKS" style={{ alignItems: 'center' }} /> */}
-
-            <Tabs locked tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
+            {/* locked */}
+            <Tabs tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
                 <Tab
                     heading={<TabHeading style={{ backgroundColor: colors.border }}>
                         <MaterialCommunityIcons style={{ color: colors.text }} name="account" size={25} />
@@ -101,7 +171,32 @@ export default function HomeScreen({ navigation }) {
                     style={{ backgroundColor: colors.card, }}
                 >
 
-                    <PersonalTodo />
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
+                        {
+                            todos.length > 0 ?
+                                <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
+                                :
+                                <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
+                        }
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', width: 200, }}>
+                            <View style={{ flex: 1, height: 1, backgroundColor: 'gray' }} />
+                        </View>
+
+                        <FlatList
+                            style={{ width: '100%' }}
+                            numColumns={1}
+                            horizontal={false}
+                            data={todos}
+                            renderItem={({ item }) => (
+                                <PersonalTodo
+                                    item={item}
+                                    onDelete={handleDelete}
+                                />
+                            )}
+                        />
+
+                    </View>
                 </Tab>
 
                 <Tab
@@ -111,17 +206,43 @@ export default function HomeScreen({ navigation }) {
                     </TabHeading>}
                     style={{ backgroundColor: colors.card, }}
                 >
-                    <BusinessTodo />
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25, }}>
+                        {
+                            todos.length > 0 ?
+                                <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
+                                :
+                                <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
+                        }
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', width: 200, backgroundColor: 'gray' }}>
+                            <View style={{ flex: 1, height: 1, backgroundColor: 'gray' }} />
+                        </View>
+
+                        <FlatList
+                            style={{ width: '100%', }}
+                            numColumns={1}
+                            horizontal={false}
+                            data={todos}
+                            renderItem={({ item }) => (
+                                <BusinessTodo
+                                    item={item}
+                                    onDelete={handleDelete}
+                                />
+                            )}
+                        />
+
+                    </View>
+
+
                 </Tab>
 
             </Tabs>
-
 
             <TouchableOpacity style={iconButton} onPress={() => navigation.navigate('Add')}>
                 <Ionicons size={35} name="add" style={iconText} />
             </TouchableOpacity>
 
-        </SafeAreaView >
+        </SafeAreaView>
 
     )
 }
@@ -138,11 +259,6 @@ const styles = StyleSheet.create({
     containerText: {
         fontSize: 28,
         fontWeight: 'bold',
-    },
-    todoContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     iconButton: {
         backgroundColor: '#2E9298',

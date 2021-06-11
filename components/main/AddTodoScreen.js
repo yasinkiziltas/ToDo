@@ -10,6 +10,7 @@ import RNPickerSelect from "react-native-picker-select";
 export default function AddTodoScreen({ navigation }) {
 
     const [todo, setTodo] = useState(null);
+    const [currentDate, setCurrentDate] = useState('');
     const [todoType, setTodoType] = useState(null)
     const [title, setTitle] = useState(null);
     const [date, setDate] = useState(null)
@@ -19,8 +20,15 @@ export default function AddTodoScreen({ navigation }) {
     const ref_input3 = useRef();
     const ref_input4 = useRef();
 
-    const submitTodo = () => {
-        firebase.firestore()
+
+
+    const submitTodo = async () => {
+        var datet = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear()
+        setCurrentDate(datet + '/' + month + '/' + year);
+
+        await firebase.firestore()
             .collection('todos')
             .doc(firebase.auth().currentUser.uid)
             .collection("userTodos")
@@ -29,7 +37,8 @@ export default function AddTodoScreen({ navigation }) {
                 title: title,
                 todo: todo,
                 date: date,
-                todoTime: firebase.firestore.Timestamp.fromDate(new Date()),
+                // todoTime: firebase.firestore.Timestamp.fromDate(new Date()),
+                todoTime: currentDate,
                 todoType: todoType
             }).then(() => {
                 console.log('Todo Added!')
