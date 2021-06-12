@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+//537 052 6862
 import {
     SafeAreaView,
     View,
@@ -8,6 +9,7 @@ import {
     StyleSheet,
     FlatList,
     Alert,
+    ScrollView
 } from 'react-native'
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
@@ -17,6 +19,7 @@ import CustomHeader from '../CustomHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Tab, Tabs, Icon, TabHeading } from 'native-base';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 import PersonalTodo from './PersonalTodo'
 import BusinessTodo from './BusinessTodo'
@@ -24,6 +27,7 @@ import BusinessTodo from './BusinessTodo'
 export default function HomeScreen({ navigation }) {
     const [todos, setTodos] = useState([])
     const [deleted, setDeleted] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
     const [currentDate, setCurrentDate] = useState('');
@@ -72,34 +76,6 @@ export default function HomeScreen({ navigation }) {
             })
     }
 
-    // const fetchTodos = async () => {
-    //     var date = new Date().getDate();
-    //     var month = new Date().getMonth() + 1;
-    //     var year = new Date().getFullYear();
-    //     setCurrentDate(year + '-' + '0' + month + '-' + date);
-    //     console.log(currentDate)
-
-    //     await firebase.firestore()
-    //         .collection("todos")
-    //         .doc(firebase.auth().currentUser.uid)
-    //         .collection("userTodos")
-    //         .where('date', '==', currentDate)
-    //         .get()
-    //         .then((snapshot) => {
-    //             let todos = snapshot.docs.map(doc => {
-    //                 const data = doc.data();
-    //                 const id = doc.id;
-    //                 return {
-    //                     id,
-    //                     ...data
-    //                 }
-
-    //             })
-    //             setTodos(todos)
-    //             console.log(todos)
-    //         })
-    // }
-
     const fetchTodos = async () => {
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
@@ -128,9 +104,13 @@ export default function HomeScreen({ navigation }) {
                         todoType,
                         userId
                     })
-                 })
-             })
-             setTodos(list)
+                })
+            })
+        setTodos(list)
+
+        if (loading) {
+            setLoading(false)
+        }
     }
 
     const handleDelete = (todoId) => {
@@ -181,6 +161,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <SafeAreaView style={container}>
+
             <StatusBar hidden />
             <CustomHeader title="" navigation={navigation} isHome={true} />
 
@@ -198,10 +179,11 @@ export default function HomeScreen({ navigation }) {
                     style={{ backgroundColor: colors.card, }}
                 >
 
+
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         {
                             // && todos.todoTime == currentDate 
-                            todos.length > 0  ?
+                            todos.length > 0 ?
                                 <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
                                 :
                                 <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
@@ -211,18 +193,33 @@ export default function HomeScreen({ navigation }) {
                             <View style={{ flex: 1, height: 1, backgroundColor: 'gray' }} />
                         </View>
 
-                        <FlatList
-                            style={{ width: '100%' }}
-                            numColumns={1}
-                            horizontal={false}
-                            data={todos}
-                            renderItem={({ item }) => (
-                                <PersonalTodo
-                                    item={item}
-                                    onDelete={handleDelete}
+                        {
+                            loading ?
+                                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center', }}>
+                                    <SkeletonPlaceholder>
+                                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
+                                            <View style={{ marginLeft: 20 }}>
+                                                <View style={{ width: 300, height: 30, borderRadius: 4 }} />
+                                                <View style={{ marginTop: 6, width: 300, height: 30, borderRadius: 4 }} />
+                                            </View>
+                                        </View>
+                                    </SkeletonPlaceholder>
+                                </ScrollView>
+                                :
+                                <FlatList
+                                    style={{ width: '100%' }}
+                                    numColumns={1}
+                                    horizontal={false}
+                                    data={todos}
+                                    renderItem={({ item }) => (
+                                        <PersonalTodo
+                                            item={item}
+                                            onDelete={handleDelete}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+
+                        }
 
                     </View>
                 </Tab>
@@ -237,7 +234,7 @@ export default function HomeScreen({ navigation }) {
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 25, }}>
                         {
                             // && todos.todoTime == currentDate
-                            todos.length > 0  ?
+                            todos.length > 0 ?
                                 <Text style={{ color: colors.text, padding: 10, fontWeight: 'bold' }}>TODAY TASKS</Text>
                                 :
                                 <Drawer.Section title="NO TASKS" style={{ alignItems: 'center' }} />
@@ -246,6 +243,7 @@ export default function HomeScreen({ navigation }) {
                         <View style={{ flexDirection: 'row', alignItems: 'center', width: 200, backgroundColor: 'gray' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: 'gray' }} />
                         </View>
+
 
                         <FlatList
                             style={{ width: '100%', }}
@@ -261,7 +259,7 @@ export default function HomeScreen({ navigation }) {
                         />
 
                     </View>
-                                
+
                 </Tab>
             </Tabs>
 
@@ -305,6 +303,5 @@ const styles = StyleSheet.create({
     iconText: {
         color: 'white'
     },
-   
+
 })
- 
