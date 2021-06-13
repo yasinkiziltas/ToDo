@@ -9,6 +9,7 @@ import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from "react-native-picker-select";
 
 export default function PersonalTodo({ item, onDelete }) {
+  const [todoType, setTodoType] = useState(null);
   const { colors } = useTheme()
   const [isModalVisible, setModalVisible] = useState(false);
   const
@@ -32,10 +33,6 @@ export default function PersonalTodo({ item, onDelete }) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  const test = () => {
-    alert('Test')
-  }
 
   return (
     <View>
@@ -75,19 +72,17 @@ export default function PersonalTodo({ item, onDelete }) {
                   <Text style={[modalTextTitle, { paddingTop: 25 }]}>Todo Type</Text>
                   {/* <Text style={modalText}>{item.todoType}</Text> */}
 
-                  <View style={{ marginLeft: 30, fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', }}>
-                    <RNPickerSelect
 
-                      placeholder={{ label: "Select your todo type: ", value: null }}
-                      onValueChange={(value) => setTodoType(value)}
-                      items={[
-                        { label: "Personal", value: "Personal" },
-                        { label: "Business", value: "Business" },
-                      ]}
-                    />
-                  </View>
-
-
+                  <RNPickerSelect
+                    style={{ inputAndroid: { marginTop: 15, color: 'black' } }}
+                    useNativeAndroidPickerStyle={false}
+                    placeholder={{ label: "Select your todo type: ", value: null }}
+                    onValueChange={(value) => setTodoType(value)}
+                    items={[
+                      { label: "Personal", value: "Personal" },
+                      { label: "Business", value: "Business" },
+                    ]}
+                  />
 
                   <Pressable
                     style={[button, buttonClose]}

@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }) {
         var month = new Date().getMonth() + 1;
         var year = new Date().getFullYear();
         setCurrentDate(year + '-' + '0' + month + '-' + date);
-        console.log(currentDate)
+        // console.log(currentDate)
 
         const list = []
 
