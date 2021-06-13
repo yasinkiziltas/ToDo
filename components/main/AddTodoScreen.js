@@ -20,7 +20,7 @@ export default function AddTodoScreen({ navigation }) {
     const ref_input3 = useRef();
     const ref_input4 = useRef();
 
-    const { InputField, addPostButton,addPostButtonText, } = styles;
+    const { InputField, addPostButton, addPostButtonText, } = styles;
 
     const submitTodo = async () => {
         var datet = new Date().getDate();
@@ -37,8 +37,6 @@ export default function AddTodoScreen({ navigation }) {
                 title: title,
                 todo: todo,
                 date: date,
-                // todoTime: firebase.firestore.Timestamp.fromDate(new Date()),
-                // todoTime: currentDate,
                 todoType: todoType
             }).then(() => {
                 console.log('Todo Added!')
@@ -58,7 +56,7 @@ export default function AddTodoScreen({ navigation }) {
                 <TextInput
                     returnKeyType="next"
                     // borderBottomWidth: 1, borderColor: '#2E9298', 
-                    style={[InputField, { marginBottom: 25 }]}
+                    style={InputField}
                     placeholder="Enter todo title.."
                     placeholderTextColor="gray"
                     multiline
@@ -73,7 +71,7 @@ export default function AddTodoScreen({ navigation }) {
 
                 <TextInput
                     returnKeyType="next"
-                    style={[InputField, {marginBottom: 25 }]}
+                    style={InputField}
                     placeholder="Enter new todo.."
                     //placeholderTextColor={colors.text}
                     placeholderTextColor="gray"
@@ -97,9 +95,10 @@ export default function AddTodoScreen({ navigation }) {
                     cancelBtnText="Cancel"
                 />
 
-                <View style={{ alignItems: 'center', justifyContent: 'center', borderWidth:1, borderRadius: 3 }}>
+                <View>
                     <RNPickerSelect
-                        style={{ fontWeight: 'bold' }}
+                        style={{ inputAndroid: { marginTop: 15, color: 'black' } }}
+                        useNativeAndroidPickerStyle={false}
                         placeholder={{ label: "Select your todo type: ", value: null }}
                         onValueChange={(value) => setTodoType(value)}
                         items={[
@@ -108,6 +107,7 @@ export default function AddTodoScreen({ navigation }) {
                         ]}
                     />
                 </View>
+
 
 
                 {/* <Text>{todoType ? todoType : ''}</Text> */}
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: "90%",
     },
-   
+
     addPostButton: {
         backgroundColor: '#2E9298',
         borderRadius: 30,
