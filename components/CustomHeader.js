@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image, Platform } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
 export default function CustomHeader({ title, navigation, isBack, isHome }) {
@@ -30,7 +30,7 @@ export default function CustomHeader({ title, navigation, isBack, isHome }) {
 
 
             <View style={contentHeader}>
-                <Text style={{ textAlign: 'center', color: colors.text, fontWeight: 'bold' }}>{title}</Text>
+                <Text style={{ textAlign: 'center', color: colors.text, fontWeight: 'bold', fontSize: Platform.OS === 'ios' ? 22 : null }}>{title}</Text>
             </View>
 
 

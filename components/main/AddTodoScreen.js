@@ -56,7 +56,7 @@ export default function AddTodoScreen({ navigation }) {
                 <TextInput
                     returnKeyType="next"
                     // borderBottomWidth: 1, borderColor: '#2E9298', 
-                    style={InputField}
+                    style={[InputField, { margin: 20 }]}
                     placeholder="Enter todo title.."
                     placeholderTextColor="gray"
                     multiline
