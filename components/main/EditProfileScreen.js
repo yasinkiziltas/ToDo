@@ -56,12 +56,10 @@ export default function EditProfileScreen({ navigation }) {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
                     const email = snapshot.data().email;
-                    const password = snapshot.data().password;
                     const img = snapshot.data().uploadImg;
 
                     setName(name);
                     setUserEmail(email);
-                    setPassword(password)
                     setProfileImg(img);
                     setUserData(snapshot.data());
                 }
@@ -336,21 +334,8 @@ export default function EditProfileScreen({ navigation }) {
                         />
                     </View>
 
-                    <View style={action}>
-                        <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
-                        <TextInput
-                            secureTextEntry={true}
-                            value={password}
-                            onChangeText={(txt) => setPassword(txt)}
-                            placeholder="Password.."
-                            style={[textInput, { color: colors.text }]}
-                            placeholderTextColor={colors.text}
-                            autoCorrect={false}
-                        />
-                    </View>
-
                     <TouchableOpacity onPress={() => handleUpdate()} style={commandButton}>
-                        <Text style={panelButtonTitle}>Submit</Text>
+                        <Text style={panelButtonTitle}>Edit</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={forgotButton} onPress={() => navigation.navigate('UpdatePassword')}>

@@ -26,7 +26,7 @@ export default function FormInput({ labelValue, placeholderText, iconType, ...re
 
 const styles = StyleSheet.create({
     inputContainer: {
-        borderBottomWidth:1,
+        borderBottomWidth: 1,
         borderColor: '#029571',
         marginTop: 5,
         marginBottom: 10,
