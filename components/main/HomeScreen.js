@@ -155,7 +155,7 @@ export default function HomeScreen({ navigation }) {
         fetchUser()
         setDeleted(false)
 
-    }, [deleted])
+    }, [deleted, todos])
 
 
     return (
