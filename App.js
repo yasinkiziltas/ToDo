@@ -102,6 +102,7 @@ export default function App() {
         <NavigationContainer theme={appTheme}>
             <Stack.Navigator initialRouteName="Main">
                 <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

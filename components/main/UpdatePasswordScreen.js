@@ -6,11 +6,10 @@ import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 
 export default function UpdatePasswordScreen({ navigation }) {
-    const [currentPassword, setCurrentPassword] = useState(null)
-    const [password, setPassword] = useState(null);
+    const [currentPassword, setCurrentPassword] = useState('')
+    const [password, setPassword] = useState('');
     const { colors } = useTheme();
     var user = firebase.auth().currentUser;
-
 
     const {
         container,
@@ -19,6 +18,8 @@ export default function UpdatePasswordScreen({ navigation }) {
         action,
         contentContainer,
         textInput,
+        forgotButton,
+        forgotText
     } = styles;
 
     const reauthenticate = (currentPassword) => {
@@ -27,6 +28,17 @@ export default function UpdatePasswordScreen({ navigation }) {
     }
 
     const changePassword = () => {
+
+        if (!currentPassword.trim()) {
+            alert('Please enter current password..')
+            return;
+        }
+
+        if (!password.trim()) {
+            alert('Please enter new password..')
+            return;
+        }
+
         reauthenticate(currentPassword).then(() => {
             user.updatePassword(password)
                 .then(() => {
@@ -78,6 +90,10 @@ export default function UpdatePasswordScreen({ navigation }) {
 
                 <TouchableOpacity onPress={() => changePassword()} style={commandButton}>
                     <Text style={panelButtonTitle}>Change Password</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={forgotButton} onPress={() => navigation.navigate('ForgotPassword')}>
+                    <Text style={forgotText}>Forgot Password?</Text>
                 </TouchableOpacity>
 
             </KeyboardAvoidingView>
