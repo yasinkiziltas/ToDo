@@ -12,7 +12,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     const [email, setEmail] = useState();
 
-    const { container, forgotButton, forgotText } = styles;
+    const { container, forgotButton, forgotText, logo } = styles;
 
     const handleSubmit = values => {
         firebase.auth().sendPasswordResetEmail(values.email)
@@ -30,7 +30,7 @@ export default function ForgotPasswordScreen({ navigation }) {
             <Animatable.View animation="fadeInRight">
                 <Image source={require('../../assets/img/reset.png')}
                     resizeMode="contain"
-                    style={styles.logo}
+                    style={logo}
                 />
             </Animatable.View>
 
@@ -101,26 +101,7 @@ const styles = StyleSheet.create({
         color: "#5882FD",
         fontSize: 15
     },
-    signInText: {
-        fontWeight: 'bold',
-        fontSize: 25,
-        marginBottom: 10
-    },
     forgotButton: {
         marginVertical: 35,
     },
-    registerButton: {
-        position: 'absolute',
-        margin: 16,
-        // right: 90,
-        bottom: 20,
-    },
-    registerButtonText: {
-        color: "#5882FD",
-        fontSize: 16,
-    },
-    registerButtonTextInput: {
-        fontWeight: 'bold',
-    }
-
 });

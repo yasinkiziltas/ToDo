@@ -15,7 +15,12 @@ export default function RegisterScreen({ navigation }) {
     const [uploadImg, setUploadImg] = useState()
     const [password, setPassword] = useState();
 
-    const { container, registerButton, registerButtonText } = styles;
+    const {
+        container,
+        registerButton,
+        registerButtonText,
+        logo
+    } = styles;
 
     const handleSubmit = values => {
         firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
@@ -62,7 +67,7 @@ export default function RegisterScreen({ navigation }) {
                     <Animatable.View animation="fadeInLeftBig">
                         <Image source={require('../../assets/img/signup2.png')}
                             resizeMode="contain"
-                            style={styles.logo}
+                            style={logo}
                         />
                     </Animatable.View>
 
