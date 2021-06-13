@@ -10,6 +10,7 @@ import AddTodoScreen from './main/AddTodoScreen'
 import ProfileScreen from './main/ProfileScreen'
 import EditProfileScreen from './main/EditProfileScreen'
 import SearchScreen from './main/SearchScreen'
+import UpdatePasswordScreen from './main/UpdatePasswordScreen'
 
 import DrawerContent from './DrawerContent'
 
@@ -24,7 +25,7 @@ const Drawer = createDrawerNavigator()
 export default function Main() {
 
     return (
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} />} >
+        <Drawer.Navigator initialRouteName="UpdatePassword" drawerContent={props => <DrawerContent {...props} />} >
 
             <Drawer.Screen name="Home" component={HomeScreen}
                 options={{
@@ -59,6 +60,14 @@ export default function Main() {
             />
 
             <Drawer.Screen name="Search" component={SearchScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="account-circle" color={color} size={24} />
+                    )
+                }}
+            />
+
+            <Drawer.Screen name="UpdatePassword" component={UpdatePasswordScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="account-circle" color={color} size={24} />

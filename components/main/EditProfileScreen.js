@@ -26,6 +26,24 @@ export default function EditProfileScreen({ navigation }) {
     const [transferred, setTransferred] = useState(0);
     const { colors } = useTheme();
 
+    const {
+        container,
+        commandButton,
+        panel,
+        header,
+        panelHeader,
+        panelTitle,
+        panelSubtitle,
+        panelButton,
+        panelButtonTitle,
+        action,
+        panelHandle,
+        actionError,
+        textInput,
+        forgotButton,
+        forgotText,
+    } = styles;
+
     let bs = React.createRef();
     let fall = new Animated.Value(1);
 
@@ -172,29 +190,29 @@ export default function EditProfileScreen({ navigation }) {
     }
 
     const renderInner = () => (
-        <View style={styles.panel}>
+        <View style={panel}>
             <View style={{ alignItems: 'center' }}>
-                <Text style={styles.panelTitle}>Upload Photo</Text>
-                <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+                <Text style={panelTitle}>Upload Photo</Text>
+                <Text style={panelSubtitle}>Choose Your Profile Picture</Text>
             </View>
-            <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
-                <Text style={styles.panelButtonTitle}>Take Photo</Text>
+            <TouchableOpacity style={panelButton} onPress={takePhotoFromCamera}>
+                <Text style={panelButtonTitle}>Take Photo</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
-                <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+            <TouchableOpacity style={panelButton} onPress={choosePhotoFromLibrary}>
+                <Text style={panelButtonTitle}>Choose From Library</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.panelButton}
+                style={panelButton}
                 onPress={() => bs.current.snapTo(1)}>
-                <Text style={styles.panelButtonTitle}>Cancel</Text>
+                <Text style={panelButtonTitle}>Cancel</Text>
             </TouchableOpacity>
         </View>
     );
 
     const renderHeader = () => (
-        <View style={styles.header}>
-            <View style={styles.panelHeader}>
-                <View style={styles.panelHandle} />
+        <View style={header}>
+            <View style={panelHeader}>
+                <View style={panelHandle} />
             </View>
         </View>
     );
@@ -205,7 +223,7 @@ export default function EditProfileScreen({ navigation }) {
 
 
     return (
-        <View style={styles.container}>
+        <View style={container}>
             <CustomHeader title="Edit Profile" navigation={navigation} isBack={true} />
 
             <BottomSheet
@@ -293,47 +311,52 @@ export default function EditProfileScreen({ navigation }) {
                 </View>
 
                 <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={5}>
-                    <View style={styles.action}>
+                    <View style={action}>
                         <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
                         <TextInput
                             value={userData ? userData.name : ''}
                             onChangeText={(txt) => setUserData({ ...userData, name: txt })}
                             placeholder="Name..."
-                            style={[styles.textInput, { color: colors.text }]}
+                            style={[textInput, { color: colors.text }]}
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
                         />
                     </View>
 
-                    <View style={styles.action}>
+                    <View style={action}>
                         <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
                         <TextInput
                             value={userData ? userData.email : ''}
                             onChangeText={(txt) => setUserData({ ...userData, email: txt })}
                             placeholder="Email.."
-                            style={[styles.textInput, { color: colors.text }]}
+                            style={[textInput, { color: colors.text }]}
                             keyboardType="email-address"
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
                         />
                     </View>
 
-                    <View style={styles.action}>
+                    <View style={action}>
                         <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
                         <TextInput
                             secureTextEntry={true}
                             value={password}
                             onChangeText={(txt) => setPassword(txt)}
                             placeholder="Password.."
-                            style={[styles.textInput, { color: colors.text }]}
+                            style={[textInput, { color: colors.text }]}
                             placeholderTextColor={colors.text}
                             autoCorrect={false}
                         />
                     </View>
 
-                    <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
-                        <Text style={styles.panelButtonTitle}>Submit</Text>
+                    <TouchableOpacity onPress={() => handleUpdate()} style={commandButton}>
+                        <Text style={panelButtonTitle}>Submit</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={forgotButton} onPress={() => navigation.navigate('UpdatePassword')}>
+                        <Text style={forgotText}>Change Password</Text>
+                    </TouchableOpacity>
+
                 </KeyboardAvoidingView>
             </Animated.View>
         </View>
@@ -341,6 +364,7 @@ export default function EditProfileScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 15 : null
@@ -377,6 +401,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#00000040',
         marginBottom: 10,
     },
+
     panelTitle: {
         fontSize: 27,
         height: 35,
@@ -423,5 +448,13 @@ const styles = StyleSheet.create({
         // textAlign: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'gray'
+    },
+    forgotButton: {
+        marginVertical: 35,
+    },
+    forgotText: {
+        color: "#5882FD",
+        fontSize: 15,
+        textAlign: 'center'
     },
 });
