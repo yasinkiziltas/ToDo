@@ -14,10 +14,11 @@ import Animated from 'react-native-reanimated';
 
 export default function EditProfileScreen({ navigation }) {
     const [name, setName] = useState(null);
-    // const [userName, setUserName] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    // const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState(null);
     const [userData, setUserData] = useState(null)
+
+    const user = firebase.auth().currentUser;
 
     const [image, setImage] = useState(null);
     const [profileImg, setProfileImg] = useState(null);
@@ -36,15 +37,13 @@ export default function EditProfileScreen({ navigation }) {
             .then((snapshot) => {
                 if (snapshot.exists) {
                     const name = snapshot.data().name;
-                    // const username = snapshot.data().userName;
                     const email = snapshot.data().email;
-                    // const upassword = snapshot.data().password;
-
+                    const password = snapshot.data().password;
                     const img = snapshot.data().uploadImg;
-                    setName(name)
-                    // setUserName(username)
-                    setUserEmail(email)
-                    // setPassword(upassword)
+
+                    setName(name);
+                    setUserEmail(email);
+                    setPassword(password)
                     setProfileImg(img);
                     setUserData(snapshot.data());
                 }
@@ -54,6 +53,38 @@ export default function EditProfileScreen({ navigation }) {
 
             })
     }
+
+    // const reauthenticate = (password) => {
+    //     reauthenticate(password).then(() => {
+    //         var user = firebase.auth().currentUser;
+    //         user.updatePassword(password).then(() => {
+    //             console.log('Password changed!')
+    //         })
+    //             .catch((error) => {
+    //                 console.log(error.message)
+    //             })
+    //     }).catch((error) => {
+    //         console.log(error.message)
+    //     })
+    // }
+
+    // // Reauthenticates the current user and returns a promise...
+    // const reauthenticate = (password) => {
+    //     var user = firebase.auth().currentUser;
+    //     var cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
+    //     return user.reauthenticateWithCredential(cred);
+    // }
+
+    // // Changes user's password...
+    // const onChangePasswordPress = () => {
+    //     reauthenticate(password).then(() => {
+    //         var user = firebase.auth().currentUser;
+    //         user.updatePassword(password).then(() => {
+    //             Alert.alert("Password was changed");
+    //         }).catch((error) => { console.log(error.message); });
+    //     }).catch((error) => { console.log(error.message) });
+    //     user.updatePassword(onChangePasswordPress)
+    // }
 
     const handleUpdate = async () => {
         let user = firebase.auth().currentUser;
@@ -66,13 +97,14 @@ export default function EditProfileScreen({ navigation }) {
                 .doc(firebase.auth().currentUser.uid)
                 .update({
                     name: userData.name,
-                    // uname: userData.userName,
                     email: userData.email,
-                    // password: userData.password,
                     uploadImg: imageUrl
                 })
             user.updateEmail(userData.email)
-            // user.updatePassword(userData.password)
+                .then(() => {
+                    user.updatePassword(password)
+                })
+
             Alert.alert(
                 'Profile Updated!',
                 'Your profile has been updated successfully.'
@@ -83,6 +115,7 @@ export default function EditProfileScreen({ navigation }) {
             console.log('Error: ', error)
         }
     }
+
 
     const takePhotoFromCamera = async () => {
         const { granted } = await Permissions.askAsync(Permissions.CAMERA)
@@ -198,9 +231,6 @@ export default function EditProfileScreen({ navigation }) {
         </View>
     );
 
-
-
-
     useEffect(() => {
         fetchUser()
     }, [])
@@ -307,17 +337,6 @@ export default function EditProfileScreen({ navigation }) {
                         />
                     </View>
 
-                    {/* <View style={styles.action}>
-                            <FontAwesome name="user-o" size={20} style={{ color: colors.text }} />
-                            <TextInput
-                                value={userData ? userData.userName : ''}
-                                onChangeText={(txt) => setUserData({ ...userData, userName: txt })}
-                                placeholder="Username.."
-                                style={[styles.textInput, { color: colors.text }]}
-                                placeholderTextColor={colors.text}
-                                autoCorrect={false}
-                            />
-                        </View> */}
                     <View style={styles.action}>
                         <FontAwesome name="envelope-o" size={20} style={{ color: colors.text }} />
                         <TextInput
@@ -331,18 +350,19 @@ export default function EditProfileScreen({ navigation }) {
                         />
                     </View>
 
-                    {/* <View style={styles.action}>
-                            <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
-                            <TextInput
-                                secureTextEntry={true}
-                                value={userData ? userData.password : ''}
-                                onChangeText={(txt) => setUserData({ ...userData, password: txt })}
-                                placeholder="Password.."
-                                style={[styles.textInput, { color: colors.text }]}
-                                placeholderTextColor={colors.text}
-                                autoCorrect={false}
-                            />
-                        </View> */}
+                    <View style={styles.action}>
+                        <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
+                        <TextInput
+                            // secureTextEntry={true}
+                            value={password}
+                            onChangeText={(txt) => setPassword(txt)}
+                            placeholder="Password.."
+                            style={[styles.textInput, { color: colors.text }]}
+                            placeholderTextColor={colors.text}
+                            autoCorrect={false}
+                        />
+                    </View>
+
                     <TouchableOpacity onPress={() => handleUpdate()} style={styles.commandButton}>
                         <Text style={styles.panelButtonTitle}>Submit</Text>
                     </TouchableOpacity>

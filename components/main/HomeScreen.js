@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-//537 052 6862
 import {
     SafeAreaView,
     View,
