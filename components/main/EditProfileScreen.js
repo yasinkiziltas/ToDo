@@ -54,38 +54,6 @@ export default function EditProfileScreen({ navigation }) {
             })
     }
 
-    // const reauthenticate = (password) => {
-    //     reauthenticate(password).then(() => {
-    //         var user = firebase.auth().currentUser;
-    //         user.updatePassword(password).then(() => {
-    //             console.log('Password changed!')
-    //         })
-    //             .catch((error) => {
-    //                 console.log(error.message)
-    //             })
-    //     }).catch((error) => {
-    //         console.log(error.message)
-    //     })
-    // }
-
-    // // Reauthenticates the current user and returns a promise...
-    // const reauthenticate = (password) => {
-    //     var user = firebase.auth().currentUser;
-    //     var cred = firebase.auth.EmailAuthProvider.credential(user.email, password);
-    //     return user.reauthenticateWithCredential(cred);
-    // }
-
-    // // Changes user's password...
-    // const onChangePasswordPress = () => {
-    //     reauthenticate(password).then(() => {
-    //         var user = firebase.auth().currentUser;
-    //         user.updatePassword(password).then(() => {
-    //             Alert.alert("Password was changed");
-    //         }).catch((error) => { console.log(error.message); });
-    //     }).catch((error) => { console.log(error.message) });
-    //     user.updatePassword(onChangePasswordPress)
-    // }
-
     const handleUpdate = async () => {
         let user = firebase.auth().currentUser;
         const imageUrl = await uploadImage();
@@ -353,7 +321,7 @@ export default function EditProfileScreen({ navigation }) {
                     <View style={styles.action}>
                         <FontAwesome name="lock" size={20} style={{ color: colors.text }} />
                         <TextInput
-                            // secureTextEntry={true}
+                            secureTextEntry={true}
                             value={password}
                             onChangeText={(txt) => setPassword(txt)}
                             placeholder="Password.."
