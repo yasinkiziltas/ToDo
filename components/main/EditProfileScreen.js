@@ -335,7 +335,7 @@ export default function EditProfileScreen({ navigation }) {
                     </View>
 
                     <TouchableOpacity onPress={() => handleUpdate()} style={commandButton}>
-                        <Text style={panelButtonTitle}>Edit</Text>
+                        <Text style={panelButtonTitle}>Update Profile</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={forgotButton} onPress={() => navigation.navigate('UpdatePassword')}>

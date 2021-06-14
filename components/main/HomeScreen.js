@@ -150,6 +150,7 @@ export default function HomeScreen({ navigation }) {
             .catch((e) => console.log('Error deleting todo.', e));
     };
 
+
     useEffect(() => {
         fetchTodos()
         fetchUser()

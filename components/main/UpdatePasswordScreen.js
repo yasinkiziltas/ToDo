@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Alert, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import CustomHeader from '../CustomHeader'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 
@@ -61,7 +62,7 @@ export default function UpdatePasswordScreen({ navigation }) {
             <KeyboardAvoidingView style={contentContainer} behavior={"padding"} keyboardVerticalOffset={5}>
 
                 <View style={action}>
-                    <FontAwesome name="lock" size={30} style={{ color: colors.text, marginLeft: 5 }} />
+                    <MaterialCommunityIcons name="lock-outline" size={30} style={{ color: colors.text, marginLeft: 5 }} />
                     <TextInput
                         secureTextEntry={true}
                         value={currentPassword}
@@ -75,7 +76,7 @@ export default function UpdatePasswordScreen({ navigation }) {
                 </View>
 
                 <View style={action}>
-                    <FontAwesome name="lock" size={30} style={{ color: colors.text, marginLeft: 5 }} />
+                    <MaterialCommunityIcons name="lock-outline" size={30} style={{ color: colors.text, marginLeft: 5 }} />
                     <TextInput
                         secureTextEntry={true}
                         value={password}
@@ -184,11 +185,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     textInput: {
-        marginLeft: 15,
+        marginLeft: 5,
         flex: 1,
         // marginTop: Platform.OS === 'ios' ? 20 : -12,
         color: '#05375a',
         // textAlign: 'center',
+        borderEndWidth: 1,
         borderBottomWidth: 1,
         borderBottomColor: 'gray'
     },
