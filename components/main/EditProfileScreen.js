@@ -85,10 +85,6 @@ export default function EditProfileScreen({ navigation }) {
                     uploadImg: imageUrl
                 })
             user.updateEmail(userData.email)
-                .then(() => {
-                    user.updatePassword(password)
-                })
-
             Alert.alert(
                 'Profile Updated!',
                 'Your profile has been updated successfully.'

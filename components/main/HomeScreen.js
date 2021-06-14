@@ -13,7 +13,7 @@ import {
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Drawer, DefaultTheme } from 'react-native-paper'
+import { Drawer, DefaultTheme, ActivityIndicator } from 'react-native-paper'
 import CustomHeader from '../CustomHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -165,12 +165,20 @@ export default function HomeScreen({ navigation }) {
             <StatusBar hidden />
             <CustomHeader title="" navigation={navigation} isHome={true} />
 
-            <View style={containerTitle}>
-                <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
-            </View>
+            {
+                loading ?
+                    <View style={containerTitle}>
+                        <ActivityIndicator size="medium" color="#2E9298" />
+                    </View>
+
+                    :
+                    <View style={containerTitle}>
+                        <Text style={[containerText, { color: colors.text }]}>What's up,  {userName}!</Text>
+                    </View>
+            }
 
             {/* locked */}
-            <Tabs tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
+            <Tabs initialPage={0} tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
                 <Tab
                     heading={<TabHeading style={{ backgroundColor: colors.border }}>
                         <MaterialCommunityIcons style={{ color: colors.text }} name="account" size={25} />
@@ -245,18 +253,33 @@ export default function HomeScreen({ navigation }) {
                         </View>
 
 
-                        <FlatList
-                            style={{ width: '100%', }}
-                            numColumns={1}
-                            horizontal={false}
-                            data={todos}
-                            renderItem={({ item }) => (
-                                <BusinessTodo
-                                    item={item}
-                                    onDelete={handleDelete}
+                        {
+                            loading ?
+                                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center', }}>
+                                    <SkeletonPlaceholder>
+                                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
+                                            <View style={{ marginLeft: 20 }}>
+                                                <View style={{ width: 300, height: 30, borderRadius: 4 }} />
+                                                <View style={{ marginTop: 6, width: 300, height: 30, borderRadius: 4 }} />
+                                            </View>
+                                        </View>
+                                    </SkeletonPlaceholder>
+                                </ScrollView>
+                                :
+                                <FlatList
+                                    style={{ width: '100%' }}
+                                    numColumns={1}
+                                    horizontal={false}
+                                    data={todos}
+                                    renderItem={({ item }) => (
+                                        <BusinessTodo
+                                            item={item}
+                                            onDelete={handleDelete}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+
+                        }
 
                     </View>
 
