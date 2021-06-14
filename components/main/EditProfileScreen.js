@@ -89,8 +89,8 @@ export default function EditProfileScreen({ navigation }) {
                 'Profile Updated!',
                 'Your profile has been updated successfully.'
             )
-            console.log('user updated!', user)
-
+            navigation.navigate('Home')
+            // console.log('user updated!', user)
         } catch (error) {
             console.log('Error: ', error)
         }
