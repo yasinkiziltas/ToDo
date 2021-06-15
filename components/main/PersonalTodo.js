@@ -35,39 +35,11 @@ export default function PersonalTodo({ item, onDelete }) {
       textStyle,
       editBtn,
       editBtnIcon,
-      hideButton,
     } = styles;
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  // const fetchTodos = async () => {
-  //   const list = []
-
-  //   await firebase.firestore()
-  //     .collection("todos")
-  //     .doc(firebase.auth().currentUser.uid)
-  //     .collection("userTodos")
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-
-  //         const { date, title, todo, todoTime, todoType, userId } = doc.data();
-  //         list.push({
-  //           id: doc.id,
-  //           date,
-  //           title,
-  //           todo,
-  //           todoTime,
-  //           todoType,
-  //           userId
-  //         })
-  //       })
-  //     })
-  //   setUserData(list)
-  //   console.log(list)
-  // }
 
   const fetchTodos = async () => {
     await firebase.firestore()
@@ -86,9 +58,8 @@ export default function PersonalTodo({ item, onDelete }) {
           setTodo(todo);
           setDate(date)
           setTodoType(todoType)
-          setUserData(snapshot.data());
-          console.log(snapshot.data())
         }
+        setUserData(snapshot.data());
       }).catch((e) => console.log('Error updating todo.', e));
   }
 
@@ -113,8 +84,7 @@ export default function PersonalTodo({ item, onDelete }) {
   };
 
   const updateTodo = async (todoId) => {
-    console.log('Current todo Id: ', todoId);
-
+    // console.log('Current todo Id: ', todoId);
     await firebase.firestore()
       .collection("todos")
       .doc(firebase.auth().currentUser.uid)
@@ -131,7 +101,6 @@ export default function PersonalTodo({ item, onDelete }) {
           'Todo updated!',
           'Your todo has been updated successfully!',
         );
-        // setDeleted(true)
       })
       .catch((e) => console.log('Error updating todo.', e));
   };
@@ -176,6 +145,7 @@ export default function PersonalTodo({ item, onDelete }) {
 
                   <Text style={modalTextTitle}>Todo Detail</Text>
                   <TextInput
+                    value={userData ? userData.todo : ''}
                     style={{ marginBottom: 5 }}
                     returnKeyType="next"
                     placeholder="Enter new todo.."
