@@ -44,6 +44,7 @@ export default function AddTodoScreen({ navigation }) {
                     'Todo added!',
                     'Your todo has been published successfully!',
                 )
+                navigation.navigate('Home')
             })
     }
 
@@ -60,9 +61,9 @@ export default function AddTodoScreen({ navigation }) {
                     placeholder="Enter todo title.."
                     placeholderTextColor="gray"
                     multiline
-                    format="DD-MM-YYYY"
-                    minDate="01-01-1900"
-                    maxDate="01-01-2050"
+                    // format="DD-MM-YYYY"
+                    // minDate="01-01-1900"
+                    // maxDate="01-01-2050"
                     numberOfLines={2}
                     onChangeText={(content) => setTitle(content)}
                     value={title}

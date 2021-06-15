@@ -178,7 +178,7 @@ export default function HomeScreen({ navigation }) {
             }
 
             {/* locked */}
-            <Tabs initialPage={0} tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
+            <Tabs tabBarUnderlineStyle={{ borderBottomWidth: 4, borderBottomColor: '#2E9298' }}>
                 <Tab
                     heading={<TabHeading style={{ backgroundColor: colors.border }}>
                         <MaterialCommunityIcons style={{ color: colors.text }} name="account" size={25} />
