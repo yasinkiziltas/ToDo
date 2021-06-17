@@ -30,7 +30,7 @@ export default function CustomHeader({ title, navigation, isBack, isHome }) {
 
 
             <View style={contentHeader}>
-                <Text style={{ textAlign: 'center', color: colors.text, fontWeight: 'bold', fontSize: Platform.OS === 'ios' ? 22 : null }}>{title}</Text>
+                <Text style={{ textAlign: 'center', color: colors.text, fontWeight: 'bold', fontSize: Platform.OS === 'ios' ? 20 : null }}>{title}</Text>
             </View>
 
 
