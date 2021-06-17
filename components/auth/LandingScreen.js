@@ -17,7 +17,7 @@ const Dots = ({ selected }) => {
 const Skip = ({ ...props }) => {
     return (
         <Button
-            title={"Skip"}
+            title={""}
             color="black"
             {...props}
         />
@@ -27,7 +27,7 @@ const Skip = ({ ...props }) => {
 const Next = ({ ...props }) => {
     return (
         <Button
-            title={"Next"}
+            title={""}
             color="black"
             {...props}
         />
@@ -40,7 +40,7 @@ const Done = ({ ...props }) => {
             style={{ marginHorizontal: 8 }}
             {...props}
         >
-            <Text style={{ fontSize: 20, color: "black"}}>Done</Text>
+            <Text style={{ fontSize: 20, color: "black" }}>Done</Text>
         </TouchableOpacity>
     )
 }
