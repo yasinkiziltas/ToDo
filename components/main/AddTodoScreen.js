@@ -7,6 +7,10 @@ import DatePicker from 'react-native-datepicker';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import RNPickerSelect from "react-native-picker-select";
 
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions'
+
+
 export default function AddTodoScreen({ navigation }) {
 
     const [todo, setTodo] = useState(null);
@@ -44,8 +48,65 @@ export default function AddTodoScreen({ navigation }) {
                     'Todo added!',
                     'Your todo has been published successfully!',
                 )
-                navigation.navigate('Home')
+
+
+                // navigation.navigate('Home')
             })
+    }
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                registerForPushNotification(user)
+            }
+        })
+    }, [])
+
+    const registerForPushNotification = async (user) => {
+        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+        let finalStatus = existingStatus;
+
+        if (finalStatus != 'granted') {
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+            finalStatus = status;
+        }
+
+        if (finalStatus != 'granted') {
+            alert('Fail to get the push token')
+            return;
+        }
+
+
+        let tokenData = (await Notifications.getExpoPushTokenAsync()).data;
+        let tokenType = (await Notifications.getExpoPushTokenAsync()).type;
+
+        try {
+            firebase.firestore()
+                .collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .update({
+                    data: tokenData,
+                    type: tokenType
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const sendPushNotification = () => {
+        let response = fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                to: 'ExponentPushToken[HiDPmPLeGEHFU2H5Krvc41]',
+                sound: 'default',
+                title: 'Demo',
+                body: 'Demo notify'
+            })
+        })
     }
 
 
@@ -114,9 +175,11 @@ export default function AddTodoScreen({ navigation }) {
                 {/* <Text>{todoType ? todoType : ''}</Text> */}
 
 
-                <TouchableOpacity style={addPostButton} onPress={submitTodo}>
+                <TouchableOpacity style={addPostButton} onPress={sendPushNotification}>
                     <Text style={addPostButtonText}>New task  ^</Text>
                 </TouchableOpacity>
+
+
             </View>
 
 

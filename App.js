@@ -55,7 +55,7 @@ export default function App() {
                 }
 
                 else {
-                    registerForPushNotification(user)
+                    // registerForPushNotification(user)
                     setLoggedIn(true)
                     setLoaded(true)
                 }
@@ -69,40 +69,56 @@ export default function App() {
             )
 
         }, 2500)
-
-
-
-
         // return(
         //     EventRegister.removeEventListener(eventListener)
         // )
     }, [])
 
-    const registerForPushNotification = async (user) => {
-        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-        let finalStatus = existingStatus;
+    // const registerForPushNotification = async (user) => {
+    //     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+    //     let finalStatus = existingStatus;
 
-        if (finalStatus != 'granted') {
-            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-            finalStatus = status;
-        }
+    //     if (finalStatus != 'granted') {
+    //         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+    //         finalStatus = status;
+    //     }
 
-        if (finalStatus != 'granted') {
-            alert('Fail to get the push token')
-            return;
-        }
+    //     if (finalStatus != 'granted') {
+    //         alert('Fail to get the push token')
+    //         return;
+    //     }
 
-        let token = await Notifications.getExpoPushTokenAsync();
 
-        var updates = {}
-        updates['/expoToken'] = token;
-        firebase.firestore()
-            .collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .update(updates)
-        console.log(token);
-        // firebase.database().ref('user').child(user.ui).update(updates)
-    }
+    //     let tokenData = (await Notifications.getExpoPushTokenAsync()).data;
+    //     let tokenType = (await Notifications.getExpoPushTokenAsync()).type;
+
+    //     try {
+    //         firebase.firestore()
+    //             .collection('users')
+    //             .doc(firebase.auth().currentUser.uid)
+    //             .update({
+    //                 data: tokenData,
+    //                 type: tokenType
+    //             })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+
+    //     // let token = await Notifications.getExpoPushTokenAsync();
+
+    //     // var updates = {}
+    //     // updates['/expoToken'] = token;
+    //     // console.log(token);
+    //     // firebase.database().ref("users").child(user.uid).update(updates)
+
+    //     // let uid = firebase.auth().currentUser.uid;
+    //     // firebase.database().ref("users").child(uid).update({
+    //     //     expoPushToken: token
+    //     // })
+    //     // console.log(token)
+
+
+    // }
 
     if (!loaded) {
         return (
