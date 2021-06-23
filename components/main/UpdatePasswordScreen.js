@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Alert, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import CustomHeader from '../CustomHeader'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import firebase from 'firebase'
 import { useTheme } from '@react-navigation/native'

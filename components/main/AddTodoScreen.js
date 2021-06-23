@@ -48,8 +48,6 @@ export default function AddTodoScreen({ navigation }) {
                     'Todo added!',
                     'Your todo has been published successfully!',
                 )
-
-
                 // navigation.navigate('Home')
             })
     }
