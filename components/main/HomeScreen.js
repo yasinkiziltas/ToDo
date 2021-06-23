@@ -204,6 +204,7 @@ export default function HomeScreen({ navigation }) {
                         {
                             loading ?
                                 <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center', }}>
+                                    <ActivityIndicator size={25} style={{ marginTop: 5 }} />
                                     <SkeletonPlaceholder>
                                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
                                             <View style={{ marginLeft: 20 }}>
